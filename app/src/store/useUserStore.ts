@@ -7,6 +7,7 @@ const useUserStore = defineStore('userStore', () => {
     const user = ref<User>({
         id: -1,
         name: 'Sotvorenie',
+        avatarUrl: '/diane.jpg',
     })
 
     // пользователь вошел или нет
@@ -19,6 +20,7 @@ const useUserStore = defineStore('userStore', () => {
         user.value = {
             id: -1,
             name: '',
+            avatarUrl: '',
         }
         isLogged.value = false
         token.value = ''

@@ -43,7 +43,9 @@ const handleLogout = async () => {
   <div class="user h-100 flex-center">
     <div class="grid-cols-2 gap-20 w-75">
       <div class="user__avatar img-container rounded-20">
-        <img src="/diane.jpg" alt="Sotvorenie">
+        <img :src="`${userStore.user.avatarUrl}?t=${Date.now()}`"
+             :alt="userStore.user.name"
+        >
       </div>
 
       <form novalidate class="flex flex-column gap-20">

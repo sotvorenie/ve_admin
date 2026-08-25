@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {productsData} from "@data/products.ts";
 
+import useUserStore from "@store/useUserStore.ts";
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -33,10 +35,12 @@ import {productsData} from "@data/products.ts";
 
     <RouterLink to="/user" class="aside__user mt-auto flex align-center gap-10">
       <div class="aside__avatar rounded-full img-container">
-        <img src="/diane.jpg" alt="Sotvorenie">
+        <img :src="`${userStore.user.avatarUrl}?t=${Date.now()}`"
+             :alt="userStore.user.name"
+        >
       </div>
 
-      <span class="text-w500 text-ellipsis">Sotvorenie</span>
+      <span class="text-w500 text-ellipsis">{{userStore.user.name}}</span>
     </RouterLink>
   </aside>
 
