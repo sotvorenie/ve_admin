@@ -4,6 +4,6 @@
 
 <template>
 
-
+  опана
 
 </template>

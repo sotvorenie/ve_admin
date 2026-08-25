@@ -4,11 +4,13 @@ import AppAside from "@layouts/AppAside.vue";
 
 <template>
 
-  <div class="row h-screen">
+  <div class="row h-screen overflow-hidden">
     <AppAside class="col-2"/>
 
-    <main class="col-10 py-20 px-40">
-      <router-view/>
+    <main class="col-10 py-20 px-40 overflow-x-hidden overflow-y-auto">
+      <Transition name="fade">
+        <router-view/>
+      </Transition>
     </main>
   </div>
 

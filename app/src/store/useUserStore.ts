@@ -6,7 +6,7 @@ const useUserStore = defineStore('userStore', () => {
     // данные о пользователе
     const user = ref<User>({
         id: -1,
-        name: '',
+        name: 'Sotvorenie',
     })
 
     // пользователь вошел или нет

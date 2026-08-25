@@ -18,6 +18,7 @@ body {
 
 main, #app {
   flex-grow: 1;
+  scrollbar-gutter: stable;
 }
 
 h1, .h1 {
@@ -52,6 +53,7 @@ textarea,
 select,
 svg * {
   transition-duration: var(--transition-duration);
+  outline: none;
 }
 
 a {
@@ -66,8 +68,8 @@ a {
   }
 }
 
-:focus-visible {
-  outline: rem(2) dashed var(--color-light);
-  outline-offset: rem(4);
-  transition-duration: 0s !important;
+button:disabled {
+  opacity: 50%;
+  cursor: not-allowed;
+  pointer-events: none;
 }

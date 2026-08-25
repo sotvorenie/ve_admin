@@ -2,7 +2,7 @@
 
 .aside {
 
-  &__icon {
+  &__icon, &__avatar {
     @include square(40);
   }
 }

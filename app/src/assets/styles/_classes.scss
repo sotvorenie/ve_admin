@@ -58,10 +58,16 @@ $colors: (
 .text-no-decoration { text-decoration: none !important; }
 
 // --- генерация цветов текста, фона и рамок ---
+.bg-transparent {background: transparent !important;}
 @each $name, $color in $colors {
   .text-#{$name} { color: $color !important; }
   .hover\:text-#{$name} {
     @include hover {
+      color: $color !important;
+    }
+  }
+  .placeholder\:text-#{$name} {
+    &::placeholder {
       color: $color !important;
     }
   }
@@ -77,6 +83,12 @@ $colors: (
   }
   .hover\:border-#{$name} {
     @include hover {
+      --border-color: #{$color};
+      border-color: #{$color} !important;
+    }
+  }
+  .focus\:border-#{$name} {
+    &:focus {
       --border-color: #{$color};
       border-color: #{$color} !important;
     }
@@ -181,8 +193,8 @@ $spaces: (
 .overflow-hidden { overflow: hidden !important; }
 .overflow-x-hidden { overflow-x: hidden !important; }
 .overflow-y-hidden { overflow-y: hidden !important; }
-.overflow-y-scroll { overflow-y: scroll !important; }
-.overflow-x-scroll { overflow-x: scroll !important; }
+.overflow-y-auto { overflow-y: auto !important; }
+.overflow-x-auto { overflow-x: auto !important; }
 
 // --- курсоры и взаимодействие ---
 .user-select-none { user-select: none !important; }
@@ -338,8 +350,6 @@ $spaces: (
       .#{$breakpoint}-grid-cols-#{$i} {
         display: grid !important;
         grid-template-columns: repeat($i, 1fr) !important;
-        column-gap: var(--column-gap) !important;
-        row-gap: var(--row-gap) !important;
       }
     }
   }
@@ -348,8 +358,6 @@ $spaces: (
 .row {
   display: grid !important;
   grid-template-columns: repeat($grid-columns, 1fr);
-  column-gap: var(--column-gap) !important;
-  row-gap: var(--row-gap) !important;
   width: 100%;
 }
 @for $i from 1 through $grid-columns {
