@@ -1,0 +1,17 @@
+@use 'helpers' as *;
+
+:root {
+  --color-light: #FFFFFF;
+  --color-light-alt: #aaaaaa;
+
+  --color-dark: #000000;
+  --color-dark-alt: #141414;
+  --color-dark-muted: #262626;
+
+  --color-accent: #fe7971;
+
+  --font-family-base: 'Montserrat', sans-serif;
+
+  --transition-duration: 0.2s;
+  --transition-duration-big: 0.5s;
+}

@@ -1,0 +1,8 @@
+@use '../helpers' as *;
+
+.aside {
+
+  &__icon {
+    @include square(40);
+  }
+}

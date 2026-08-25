@@ -1,0 +1,10 @@
+@use '../helpers' as *;
+
+.index {
+
+  &__icon-container {
+    @include square(100);
+
+    top: rem(-50);
+  }
+}

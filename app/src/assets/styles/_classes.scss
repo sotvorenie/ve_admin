@@ -1,0 +1,370 @@
+@use 'helpers' as *;
+
+$breakpoints: (
+        'sm': 480px,
+        'md': 767px,
+        'lg': 1023px,
+        'xl': 1440px
+);
+$grid-columns: 12 !default;
+
+// --- цвета (палитра и переменные) ---
+$colors: (
+        'light': var(--color-light, #ffffff),
+        'light-alt': var(--color-light-alt, #ffffff),
+
+        'dark': var(--color-dark, #000000),
+        'dark-alt': var(--color-dark-alt, #343a40),
+        'dark-muted': var(--color-dark-muted, #495057),
+
+        'accent': var(--color-accent, #6610f2),
+
+        'success': var(--success, #28a745),
+
+        'warning': var(--warning, #ffc107),
+
+        'danger': var(--danger, #dc3545),
+
+        'info': var(--info, #17a2b8),
+
+        'white': #ffffff,
+        'black': #000000,
+        'transparent': transparent,
+);
+
+// --- текст и шрифты ---
+.text-center {text-align: center !important;}
+.text-upper {text-transform: uppercase !important;}
+.text-left {text-align: left !important;}
+.text-right {text-align: right !important;}
+.text-nowrap {white-space: nowrap !important;}
+.text-numeric {font-variant-numeric: tabular-nums !important;}
+.line-height-1 {line-height: 1 !important;}
+.text-ellipsis {width: 100% !important;overflow: hidden !important;text-overflow: ellipsis !important;white-space: nowrap !important;}
+.line-clamp-2 {display: -webkit-box !important;-webkit-box-orient: vertical !important;-webkit-line-clamp: 2 !important;overflow: hidden !important;}
+.line-clamp-3 {display: -webkit-box !important;-webkit-box-orient: vertical !important;-webkit-line-clamp: 3 !important;overflow: hidden !important;}
+@for $w from 4 through 7 {
+  .text-w#{$w * 100} { font-weight: $w * 100 !important; }
+  .hover\:text-w#{$w * 100} {
+    @include hover {
+      font-weight: $w * 100 !important;
+    }
+  }
+}
+
+// --- декорирование текста ---
+.text-underline { text-decoration: underline !important; }
+.text-line-through { text-decoration: line-through !important; }
+.text-no-decoration { text-decoration: none !important; }
+
+// --- генерация цветов текста, фона и рамок ---
+@each $name, $color in $colors {
+  .text-#{$name} { color: $color !important; }
+  .hover\:text-#{$name} {
+    @include hover {
+      color: $color !important;
+    }
+  }
+  .bg-#{$name} { background-color: $color !important; }
+  .hover\:bg-#{$name} {
+    @include hover {
+      background-color: $color !important;
+    }
+  }
+  .border-#{$name} {
+    --border-color: #{$color};
+    border-color: #{$color} !important;
+  }
+  .hover\:border-#{$name} {
+    @include hover {
+      --border-color: #{$color};
+      border-color: #{$color} !important;
+    }
+  }
+}
+
+// --- размеры шрифтов ---
+$font-sizes: (10, 12, 14, 16, 18);
+@each $size in $font-sizes {
+  .fs-#{$size} { font-size: #{$size}px !important; }
+}
+@each $breakpoint, $value in $breakpoints {
+  @media (min-width: $breakpoint) {
+    @each $size in $font-sizes {
+      .fs-#{$size} { font-size: #{$size}px !important; }
+    }
+  }
+}
+
+// --- размеры ---
+@for $w from 1 through 4 {
+  .w-#{$w * 25} { width: $w * 25% !important; }
+}
+.h-100 {height: 100%;}
+.h-screen { height: 100vh !important; }
+.w-screen { width: 100vw !important; }
+.min-h-screen { min-height: 100vh !important; }
+.min-w-screen { min-width: 100vw !important; }
+
+// --- отступы ---
+$spaces: (
+        0: 0, 2: rem(2), 3: rem(3), 4: rem(4), 5: rem(5), 6: rem(6), 7: rem(7), 8: rem(8), 9: rem(9),
+        10: rem(10), 12: rem(12), 14: rem(14), 16: rem(16), 18: rem(18),
+        20: rem(20), 22: rem(22), 24: rem(24), 26: rem(26), 28: rem(28),
+        30: rem(30), 35: rem(35), 40: rem(40), 45: rem(45), 50: rem(50),
+);
+@each $key, $val in $spaces {
+  .m-#{$key} { margin: $val !important; }
+  .mt-#{$key} { margin-top: $val !important; }
+  .mb-#{$key} { margin-bottom: $val !important; }
+  .ml-#{$key} { margin-left: $val !important; }
+  .mr-#{$key} { margin-right: $val !important; }
+  .mx-#{$key} { margin-left: $val !important; margin-right: $val !important; }
+  .my-#{$key} { margin-top: $val !important; margin-bottom: $val !important; }
+
+  .p-#{$key} { padding: $val !important; }
+  .pt-#{$key} { padding-top: $val !important; }
+  .pb-#{$key} { padding-bottom: $val !important; }
+  .pl-#{$key} { padding-left: $val !important; }
+  .pr-#{$key} { padding-right: $val !important; }
+  .px-#{$key} { padding-left: $val !important; padding-right: $val !important; }
+  .py-#{$key} { padding-top: $val !important; padding-bottom: $val !important; }
+}
+
+// --- flexbox ---
+.flex { display: flex; }
+.flex-column { flex-direction: column !important; }
+.flex-row { flex-direction: row !important; }
+.flex-between {justify-content: space-between !important;}
+.flex-around {justify-content: space-around !important;}
+.flex-wrap {flex-wrap: wrap !important;}
+.align-center {align-items: center !important;}
+.align-start {align-items: start !important;}
+.align-end {align-items: end !important;}
+.justify-start {justify-content: start !important;}
+.justify-center {justify-content: center !important;}
+.justify-end {justify-content: end !important;}
+.flex-center {display: flex !important;justify-content: center !important;align-items: center !important;}
+.flex-1 { flex: 1 1 0 !important; }
+.flex-shrink-0  { flex-shrink: 0 !important; }
+@for $g from 1 through 30 {
+  .gap-#{$g} { gap: rem($g) !important; }
+  .column-gap-#{$g} { column-gap: rem($g) !important; }
+  .row-gap-#{$g} { row-gap: rem($g) !important; }
+}
+
+// --- позиционирование и геометрия ---
+.m-auto {margin: auto !important;}
+.mt-auto {margin-top: auto !important;}
+.position-relative { position: relative !important; }
+.position-absolute { position: absolute !important; }
+.position-fixed {position: fixed !important;}
+.position-sticky {position: sticky !important;}
+.absolute-center {@include abs-center;}
+.absolute-x-center {@include abs-x;}
+.absolute-y-center {@include abs-y;}
+.inset-0 {inset: 0 !important;}
+.top-0 {top: 0 !important;}
+.bottom-0 {bottom: 0 !important;}
+.left-0 {left: 0 !important;}
+.right-0 {right: 0 !important;}
+.radius-50 {border-radius: 50% !important;}
+.aspect-1 {aspect-ratio: 1 !important;}
+.aspect-16_9 {aspect-ratio: 16/9 !important;}
+.aspect-4_3 {aspect-ratio: 4/3 !important;}
+
+// --- отображение и переполнение ---
+.d-inline-block { display: inline-block !important; }
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-inline { display: inline !important; }
+.overflow-hidden { overflow: hidden !important; }
+.overflow-x-hidden { overflow-x: hidden !important; }
+.overflow-y-hidden { overflow-y: hidden !important; }
+.overflow-y-scroll { overflow-y: scroll !important; }
+.overflow-x-scroll { overflow-x: scroll !important; }
+
+// --- курсоры и взаимодействие ---
+.user-select-none { user-select: none !important; }
+.cursor-pointer { cursor: pointer !important; }
+.cursor-not-allowed { cursor: not-allowed !important; }
+.cursor-default { cursor: default !important; }
+.cursor-text {cursor: text !important;}
+.pointer-none {pointer-events: none !important;}
+.transition-all { transition: all var(--transition-duration, 0.2s) !important; }
+.transition-colors {
+  transition:
+        background-color var(--transition-duration, 0.2s),
+        border-color var(--transition-duration, 0.2s),
+        color var(--transition-duration, 0.2s) !important;
+}
+.transition-opacity { transition: opacity var(--transition-duration, 0.2s) !important; }
+.transition-transform { transition: transform var(--transition-duration, 0.2s) !important; }
+
+// --- z-index ---
+.z--2 {z-index: -2 !important;}
+.z--1 {z-index: -1 !important;}
+.z-0 {z-index: 0 !important;}
+.z-1 {z-index: 1 !important;}
+.z-10 {z-index: 10 !important;}
+.z-11 {z-index: 11 !important;}
+.z-100 {z-index: 100 !important;}
+.z-101 {z-index: 101 !important;}
+.z-1000 {z-index: 1000 !important;}
+.z-1001 {z-index: 1001 !important;}
+.z-10000 {z-index: 10000 !important;}
+.z-10001 {z-index: 10001 !important;}
+
+// --- скругление ---
+.rounded-none { border-radius: 0 !important; }
+@for $r from 1 through 30 {
+  .rounded-#{$r} { border-radius: rem($r) !important; }
+  .hover\:rounded-#{$r} {
+    @include hover {
+      border-radius: rem($r) !important;
+    }
+  }
+}
+.rounded-full { border-radius: 9999px !important; }
+
+// --- границы --- }
+.border {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--border-color, currentColor) !important;
+}
+.border-none { border: none !important; }
+.border-t {
+  border-width: 0 !important;
+  border-top-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--border-color, currentColor) !important;
+}
+.border-b {
+  border-width: 0 !important;
+  border-bottom-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--border-color, currentColor) !important;
+}
+.border-l {
+  border-width: 0 !important;
+  border-left-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--border-color, currentColor) !important;
+}
+.border-r {
+  border-width: 0 !important;
+  border-right-width: 1px !important;
+  border-style: solid !important;
+  border-color: var(--border-color, currentColor) !important;
+}
+@for $i from 1 through 5 {
+  .border-#{$i} {
+    border-width: #{$i}px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+  .border-t-#{$i} {
+    border-width: 0 !important;
+    border-top-width: #{$i}px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+  .border-b-#{$i} {
+    border-width: 0 !important;
+    border-bottom-width: #{$i}px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+  .border-l-#{$i} {
+    border-width: 0 !important;
+    border-left-width: #{$i}px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+  .border-r-#{$i} {
+    border-width: 0 !important;
+    border-right-width: #{$i}px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
+@each $breakpoint, $value in $breakpoints {
+  @media (min-width: $value) {
+    @for $i from 1 through 5 {
+      .#{$breakpoint}-border-#{$i} {
+        border-width: #{$i}px !important;
+        border-style: solid !important;
+        border-color: var(--border-color, currentColor) !important;
+      }
+      .#{$breakpoint}-border-t-#{$i} {
+        border-width: 0 !important;
+        border-top-width: #{$i}px !important;
+        border-style: solid !important;
+        border-color: var(--border-color, currentColor) !important;
+      }
+      .#{$breakpoint}-border-b-#{$i} {
+        border-width: 0 !important;
+        border-bottom-width: #{$i}px !important;
+        border-style: solid !important;
+        border-color: var(--border-color, currentColor) !important;
+      }
+      .#{$breakpoint}-border-l-#{$i} {
+        border-width: 0 !important;
+        border-left-width: #{$i}px !important;
+        border-style: solid !important;
+        border-color: var(--border-color, currentColor) !important;
+      }
+      .#{$breakpoint}-border-r-#{$i} {
+        border-width: 0 !important;
+        border-right-width: #{$i}px !important;
+        border-style: solid !important;
+        border-color: var(--border-color, currentColor) !important;
+      }
+    }
+  }
+}
+
+// --- сетки (grid) ---
+@for $i from 1 through $grid-columns {
+  .grid-cols-#{$i} {
+    display: grid !important;
+    grid-template-columns: repeat($i, 1fr) !important;
+  }
+}
+@each $breakpoint, $value in $breakpoints {
+  @media (min-width: $value) {
+    @for $i from 1 through $grid-columns {
+      .#{$breakpoint}-grid-cols-#{$i} {
+        display: grid !important;
+        grid-template-columns: repeat($i, 1fr) !important;
+        column-gap: var(--column-gap) !important;
+        row-gap: var(--row-gap) !important;
+      }
+    }
+  }
+}
+
+.row {
+  display: grid !important;
+  grid-template-columns: repeat($grid-columns, 1fr);
+  column-gap: var(--column-gap) !important;
+  row-gap: var(--row-gap) !important;
+  width: 100%;
+}
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    grid-column: span $i;
+  }
+}
+@each $breakpoint, $value in $breakpoints {
+  @media (min-width: $value) {
+    @for $i from 1 through $grid-columns {
+      .#{$breakpoint}-col-#{$i} {
+        grid-column: span $i;
+      }
+    }
+  }
+}
+.col-auto { grid-column: auto; }
+.row .row {grid-column: 1 / -1;}
