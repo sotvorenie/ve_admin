@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router";
-
 import {productsData} from "@data/products.ts";
 
-const route = useRoute()
 </script>
 
 <template>
@@ -21,7 +18,7 @@ const route = useRoute()
           <RouterLink :to="item.url"
                       class="w-100 p-6 rounded-12 border border-dark-muted flex align-center gap-6"
                       :class="[
-                          route.path.includes(item.url) && 'bg-dark-muted pointer-none cursor-default',
+                          $route.path.includes(item.url) && 'bg-dark-muted pointer-none cursor-default',
                       ]"
           >
             <Component v-if="item.icon"
