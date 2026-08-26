@@ -1,0 +1,12 @@
+@use '../helpers' as *;
+
+.user {
+
+  &__avatar {
+    @include square(400);
+  }
+
+  &__form {
+    width: rem(360);
+  }
+}
