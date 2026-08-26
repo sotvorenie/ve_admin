@@ -1,0 +1,16 @@
+@use '../helpers' as *;
+
+.pagination {
+
+  &__btn {
+    @include square(40);
+  }
+
+  &__prev {
+    rotate: 90deg;
+  }
+
+  &__next {
+    rotate: -90deg;
+  }
+}

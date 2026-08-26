@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import List from "@common/List.vue";
+import {ref} from "vue";
+
 import {ListHeadType, ListItemType} from "@/types/list.ts";
+
+import List from "@common/List.vue";
+import Pagination from "@common/Pagination.vue";
 
 const headItems: ListHeadType[] = [
   {
@@ -53,10 +57,16 @@ const users: ListItemType[] = [
 ]
 
 const colsStyle = '4rem 8rem 1fr 1fr 1fr'
+
+const activePage = ref(1)
+
+const total = ref(100)
 </script>
 
 <template>
 
   <List :items="users" :head-items="headItems" :cols-style="colsStyle"/>
+
+  <Pagination v-model="activePage" :total="total"/>
 
 </template>
