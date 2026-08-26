@@ -231,6 +231,7 @@ $spaces: (
 .rounded-full { border-radius: 9999px !important; }
 
 // --- границы --- }
+.border-transparent {border-color: transparent !important;}
 .border {
   border-width: 1px !important;
   border-style: solid !important;

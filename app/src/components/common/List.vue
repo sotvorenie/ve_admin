@@ -41,6 +41,7 @@ const colsStyles = computed(() => props.colsStyle && `grid-template-columns: ${p
     <ul class="flex flex-column">
       <li v-for="(row, rowIndex) in items"
           :key="rowIndex"
+          class="cursor-pointer"
       >
         <div
             class="border-b border-light text-center hover:bg-dark-alt"
@@ -54,7 +55,7 @@ const colsStyles = computed(() => props.colsStyle && `grid-template-columns: ${p
           >
             <span v-if="headItems[index]?.type === 'text'">{{item}}</span>
             <div v-else
-                 class="img-container"
+                 class="img-container border border-transparent hover:border-accent transition-colors"
                  :class="[
                     headItems[index]?.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
                  ]"
