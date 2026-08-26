@@ -54,6 +54,9 @@ select,
 svg * {
   transition-duration: var(--transition-duration);
   outline: none;
+  background: transparent;
+  border: none;
+  color: var(--color-light);
 }
 
 a {

@@ -20,7 +20,7 @@ withDefaults(
   <button
       :type="type"
       :disabled="disabled || isLoading"
-      class="flex-center gap-10 text-center text-ellipsis bg-transparent rounded-12 border border-light-alt text-light hover:border-accent hover:text-accent p-10 text-w500"
+      class="flex-center gap-10 text-center text-ellipsis rounded-12 border border-light-alt hover:border-accent hover:text-accent p-10 text-w500"
   >
     <LoadingIcon v-if="isLoading"/>
     <slot v-else/>

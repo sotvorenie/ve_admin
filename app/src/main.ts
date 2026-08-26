@@ -1,4 +1,5 @@
 import '@/assets/styles/main.scss'
+import "@fancyapps/ui/dist/fancybox/fancybox.css"
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

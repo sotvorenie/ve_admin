@@ -20,7 +20,7 @@ const userStore = useUserStore();
           <RouterLink :to="item.url"
                       class="w-100 p-6 rounded-12 border border-dark-muted flex align-center gap-6"
                       :class="[
-                          $route.path.includes(item.url) && 'bg-dark-muted pointer-none cursor-default',
+                          $route.path.includes(item.url) && 'bg-dark-muted',
                       ]"
           >
             <Component v-if="item.icon"

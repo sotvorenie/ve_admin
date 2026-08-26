@@ -45,11 +45,6 @@ $colors: (
 .line-clamp-3 {display: -webkit-box !important;-webkit-box-orient: vertical !important;-webkit-line-clamp: 3 !important;overflow: hidden !important;}
 @for $w from 4 through 7 {
   .text-w#{$w * 100} { font-weight: $w * 100 !important; }
-  .hover\:text-w#{$w * 100} {
-    @include hover {
-      font-weight: $w * 100 !important;
-    }
-  }
 }
 
 // --- декорирование текста ---
@@ -190,6 +185,7 @@ $spaces: (
 .d-none { display: none !important; }
 .d-block { display: block !important; }
 .d-inline { display: inline !important; }
+.d-grid { display: grid !important; }
 .overflow-hidden { overflow: hidden !important; }
 .overflow-x-hidden { overflow-x: hidden !important; }
 .overflow-y-hidden { overflow-y: hidden !important; }
@@ -231,11 +227,6 @@ $spaces: (
 .rounded-none { border-radius: 0 !important; }
 @for $r from 1 through 30 {
   .rounded-#{$r} { border-radius: rem($r) !important; }
-  .hover\:rounded-#{$r} {
-    @include hover {
-      border-radius: rem($r) !important;
-    }
-  }
 }
 .rounded-full { border-radius: 9999px !important; }
 
@@ -247,28 +238,84 @@ $spaces: (
 }
 .border-none { border: none !important; }
 .border-t {
-  border-width: 0 !important;
+  border-width: 0;
   border-top-width: 1px !important;
   border-style: solid !important;
   border-color: var(--border-color, currentColor) !important;
 }
+.first\:border-t {
+  &:first-child {
+    border-top-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
+.last\:border-t {
+  &:last-child {
+    border-top-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
 .border-b {
-  border-width: 0 !important;
+  border-width: 0;
   border-bottom-width: 1px !important;
   border-style: solid !important;
   border-color: var(--border-color, currentColor) !important;
 }
+.first\:border-b {
+  &:first-child {
+    border-bottom-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
+.last\:border-b {
+  &:last-child {
+    border-bottom-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
 .border-l {
-  border-width: 0 !important;
+  border-width: 0;
   border-left-width: 1px !important;
   border-style: solid !important;
   border-color: var(--border-color, currentColor) !important;
 }
+.first\:border-l {
+  &:first-child {
+    border-left-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
+.last\:border-l {
+  &:last-child {
+    border-left-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
 .border-r {
-  border-width: 0 !important;
+  border-width: 0;
   border-right-width: 1px !important;
   border-style: solid !important;
   border-color: var(--border-color, currentColor) !important;
+}
+.first\:border-r {
+  &:first-child {
+    border-right-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
+}
+.last\:border-r {
+  &:last-child {
+    border-right-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--border-color, currentColor) !important;
+  }
 }
 @for $i from 1 through 5 {
   .border-#{$i} {
@@ -304,30 +351,30 @@ $spaces: (
 @each $breakpoint, $value in $breakpoints {
   @media (min-width: $value) {
     @for $i from 1 through 5 {
-      .#{$breakpoint}-border-#{$i} {
+      .#{$breakpoint}\:border-#{$i} {
         border-width: #{$i}px !important;
         border-style: solid !important;
         border-color: var(--border-color, currentColor) !important;
       }
-      .#{$breakpoint}-border-t-#{$i} {
+      .#{$breakpoint}\:border-t-#{$i} {
         border-width: 0 !important;
         border-top-width: #{$i}px !important;
         border-style: solid !important;
         border-color: var(--border-color, currentColor) !important;
       }
-      .#{$breakpoint}-border-b-#{$i} {
+      .#{$breakpoint}\:border-b-#{$i} {
         border-width: 0 !important;
         border-bottom-width: #{$i}px !important;
         border-style: solid !important;
         border-color: var(--border-color, currentColor) !important;
       }
-      .#{$breakpoint}-border-l-#{$i} {
+      .#{$breakpoint}\:border-l-#{$i} {
         border-width: 0 !important;
         border-left-width: #{$i}px !important;
         border-style: solid !important;
         border-color: var(--border-color, currentColor) !important;
       }
-      .#{$breakpoint}-border-r-#{$i} {
+      .#{$breakpoint}\:border-r-#{$i} {
         border-width: 0 !important;
         border-right-width: #{$i}px !important;
         border-style: solid !important;
@@ -347,7 +394,7 @@ $spaces: (
 @each $breakpoint, $value in $breakpoints {
   @media (min-width: $value) {
     @for $i from 1 through $grid-columns {
-      .#{$breakpoint}-grid-cols-#{$i} {
+      .#{$breakpoint}\:grid-cols-#{$i} {
         display: grid !important;
         grid-template-columns: repeat($i, 1fr) !important;
       }
@@ -368,7 +415,7 @@ $spaces: (
 @each $breakpoint, $value in $breakpoints {
   @media (min-width: $value) {
     @for $i from 1 through $grid-columns {
-      .#{$breakpoint}-col-#{$i} {
+      .#{$breakpoint}\:col-#{$i} {
         grid-column: span $i;
       }
     }

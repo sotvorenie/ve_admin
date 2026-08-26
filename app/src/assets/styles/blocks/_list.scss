@@ -1,0 +1,12 @@
+@use '../helpers' as *;
+
+.list {
+
+  &__avatar {
+    @include square(40);
+  }
+
+  &__preview {
+    max-width: rem(100);
+  }
+}

@@ -4,6 +4,8 @@
 
 <template>
 
-  опана
-
 </template>
+
+<style scoped>
+
+</style>

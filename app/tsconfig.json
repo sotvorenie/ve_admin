@@ -31,6 +31,7 @@
       "@store/*": ["src/store/*"],
       "@utils/*": ["src/utils/*"],
       "@components/*": ["src/components/block/*"],
+      "@common/*": ["src/components/common/*"],
       "@ui/*": ["src/components/ui/*"],
       "@pages/*": ["src/pages/*"],
       "@layouts/*": ["src/layouts/*"],
