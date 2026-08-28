@@ -4,7 +4,7 @@ import {onBeforeMount, ref} from "vue";
 import {ListHeadType, ListItemType} from "@/types/list.ts";
 import {AppUsersResponse} from "@/types/user.ts";
 
-import {getAllUsers} from "@api/users/veMusic.ts";
+import {apiGetAllUsers} from "@api/users/veMusic.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -55,7 +55,7 @@ const getUsers = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponse = await getAllUsers(page.value, 30, signal)
+    const response: AppUsersResponse = await apiGetAllUsers(page.value, 30, signal)
 
     if (response) {
       page.value = response.page

@@ -4,7 +4,7 @@ import {useRoute} from "vue-router";
 
 import {AppUserType} from "@/types/user.ts";
 
-import {getUser} from "@api/users/veMusic.ts";
+import {apiGetUser} from "@api/users/veMusic.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -33,7 +33,7 @@ const getCurrentUser = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUserType = await getUser(+userId.value, signal)
+    const response: AppUserType = await apiGetUser(+userId.value, signal)
 
     if (response) {
       veMusicStore.currentUser = response

@@ -58,3 +58,16 @@ export const apiPatch = async <T>(
     const res = await client.patch(url, data, finalConfig)
     return res.data as T
 }
+
+export const apiDelete = async <T>(
+    url: string,
+    config?: any,
+    signal?: AbortSignal
+): Promise<T> => {
+    const finalConfig = {
+        ...config,
+        signal,
+    }
+    const res = await client.delete(url, finalConfig)
+    return res.data as T
+}

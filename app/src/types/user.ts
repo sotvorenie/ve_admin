@@ -19,3 +19,8 @@ export interface AppUserType extends User {
 export interface AppUsersResponse extends Meta {
     users: AppUserType[]
 }
+
+
+export interface UserAvatar {
+    newAvatarUrl: string
+}
