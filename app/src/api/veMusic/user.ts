@@ -1,7 +1,7 @@
 import {AppUsersResponse, AppUserType, UserAvatar} from "@/types/user.ts";
 import {SuccessResponse} from "@/types/success.ts";
 
-import {apiDelete, apiGet, apiPatch, apiPost} from "@api/index.ts";
+import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
 export const apiGetAllUsers = async (page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<AppUsersResponse> => {
     return apiGet(`/user/all?page=${page}&limit=${limit}`, undefined, signal)

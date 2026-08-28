@@ -4,7 +4,7 @@ import {useRoute} from "vue-router";
 
 import {AppUserType} from "@/types/user.ts";
 
-import {apiGetUser} from "@api/user/veMusic.ts";
+import {apiGetUser} from "@api/veMusic/user.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
