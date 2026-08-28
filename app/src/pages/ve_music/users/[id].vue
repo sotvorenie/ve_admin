@@ -6,6 +6,7 @@ import {AppUserType} from "@/types/user.ts";
 
 import {getUser} from "@api/users/veMusic.ts";
 
+import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
 
 import LabelUi from "@ui/LabelUi.vue";
@@ -19,6 +20,8 @@ import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 import usePageStore from "@store/usePageStore.ts";
 const pageStore = usePageStore();
+
+const signal = useSignal()
 
 const route = useRoute()
 const router = useRouter()
@@ -102,7 +105,7 @@ const getCurrentUser = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUserType = await getUser(+userId.value)
+    const response: AppUserType = await getUser(+userId.value, signal)
 
     if (response) {
       veMusicStore.currentUser = response
@@ -112,7 +115,7 @@ const getCurrentUser = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',
-        `Не удалось загрузить данные пользователя.. Ошибка: ${err.detail}`
+        `Не удалось загрузить данные пользователя.. Ошибка: ${err.message}`
     )
   } finally {
     isLoading.value = false

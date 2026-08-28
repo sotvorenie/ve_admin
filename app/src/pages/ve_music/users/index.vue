@@ -6,6 +6,7 @@ import {AppUsersResponse} from "@/types/user.ts";
 
 import {getAllUsers} from "@api/users/veMusic.ts";
 
+import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
@@ -13,6 +14,8 @@ import Pagination from "@common/Pagination.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
+
+const signal = useSignal()
 
 const headItems: ListHeadType[] = [
   {
@@ -54,7 +57,7 @@ const getUsers = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponse = await getAllUsers(page.value, 30)
+    const response: AppUsersResponse = await getAllUsers(page.value, 30, signal)
 
     if (response) {
       page.value = response.page
@@ -69,7 +72,7 @@ const getUsers = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список пользователей... Ошибка: ${err.detail}`
+        `Не удалось загрузить список пользователей... Ошибка: ${err.message}`
     )
   } finally {
     isLoading.value = false

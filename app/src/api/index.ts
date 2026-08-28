@@ -18,6 +18,10 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
     response => response,
     async error => {
+        if (axios.isCancel(error) || error.code === 'ERR_CANCELED') {
+            return { data: null, error: 'canceled' as const }
+        }
+
         if (error.response?.status === 401) {
             logout()
         }
