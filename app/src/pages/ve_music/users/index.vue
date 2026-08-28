@@ -2,7 +2,7 @@
 import {onBeforeMount, ref} from "vue";
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
-import {AppUsersResponse} from "@/types/user.ts";
+import {AppUsersResponseType} from "@/types/user.ts";
 
 import {apiGetAllUsers} from "@api/veMusic/user.ts";
 
@@ -55,7 +55,7 @@ const getUsers = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponse = await apiGetAllUsers(page.value, 30, signal)
+    const response: AppUsersResponseType = await apiGetAllUsers(page.value, 30, signal)
 
     if (response) {
       page.value = response.page

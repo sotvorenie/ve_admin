@@ -1,16 +1,16 @@
-import {Meta} from "@/types/meta.ts";
+import {BasePaginationType} from "@/types/basePagination.ts";
 
-export interface Artist {
+export interface ArtistType {
     id: number
     name: string
     avatarUrl: string | null
 }
 
-export interface ArtistsList extends Meta {
-    artists: Artist[]
+export interface ArtistsListType extends BasePaginationType {
+    artists: ArtistType[]
 }
 
-export interface CreatedArtist {
+export interface CreatedArtistType {
     id: number
     name: string
 }

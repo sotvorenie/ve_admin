@@ -1,18 +1,18 @@
-import {Genre} from "@/types/genre.ts";
-import {Artist} from "@/types/artist.ts";
-import {Meta} from "@/types/meta.ts";
+import {GenreType} from "@/types/genre.ts";
+import {ArtistType} from "@/types/artist.ts";
+import {BasePaginationType} from "@/types/basePagination.ts";
 
-export interface MusicForList {
+export interface MusicForListType {
     id: number
     name: string
     duration: number
     previewUrl: string | null
 
-    genre: Genre
-    artists: Artist[]
+    genre: GenreType
+    artists: ArtistType[]
 }
 
-export interface Music {
+export interface MusicType {
     id: number
     name: string
     duration: number
@@ -23,9 +23,9 @@ export interface Music {
     videoClipUrl: string | null
     isLiked: boolean
 
-    artists: Artist[]
+    artists: ArtistType[]
 }
 
-export interface MusicList extends Meta{
-    music: MusicForList[]
+export interface MusicListType extends BasePaginationType {
+    music: MusicForListType[]
 }

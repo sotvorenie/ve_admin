@@ -1,3 +1,3 @@
-export interface AvatarUrl {
+export interface AvatarUrlType {
     newAvatarUrl: string
 }

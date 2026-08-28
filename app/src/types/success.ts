@@ -1,3 +1,3 @@
-export interface SuccessResponse {
+export interface SuccessResponseType {
     success: boolean
 }
