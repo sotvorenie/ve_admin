@@ -38,6 +38,7 @@
   @include flex-center();
 
   overflow: hidden;
+  background: var(--color-dark-alt);
 
   img, video, iframe {
     width: 100%;
@@ -81,5 +82,13 @@
     width: 80%;
     height: auto;
     max-height: 80%;
+  }
+}
+
+.button-width-full-svg {
+
+  svg {
+    width: 100%;
+    height: auto;
   }
 }

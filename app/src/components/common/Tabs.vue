@@ -7,7 +7,7 @@ defineProps<{
   items: TabType[]
 }>()
 
-const activeTab = defineModel<TabType>({
+const activeTab = defineModel<TabType | null>({
   required: true,
 })
 
@@ -15,7 +15,7 @@ const router = useRouter()
 
 const handleTab = (tab: TabType) => {
   activeTab.value = tab
-  router.push(activeTab.value.url)
+  router.push(tab.url)
 }
 </script>
 

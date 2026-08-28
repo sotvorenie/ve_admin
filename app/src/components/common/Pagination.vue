@@ -54,7 +54,7 @@ const handlePage = (page: number) => {
 
 <template>
 
-  <div v-if="maxPage > 1" class="pagination flex-center gap-20 mt-24">
+  <div v-if="maxPage > 1" class="pagination flex-center gap-20 mt-24 user-select-none">
     <button :class="['pagination__prev', btnClass]"
             :disabled="activePage === 1"
             type="button"

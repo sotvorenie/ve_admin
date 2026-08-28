@@ -1,0 +1,10 @@
+@use '../helpers' as *;
+
+.input {
+
+  &__btn {
+    @include square(30);
+
+    right: rem(5);
+  }
+}

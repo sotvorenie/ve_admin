@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppAside from "@layouts/AppAside.vue";
+import AppHeader from "@layouts/AppHeader.vue";
 </script>
 
 <template>
@@ -7,9 +8,13 @@ import AppAside from "@layouts/AppAside.vue";
   <div class="row h-screen overflow-hidden">
     <AppAside class="col-2"/>
 
-    <main class="col-10 py-20 px-40 overflow-x-hidden overflow-y-auto position-relative">
-      <router-view/>
-    </main>
+    <div class="flex flex-column gap-30 py-20 px-40 w-100 col-10 overflow-x-hidden">
+      <AppHeader/>
+
+      <main class="overflow-x-hidden overflow-y-auto position-relative">
+        <router-view/>
+      </main>
+    </div>
   </div>
 
 </template>

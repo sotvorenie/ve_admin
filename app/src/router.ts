@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/auth',
         name: 'auth',
-        component: auth
+        component: auth,
     },
     {
         path: '/',
@@ -21,29 +21,44 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: '',
                 name: 'main',
-                component: index
+                component: index,
+                meta: {
+                    title: 'Главная',
+                },
             },
             {
                 path: '/user',
                 name: 'user',
-                component: user
+                component: user,
+                meta: {
+                    title: 'Пользователь',
+                },
             },
             {
                 path: '/ve_music',
                 name: 've_music',
                 component: veMusic,
+                meta: {
+                    title: 'veMusic',
+                },
                 children: [
                     {
                         path: 'users',
                         name: 've_music_users',
-                        component: veMusicUsers
+                        component: veMusicUsers,
+                        meta: {
+                            title: 'Пользователи veMusic',
+                        },
                     },
                 ]
             },
             {
                 path: '/ve_music/users/:id',
                 name: 've_music_user',
-                component: veMusicUser
+                component: veMusicUser,
+                meta: {
+                    title: 'Главная',
+                },
             },
         ]
     },

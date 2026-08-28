@@ -1,0 +1,38 @@
+@use '../helpers' as *;
+
+.img-upload {
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    opacity: 0;
+    transition: opacity var(--transition-duration);
+  }
+
+  @include hover {
+
+    &::after {
+      opacity: 1;
+    }
+
+    .img-upload__icon, .img-upload__delete {
+      opacity: 1;
+    }
+  }
+
+  &__icon {
+    @include square(80);
+
+    opacity: 0;
+  }
+
+  &__delete {
+    @include square(40);
+
+    top: rem(10);
+    right: rem(10);
+    opacity: 0;
+  }
+}

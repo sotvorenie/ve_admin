@@ -51,8 +51,8 @@ const handleLogout = async () => {
       <form novalidate class="user__form flex flex-column gap-20">
         <p class="h4 text-w600">Данные пользователя</p>
 
-        <LabelUi for-id="name" text="Имя:">
-          <InputUi v-model="userName" id="name"/>
+        <LabelUi text="Имя:">
+          <InputUi v-model="userName"/>
         </LabelUi>
 
         <div class="flex flex-column gap-10 mt-auto">

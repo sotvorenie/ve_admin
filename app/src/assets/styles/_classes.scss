@@ -142,7 +142,6 @@ $spaces: (
 .flex { display: flex; }
 .flex-column { flex-direction: column !important; }
 .flex-row { flex-direction: row !important; }
-.flex-between {justify-content: space-between !important;}
 .flex-around {justify-content: space-around !important;}
 .flex-wrap {flex-wrap: wrap !important;}
 .align-center {align-items: center !important;}
@@ -151,6 +150,7 @@ $spaces: (
 .justify-start {justify-content: start !important;}
 .justify-center {justify-content: center !important;}
 .justify-end {justify-content: end !important;}
+.justify-between {justify-content: space-between !important;}
 .flex-center {display: flex !important;justify-content: center !important;align-items: center !important;}
 .flex-1 { flex: 1 1 0 !important; }
 .flex-shrink-0  { flex-shrink: 0 !important; }

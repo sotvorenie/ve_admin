@@ -1,9 +1,11 @@
 import axios from 'axios'
 
+import {BASE_URL} from "@api/url.ts";
+
 import {logout} from "../utils/auth.ts";
 
 const client = axios.create({
-    baseURL: 'http://localhost:81',
+    baseURL: `${BASE_URL}/api`,
     timeout: 10000,
 })
 

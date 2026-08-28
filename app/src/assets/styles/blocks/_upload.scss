@@ -1,0 +1,8 @@
+@use '../helpers' as *;
+
+.upload {
+
+  &__btn {
+    @include square(30);
+  }
+}

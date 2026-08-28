@@ -1,3 +1,5 @@
+import {Meta} from "@/types/meta.ts";
+
 export interface User {
     id: number
     name: string
@@ -7,4 +9,13 @@ export interface User {
 export interface UserWithToken {
     user: User,
     token: string
+}
+
+export interface AppUserType extends User {
+    password: string
+    login: string
+}
+
+export interface AppUsersResponse extends Meta {
+    users: AppUserType[]
 }

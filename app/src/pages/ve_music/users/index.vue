@@ -1,72 +1,93 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
+import {AppUsersResponse} from "@/types/user.ts";
+
+import {getAllUsers} from "@api/users/veMusic.ts";
+
+import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
 import Pagination from "@common/Pagination.vue";
 
+import useVeMusicStore from "@store/useVeMusicStore.ts";
+const veMusicStore = useVeMusicStore();
+
 const headItems: ListHeadType[] = [
   {
     label: 'id',
+    key: 'id',
     type: 'text',
   },
   {
     label: 'Аватар',
+    key: 'avatarUrl',
     type: 'avatar',
   },
   {
     label: 'Имя',
+    key: 'name',
     type: 'text',
   },
   {
     label: 'Логин',
-    type: 'text',
-  },
-  {
-    label: 'Пароль',
+    key: 'login',
     type: 'text',
   },
 ]
 
-const users: ListItemType[] = [
-  {
-    url: `/ve_music/users/${1}`,
-    items: ['1', '/diane.jpg', 'Витос', '1111', '1111'],
-  },
-  {
-    url: `/ve_music/users/${1}`,
-    items: ['1', '/diane.jpg', 'Витос', '1111', '1111'],
-  },
-  {
-    url: `/ve_music/users/${1}`,
-    items: ['1', '/diane.jpg', 'Витос', '1111', '1111'],
-  },
-  {
-    url: `/ve_music/users/${1}`,
-    items: ['1', '/diane.jpg', 'Витос', '1111', '1111'],
-  },
-  {
-    url: `/ve_music/users/${1}`,
-    items: ['1', '/diane.jpg', 'Витос', '1111', '1111'],
-  },
-  {
-    url: `/ve_music/users/${1}`,
-    items: ['1', '/diane.jpg', 'Витос', '1111', '1111'],
-  },
-]
+const users = ref<ListItemType[]>([])
 
-const colsStyle = '4rem 8rem 1fr 1fr 1fr'
+const colsStyle = '4rem 10rem 1fr 1fr'
 
-const activePage = ref(1)
+const page = ref(1)
+const total = ref(0)
 
-const total = ref(100)
+const isLoading = ref(true)
+
+const setToStore = (user: any) => {
+  veMusicStore.currentUser = user
+}
+
+const getUsers = async () => {
+  isLoading.value = true
+
+  try {
+    const response: AppUsersResponse = await getAllUsers(page.value, 30)
+
+    if (response) {
+      page.value = response.page
+      total.value = response.total
+      users.value = response.users.map(user => ({
+        url: `/ve_music/users/${user.id}`,
+        info: {
+          ...user
+        }
+      }))
+    }
+  } catch (err: any) {
+    await showError(
+        'Ошибка загрузки данных',
+        `Не удалось загрузить список пользователей... Ошибка: ${err.detail}`
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onBeforeMount(() => getUsers())
 </script>
 
 <template>
 
-  <List :items="users" :head-items="headItems" :cols-style="colsStyle"/>
+  <List :items="users"
+        :head-items="headItems"
+        :cols-style="colsStyle"
+        :store-func="setToStore"
+        :is-loading="isLoading"
+  />
 
-  <Pagination v-model="activePage" :total="total"/>
+  <Pagination v-model="page" :total="total"/>
 
 </template>

@@ -18,5 +18,3 @@
   animation: loading 1s infinite linear;
 }
 </style>
-<script setup lang="ts">
-</script>

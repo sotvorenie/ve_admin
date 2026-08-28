@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import {computed} from "vue";
+import {useRouter} from "vue-router";
 import { Fancybox } from "@fancyapps/ui"
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
 
-const props = defineProps<{
-  headItems: ListHeadType[]
-  items: ListItemType[]
-  colsStyle?: string
-}>()
+const props = withDefaults(
+    defineProps<{
+      headItems: ListHeadType[]
+      items: ListItemType[]
+      isLoading: boolean
+      storeFunc?: Function
+      colsStyle?: string
+    }>(), {
+      isLoading: true
+    }
+)
+
+const router = useRouter()
 
 const openFancybox = (src: string) => {
   Fancybox.show([
@@ -21,6 +30,12 @@ const openFancybox = (src: string) => {
 
 const colsClass = computed(() => props.colsStyle ? 'd-grid' : `grid-cols-${props.headItems.length}`)
 const colsStyles = computed(() => props.colsStyle && `grid-template-columns: ${props.colsStyle}`)
+
+const handleItem = (row: ListItemType) => {
+  if (props.storeFunc) props.storeFunc(row.info)
+
+  router.push(row.url)
+}
 </script>
 
 <template>
@@ -38,35 +53,44 @@ const colsStyles = computed(() => props.colsStyle && `grid-template-columns: ${p
       </li>
     </ul>
 
-    <ul class="flex flex-column">
-      <li v-for="(row, rowIndex) in items"
-          :key="rowIndex"
+    <ul v-if="items?.length" class="flex flex-column">
+      <li v-for="row in items"
+          :key="row.info.id"
           class="cursor-pointer"
       >
         <div
+            v-if="row?.info"
             class="border-b border-light text-center hover:bg-dark-alt"
             :class="colsClass"
             :style="colsStyles"
-            @click="$router.push(row.url)"
+            @click="handleItem(row)"
         >
-          <div v-for="(item, index) in row.items"
-               :key="index"
+          <div v-for="item in headItems"
+               :key="item.key"
                class="flex-center first:border-l border-r p-8"
           >
-            <span v-if="headItems[index]?.type === 'text'">{{item}}</span>
+            <span v-if="item.type === 'text'" class="text-ellipsis">{{row.info?.[item.key]}}</span>
             <div v-else
                  class="img-container border border-transparent hover:border-accent transition-colors"
                  :class="[
-                    headItems[index]?.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
+                    item.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
                  ]"
-                 @click.stop="openFancybox(item)"
+                 @click.stop="openFancybox(row.info?.[item.key])"
             >
-              <img :src="item" alt="фото">
+              <img :src="row.info?.[item.key]" alt="фото">
             </div>
           </div>
         </div>
       </li>
     </ul>
+
+    <div v-else-if="!isLoading"
+         class="flex-center text-center p-50 border-l border-r border-b text-w500"
+    >
+      Данных нет..
+    </div>
+
+    <div v-else></div>
   </div>
 
 </template>
