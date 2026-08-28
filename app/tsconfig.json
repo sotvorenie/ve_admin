@@ -30,7 +30,7 @@
       "@data/*": ["src/data/*"],
       "@store/*": ["src/store/*"],
       "@utils/*": ["src/utils/*"],
-      "@components/*": ["src/components/block/*"],
+      "@components/*": ["src/components/blocks/*"],
       "@common/*": ["src/components/common/*"],
       "@ui/*": ["src/components/ui/*"],
       "@pages/*": ["src/pages/*"],

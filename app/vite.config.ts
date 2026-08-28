@@ -23,7 +23,7 @@ export default defineConfig(async () => ({
             '@data': fileURLToPath(new URL('./src/data', import.meta.url)),
             '@store': fileURLToPath(new URL('./src/store', import.meta.url)),
             '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
-            '@components': fileURLToPath(new URL('./src/components/block', import.meta.url)),
+            '@components': fileURLToPath(new URL('./src/components/blocks', import.meta.url)),
             '@common': fileURLToPath(new URL('./src/components/common', import.meta.url)),
             '@ui': fileURLToPath(new URL('./src/components/ui', import.meta.url)),
             '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
