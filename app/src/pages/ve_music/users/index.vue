@@ -4,7 +4,7 @@ import {onBeforeMount, ref} from "vue";
 import {ListHeadType, ListItemType} from "@/types/list.ts";
 import {AppUsersResponse} from "@/types/user.ts";
 
-import {apiGetAllUsers} from "@api/users/veMusic.ts";
+import {apiGetAllUsers} from "@api/user/veMusic.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";

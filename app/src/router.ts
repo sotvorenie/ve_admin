@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
                 ]
             },
             {
-                path: '/ve_music/users/:id',
+                path: '/ve_music/user/:id',
                 name: 've_music_user',
                 component: veMusicUser,
                 meta: {
