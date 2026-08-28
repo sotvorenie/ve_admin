@@ -42,8 +42,6 @@ const headItems: ListHeadType[] = [
 
 const users = ref<ListItemType[]>([])
 
-const colsStyle = '4rem 10rem 1fr 1fr'
-
 const page = ref(1)
 const total = ref(0)
 
@@ -86,7 +84,7 @@ onBeforeMount(() => getUsers())
 
   <List :items="users"
         :head-items="headItems"
-        :cols-style="colsStyle"
+        cols-style="4rem 10rem 1fr 1fr"
         :store-func="setToStore"
         :is-loading="isLoading"
   />
