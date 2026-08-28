@@ -5,7 +5,7 @@ import EditIcon from "@icons/EditIcon.vue";
 import CrossIcon from "@icons/CrossIcon.vue";
 
 defineProps<{
-  imgUrl: string
+  imgUrl: string | undefined
 }>()
 
 const emits = defineEmits<{
