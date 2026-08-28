@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from "vue";
+import {computed, onBeforeMount, ref, watchEffect} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
-import {showConfirm} from "@utils/modals.ts";
+import {AppUserType} from "@/types/user.ts";
+
+import {getUser} from "@api/users/veMusic.ts";
+
+import {showConfirm, showError} from "@utils/modals.ts";
 
 import LabelUi from "@ui/LabelUi.vue";
 import InputUi from "@ui/InputUi.vue";
@@ -22,14 +26,45 @@ const router = useRouter()
 const userId = computed(() => route.params.id)
 
 const userName = ref<string>(veMusicStore.currentUser?.name ?? '')
+const userLogin = ref<string>(veMusicStore.currentUser?.login ?? '')
 const userPassword = ref<string>(veMusicStore.currentUser?.password ?? '')
 
-const handleRedactName = () => {
+const isLoading = ref<boolean>(true)
+
+const handleRedactName = async () => {
   if (veMusicStore.currentUser?.name === userName.value) return
+
+  const confirm = await showConfirm(
+      'Редактирование данных пользователя',
+      'Вы действительно хотите редактировать имя пользователя?'
+  )
+  if (confirm) {
+
+  }
 }
 
-const handleRedactPassword = () => {
+const handleRedactLogin = async () => {
+  if (veMusicStore.currentUser?.login === userLogin.value) return
+
+  const confirm = await showConfirm(
+      'Редактирование данных пользователя',
+      'Вы действительно хотите редактировать логин пользователя?'
+  )
+  if (confirm) {
+
+  }
+}
+
+const handleRedactPassword = async () => {
   if (veMusicStore.currentUser?.password === userPassword.value) return
+
+  const confirm = await showConfirm(
+      'Редактирование данных пользователя',
+      'Вы действительно хотите редактировать пароль пользователя?'
+  )
+  if (confirm) {
+
+  }
 }
 
 const handleRedactAvatar = (file: File) => {
@@ -63,7 +98,32 @@ const handleDeleteAvatar = async () => {
   }
 }
 
-onMounted(() => {
+const getCurrentUser = async () => {
+  isLoading.value = true
+
+  try {
+    const response: AppUserType = await getUser(+userId.value)
+
+    if (response) {
+      veMusicStore.currentUser = response
+      userName.value = veMusicStore.currentUser.name
+      userLogin.value = veMusicStore.currentUser.login
+    }
+  } catch (err: any) {
+    await showError(
+        'Ошибка получения данных',
+        `Не удалось загрузить данные пользователя.. Ошибка: ${err.detail}`
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onBeforeMount(() => {
+  getCurrentUser()
+})
+
+watchEffect(() => {
   pageStore.pageTitle = `Пользователь veMusic: (${veMusicStore.currentUser?.id}) "${veMusicStore.currentUser?.name}"`
 })
 </script>
@@ -79,16 +139,27 @@ onMounted(() => {
         />
       </div>
 
-      <form novalidate class="user__form flex flex-column gap-20">
-        <p class="h4 text-w600">Данные пользователя</p>
-
+      <form novalidate class="user__form flex flex-column gap-10">
         <LabelUi text="Имя:">
           <InputUi v-model="userName"
                    minlength="4"
+                   :disabled="isLoading"
                    :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactName,
+                      func: () => handleRedactName(),
                       visible: veMusicStore.currentUser?.name !== userName
+                   }"
+          />
+        </LabelUi>
+
+        <LabelUi text="Логин:">
+          <InputUi v-model="userLogin"
+                   minlength="4"
+                   :disabled="isLoading"
+                   :action-btn="{
+                      icon: EditIcon,
+                      func: () => handleRedactLogin(),
+                      visible: veMusicStore.currentUser?.login !== userLogin
                    }"
           />
         </LabelUi>
@@ -96,19 +167,24 @@ onMounted(() => {
         <LabelUi text="Пароль:">
           <InputUi v-model="userPassword"
                    minlength="4"
+                   :disabled="isLoading"
                    :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactPassword,
+                      func: () => handleRedactPassword(),
                       visible: !!userPassword?.length
                    }"
           />
         </LabelUi>
 
         <div class="flex flex-column gap-10 mt-auto">
-          <ButtonUi @click="handleDelete">
+          <ButtonUi :disabled="isLoading"
+                    @click="handleDelete"
+          >
             Удалить пользователя
           </ButtonUi>
-          <ButtonUi @click="handleCancel">
+          <ButtonUi :disabled="isLoading"
+                    @click="handleCancel"
+          >
             Отмена
           </ButtonUi>
         </div>

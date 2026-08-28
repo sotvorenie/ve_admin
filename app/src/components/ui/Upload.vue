@@ -3,10 +3,12 @@ import {ref} from "vue";
 
 const props = withDefaults(
     defineProps<{
+      disabled: boolean
       accept?: string
       multiple?: boolean
       showFiles?: boolean
     }>(), {
+      disabled: true,
       multiple: false,
       showFiles: false,
     }
@@ -39,7 +41,7 @@ const isValidType = (file: File): boolean => {
 }
 
 const handleFiles = (fileList: FileList | null) => {
-  if (!fileList) return
+  if (!fileList || props.disabled) return
 
   const newFiles = Array.from(fileList).filter(isValidType)
   if (!newFiles.length) return
@@ -52,16 +54,22 @@ const handleFiles = (fileList: FileList | null) => {
 }
 
 const onDrop = (e: DragEvent) => {
+  if (props.disabled) return
+
   isDragging.value = false
   if (e.dataTransfer?.files) handleFiles(e.dataTransfer.files)
 }
 
 const onChange = (e: Event) => {
+  if (props.disabled) return
+
   const target = e.target as HTMLInputElement
   if (target?.files) handleFiles(target.files)
 }
 
 const handleDelete = (index: number) => {
+  if (props.disabled) return
+
   files.value.splice(index, 1)
   emits('select', files.value)
 }
@@ -90,6 +98,7 @@ const formatSize = (bytes: number) => {
              class="visually-hidden"
              :multiple="multiple"
              :accept="accept"
+             :disabled="disabled"
              @change="onChange"
       >
       <slot/>

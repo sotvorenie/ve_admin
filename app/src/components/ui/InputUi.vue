@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 
-const props = defineProps<{
-  modelValue: string | number
-  actionBtn?: {icon: any, func: Function, visible: boolean}
-}>()
+const props = withDefaults(
+    defineProps<{
+      disabled: boolean
+      modelValue: string | number
+      actionBtn?: {icon: any, func: Function, visible: boolean}
+    }>(), {
+      disabled: true,
+    }
+)
 
 defineEmits<{
   'update:modelValue': [value: string | number]
@@ -13,7 +18,7 @@ defineEmits<{
 const inputRef = ref<HTMLInputElement | null>(null)
 
 const visibleActionBtn = computed(() => {
-  return props.actionBtn?.visible && inputRef.value?.checkValidity()
+  return props.actionBtn?.visible && inputRef.value?.checkValidity() && !props.disabled
 })
 </script>
 
@@ -27,6 +32,7 @@ const visibleActionBtn = computed(() => {
         :class="[
           actionBtn?.visible && 'pr-50',
         ]"
+        :disabled="disabled"
         ref="inputRef"
     />
 
