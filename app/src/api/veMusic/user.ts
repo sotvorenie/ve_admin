@@ -1,5 +1,6 @@
-import {AppUsersResponse, AppUserType, UserAvatar} from "@/types/user.ts";
+import {AppUsersResponse, AppUserType} from "@/types/user.ts";
 import {SuccessResponse} from "@/types/success.ts";
+import {AvatarUrl} from "@/types/avatar.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
@@ -27,7 +28,7 @@ export const apiDeleteUser = async (id: number, signal?: AbortSignal): Promise<S
     return apiDelete(`/user/delete/${id}`,undefined, signal)
 }
 
-export const apiUploadUserAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<UserAvatar> => {
+export const apiUploadUserAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<AvatarUrl> => {
     const formData = new FormData()
     formData.append('avatar', file)
 
