@@ -15,6 +15,10 @@ defineEmits<{
   'update:modelValue': [value: string | number]
 }>()
 
+defineOptions({
+  inheritAttrs: false
+})
+
 const inputRef = ref<HTMLInputElement | null>(null)
 
 const visibleActionBtn = computed(() => {
