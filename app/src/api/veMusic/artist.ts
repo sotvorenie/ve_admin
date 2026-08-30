@@ -1,7 +1,7 @@
 import {ArtistsListType, CreatedArtistType} from "@/types/artist.ts";
 import {MusicListType} from "@/types/music.ts";
 import {SuccessResponseType} from "@/types/success.ts";
-import {AvatarUrlType} from "@/types/avatar.ts";
+import {UrlType} from "@/types/url.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
@@ -25,7 +25,7 @@ export const apiRedactArtistName = async (id: number, name: string, signal?: Abo
     return apiPost(`/artist/redact_name/${id}`, {name}, signal)
 }
 
-export const apiUploadArtistAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<AvatarUrlType> => {
+export const apiUploadArtistAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
     const formData = new FormData()
     formData.append('avatar', file)
 
