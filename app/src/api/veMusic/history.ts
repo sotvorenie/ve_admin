@@ -7,6 +7,6 @@ export const apiGetUserHistoryMusic = async (userId: number, page: number = 1, l
     return apiGet(`/history/all_from_user/${userId}?page=${page}&limit=${limit}`, undefined, signal)
 }
 
-export const apiDeleteMusicFromUserHistory = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiDelete(`/history/delete/${id}`, undefined, signal)
+export const apiDeleteMusicFromUserHistory = async (musicId: number, userId: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
+    return apiDelete(`/history/delete/${musicId}?user_id=${userId}`, undefined, signal)
 }
