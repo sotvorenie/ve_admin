@@ -33,7 +33,7 @@ const handleCancel = () => {
 
 <template>
 
-  <div class="flex flex-column gap-10 mt-auto">
+  <div class="flex flex-column gap-10">
     <ButtonUi :disabled="isLoading"
               @click="handleDelete"
     >

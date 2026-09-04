@@ -3,9 +3,9 @@ import LoadingIcon from "@icons/LoadingIcon.vue";
 
 withDefaults(
     defineProps<{
-      type: string,
-      isLoading: boolean,
-      disabled: boolean,
+      type?: 'button' | 'submit' | 'reset',
+      isLoading?: boolean,
+      disabled?: boolean,
     }>(),
     {
       type: 'button',

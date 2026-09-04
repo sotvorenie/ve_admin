@@ -6,9 +6,7 @@ import ImgUpload from "@ui/ImgUpload.vue";
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
-defineProps<{
-  isLoading: boolean
-}>()
+const isLoading = defineModel<boolean>('isLoading', {default: true})
 
 const handleRedactAvatar = (file: File) => {
   console.log(file.name)
@@ -21,7 +19,7 @@ const handleDeleteAvatar = async () => {
   )
 
   if (confirm) {
-
+    isLoading.value = true
   }
 }
 

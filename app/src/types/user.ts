@@ -12,7 +12,6 @@ export interface UserWithTokenType {
 }
 
 export interface AppUserType extends UserType {
-    password: string
     login: string
 }
 

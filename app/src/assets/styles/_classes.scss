@@ -91,14 +91,14 @@ $colors: (
 }
 
 // --- размеры шрифтов ---
-$font-sizes: (10, 12, 14, 16, 18);
+$font-sizes: (10, 11, 12, 13, 14, 15, 16, 17, 18);
 @each $size in $font-sizes {
-  .fs-#{$size} { font-size: #{$size}px !important; }
+  .text-#{$size} { font-size: #{$size}px !important; }
 }
 @each $breakpoint, $value in $breakpoints {
   @media (min-width: $breakpoint) {
     @each $size in $font-sizes {
-      .fs-#{$size} { font-size: #{$size}px !important; }
+      .text-#{$size} { font-size: #{$size}px !important; }
     }
   }
 }

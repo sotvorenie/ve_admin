@@ -18,14 +18,22 @@ const veMusicStore = useVeMusicStore();
 import usePageStore from "@store/usePageStore.ts";
 const pageStore = usePageStore();
 
-const signal = useSignal()
+export interface VeMusicUserForm {
+  name: string
+  login: string
+  password: string
+}
 
+const signal = useSignal()
 const route = useRoute()
 
 const userId = computed(() => route.params.id)
 
-const userName = ref<string>(veMusicStore.currentUser?.name ?? '')
-const userLogin = ref<string>(veMusicStore.currentUser?.login ?? '')
+const form = ref<VeMusicUserForm>({
+  name: veMusicStore.currentUser?.name ?? '',
+  login: veMusicStore.currentUser?.login ?? '',
+  password: '',
+})
 
 const isLoading = ref<boolean>(true)
 
@@ -35,11 +43,7 @@ const getCurrentUser = async () => {
   try {
     const response: AppUserType = await apiGetUser(+userId.value, signal)
 
-    if (response) {
-      veMusicStore.currentUser = response
-      userName.value = veMusicStore.currentUser.name
-      userLogin.value = veMusicStore.currentUser.login
-    }
+    if (response) veMusicStore.currentUser = response
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',
@@ -55,6 +59,11 @@ onBeforeMount(() => getCurrentUser())
 watchEffect(() => {
   pageStore.pageTitle =
       `Пользователь veMusic: (${veMusicStore.currentUser?.id}) "${veMusicStore.currentUser?.name}"`
+
+  if (veMusicStore.currentUser) {
+    form.value.name = veMusicStore.currentUser.name
+    form.value.login = veMusicStore.currentUser.login
+  }
 })
 </script>
 
@@ -64,13 +73,12 @@ watchEffect(() => {
     <div class="flex gap-20">
       <VeMusicUserAvatar :is-loading="isLoading"/>
 
-      <div>
-        <VeMusicUserInfo :user-name="userName"
-                         :user-login="userLogin"
-                         :is-loading="isLoading"
+      <div class="flex flex-column justify-between">
+        <VeMusicUserInfo v-model:is-loading="isLoading"
+                         v-model:form="form"
         />
 
-        <VeMusicUserActions :is-loading="isLoading"/>
+        <VeMusicUserActions v-model:is-loading="isLoading"/>
       </div>
     </div>
   </div>
