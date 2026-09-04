@@ -2,9 +2,9 @@
 import {onBeforeMount, ref} from "vue";
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
-import {AppUsersResponseType} from "@/types/user.ts";
+import {MusicListType} from "@/types/music.ts";
 
-import {apiGetAllUsers} from "@api/veMusic/user.ts";
+import {apiGetAllMusic} from "@api/veMusic/music.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {formatDuration} from "@composables/useFormstDuration.ts";
@@ -61,7 +61,7 @@ const headItems: ListHeadType[] = [
   },
 ]
 
-const users = ref<ListItemType[]>([])
+const music = ref<ListItemType[]>([])
 
 const page = ref(1)
 const total = ref(0)
@@ -76,15 +76,15 @@ const getUsers = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponseType = await apiGetAllUsers(page.value, 30, signal)
+    const response: MusicListType = await apiGetAllMusic('', -1, -1, page.value, 30, signal)
 
     if (response) {
       page.value = response.page
       total.value = response.total
-      users.value = response.users.map(user => ({
-        url: `/ve_music/users/${user.id}`,
+      music.value = response.music.map(m => ({
+        url: `/ve_music/music/${m.id}`,
         info: {
-          ...user
+          ...m
         }
       }))
     }
@@ -103,7 +103,7 @@ onBeforeMount(() => getUsers())
 
 <template>
 
-  <List :items="users"
+  <List :items="music"
         :head-items="headItems"
         cols-style="4rem 9rem 9rem 1fr 10rem 6rem 1fr"
         :store-func="setToStore"

@@ -3,8 +3,15 @@ import {SuccessResponseType} from "@/types/success.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
-export const apiGetAllMusic = async (name: string = '', genreId: number = -1, page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<MusicListType> => {
-    return apiGet(`/music/list?page=${page}&limit=${limit}&name=${name}&genre_id=${genreId}&is_admin=true`, undefined, signal)
+export const apiGetAllMusic = async (
+    name: string = '',
+    genreId: number = -1,
+    artistId: number = -1,
+    page: number = 1,
+    limit: number = 30,
+    signal?: AbortSignal
+): Promise<MusicListType> => {
+    return apiGet(`/music/list?page=${page}&limit=${limit}&name=${name}&genre_id=${genreId}&artist_id=${artistId}&is_admin=true`, undefined, signal)
 }
 
 export const apiRedactMusic = async (id: number, title: string, genreId: number, artists: number[], signal?: AbortSignal): Promise<SuccessResponseType> => {
