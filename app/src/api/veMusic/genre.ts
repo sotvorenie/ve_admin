@@ -4,8 +4,8 @@ import {SuccessResponseType} from "@/types/success.ts";
 
 import {apiDelete, apiGet, apiPost} from "@/api";
 
-export const apiGetAllGenres = async (page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<GenresListType> => {
-    return apiGet(`/genre/all?page=${page}&limit=${limit}`, undefined, signal)
+export const apiGetAllGenres = async (signal?: AbortSignal): Promise<GenresListType> => {
+    return apiGet(`/genre/all?is_admin=true`, undefined, signal)
 }
 
 export const apiGetAllGenreMusic = async (id: number, page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<MusicListType> => {

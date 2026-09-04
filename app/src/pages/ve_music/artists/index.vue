@@ -7,7 +7,6 @@ import {AppUsersResponseType} from "@/types/user.ts";
 import {apiGetAllUsers} from "@api/veMusic/user.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
-import {formatDuration} from "@composables/useFormstDuration.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
@@ -35,29 +34,14 @@ const headItems: ListHeadType[] = [
     type: 'date',
   },
   {
-    label: 'Название',
+    label: 'Аватарка',
+    key: 'avatarUrl',
+    type: 'avatar',
+  },
+  {
+    label: 'Имя',
     key: 'name',
     type: 'text',
-  },
-  {
-    label: 'Обложка',
-    key: 'previewUrl',
-    type: 'preview',
-  },
-  {
-    label: 'Длительность',
-    key: 'duration',
-    type: 'text',
-    formatFunction: formatDuration
-  },
-  {
-    label: 'Исполнитель',
-    key: 'artistName',
-    type: 'text',
-    to: {
-      page: '/artists/',
-      id: 'artistId'
-    }
   },
 ]
 
@@ -105,7 +89,7 @@ onBeforeMount(() => getUsers())
 
   <List :items="users"
         :head-items="headItems"
-        cols-style="4rem 9rem 9rem 1fr 10rem 6rem 1fr"
+        cols-style="4rem 9rem 9rem 10rem 1fr"
         :store-func="setToStore"
         :is-loading="isLoading"
   />

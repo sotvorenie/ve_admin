@@ -191,6 +191,7 @@ $spaces: (
 .overflow-y-hidden { overflow-y: hidden !important; }
 .overflow-y-auto { overflow-y: auto !important; }
 .overflow-x-auto { overflow-x: auto !important; }
+.break-words {overflow-wrap: anywhere !important; word-break: normal !important;}
 
 // --- курсоры и взаимодействие ---
 .user-select-none { user-select: none !important; }

@@ -16,6 +16,16 @@ const tabsList: TabType[] = [
     label: 'Музыка',
     url: '/ve_music/music',
   },
+  {
+    key: 'genres',
+    label: 'Жанры',
+    url: '/ve_music/genres',
+  },
+  {
+    key: 'artists',
+    label: 'Исполнители',
+    url: '/ve_music/artists',
+  },
 ]
 
 const activeTab = ref<TabType | null>(null)

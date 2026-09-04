@@ -1,12 +1,20 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
+import AppLayout from "@layouts/AppLayout.vue";
+
 import auth from "@pages/auth.vue";
 import index from "@pages/index.vue";
 import user from "@pages/user.vue";
+
 import veMusic from "@pages/ve_music/index.vue";
 import veMusicUsers from "@pages/ve_music/users/index.vue";
 import veMusicUser from "@pages/ve_music/users/[id].vue";
-import AppLayout from "@layouts/AppLayout.vue";
+import veMusicMusic from "@pages/ve_music/music/index.vue";
+import veMusicMusicDetail from "@pages/ve_music/music/[id].vue";
+import veMusicArtists from "@pages/ve_music/artists/index.vue";
+import veMusicArtist from "@pages/ve_music/artists/[id].vue";
+import veMusicGenres from "@pages/ve_music/genres/index.vue";
+import veMusicGenre from "@pages/ve_music/genres/[id].vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -50,6 +58,30 @@ const routes: Array<RouteRecordRaw> = [
                             title: 'Пользователи veMusic',
                         },
                     },
+                    {
+                        path: 'music',
+                        name: 've_music_music',
+                        component: veMusicMusic,
+                        meta: {
+                            title: 'Аудио veMusic',
+                        },
+                    },
+                    {
+                        path: 'artists',
+                        name: 've_music_artists',
+                        component: veMusicArtists,
+                        meta: {
+                            title: 'Исполнители veMusic',
+                        },
+                    },
+                    {
+                        path: 'genres',
+                        name: 've_music_genres',
+                        component: veMusicGenres,
+                        meta: {
+                            title: 'Жанры veMusic',
+                        },
+                    },
                 ]
             },
             {
@@ -57,7 +89,31 @@ const routes: Array<RouteRecordRaw> = [
                 name: 've_music_user',
                 component: veMusicUser,
                 meta: {
-                    title: 'Главная',
+                    title: 'Пользователь VeMusic',
+                },
+            },
+            {
+                path: '/ve_music/music/:id',
+                name: 've_music_music_detail',
+                component: veMusicMusicDetail,
+                meta: {
+                    title: 'Аудио VeMusic',
+                },
+            },
+            {
+                path: '/ve_music/artists/:id',
+                name: 've_music_artist',
+                component: veMusicArtist,
+                meta: {
+                    title: 'Исполнитель VeMusic',
+                },
+            },
+            {
+                path: '/ve_music/genres/:id',
+                name: 've_music_genre',
+                component: veMusicGenre,
+                meta: {
+                    title: 'Жанр VeMusic',
                 },
             },
         ]

@@ -13,6 +13,8 @@ export interface UserWithTokenType {
 
 export interface AppUserType extends UserType {
     login: string
+    createdAt: string
+    updatedAt: string
 }
 
 export interface AppUsersResponseType extends BasePaginationType {

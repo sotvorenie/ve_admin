@@ -24,6 +24,16 @@ const headItems: ListHeadType[] = [
     type: 'text',
   },
   {
+    label: 'Дата создания',
+    key: 'createdAt',
+    type: 'date',
+  },
+  {
+    label: 'Дата обновления',
+    key: 'updatedAt',
+    type: 'date',
+  },
+  {
     label: 'Аватар',
     key: 'avatarUrl',
     type: 'avatar',
@@ -84,7 +94,7 @@ onBeforeMount(() => getUsers())
 
   <List :items="users"
         :head-items="headItems"
-        cols-style="4rem 10rem 1fr 1fr"
+        cols-style="4rem 8rem 8rem 10rem 1fr 1fr"
         :store-func="setToStore"
         :is-loading="isLoading"
   />

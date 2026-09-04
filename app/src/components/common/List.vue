@@ -4,6 +4,7 @@ import {useRouter} from "vue-router";
 import { Fancybox } from "@fancyapps/ui"
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
+import {formatDate} from "@composables/useFormatDate.ts";
 
 const props = withDefaults(
     defineProps<{
@@ -47,7 +48,7 @@ const handleItem = (row: ListItemType) => {
     >
       <li v-for="headItem in headItems"
           :key="headItem.label"
-          class="text-center first:border-l border-r p-10"
+          class="text-center flex-center first:border-l border-r p-5 break-words"
       >
         {{headItem.label}}
       </li>
@@ -67,18 +68,32 @@ const handleItem = (row: ListItemType) => {
         >
           <div v-for="item in headItems"
                :key="item.key"
-               class="flex-center first:border-l border-r p-8"
+               class="flex-center first:border-l border-r py-8 px-5"
           >
-            <span v-if="item.type === 'text'" class="text-ellipsis">{{row.info?.[item.key]}}</span>
-            <div v-else
-                 class="img-container border border-transparent hover:border-accent transition-colors"
-                 :class="[
+            <RouterLink v-if="item.to"
+                        :to="`${item.to.page}${row.info?.[item.to?.id ?? '']}`"
+                        class="text-ellipsis"
+            >
+              {{row.info?.[item.key]}}
+            </RouterLink>
+
+            <template v-else>
+              <span v-if="item.type === 'text'" class="text-ellipsis">
+                {{item?.formatFunction ? item.formatFunction(row.info?.[item.key]) : row.info?.[item.key]}}
+              </span>
+              <span v-else-if="item.type === 'date'">
+                {{formatDate(row.info?.[item.key])}}
+              </span>
+              <div v-else
+                   class="img-container border border-transparent hover:border-accent transition-colors"
+                   :class="[
                     item.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
                  ]"
-                 @click.stop="openFancybox(row.info?.[item.key])"
-            >
-              <img :src="row.info?.[item.key]" alt="фото">
-            </div>
+                   @click.stop="openFancybox(row.info?.[item.key])"
+              >
+                <img :src="row.info?.[item.key]" alt="фото">
+              </div>
+            </template>
           </div>
         </div>
       </li>

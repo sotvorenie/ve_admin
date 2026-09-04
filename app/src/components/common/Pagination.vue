@@ -6,7 +6,7 @@ import SelectArrowIcon from "@icons/SelectArrowIcon.vue";
 const props = withDefaults(
     defineProps<{
       total: number
-      limit: number
+      limit?: number
     }>(), {
       limit: 30
     }
