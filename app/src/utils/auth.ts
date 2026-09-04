@@ -1,8 +1,8 @@
-import useUserStore from "../store/useUserStore.ts";
-import {apiCheckMe} from "../api/auth/auth.ts";
-import {UserWithToken} from "../types/user.ts";
+import useUserStore from "@store/useUserStore.ts";
+import {apiCheckMe} from "@api/auth/auth.ts";
+import {UserWithTokenType} from "@/types/user.ts";
 
-export const login = (data: UserWithToken): void => {
+export const login = (data: UserWithTokenType): void => {
     const userStore = useUserStore();
 
     localStorage.setItem("token", data.token)
@@ -28,7 +28,7 @@ export const checkMe = async (): Promise<void> => {
     }
 
     try {
-        const data: UserWithToken = await apiCheckMe()
+        const data: UserWithTokenType = await apiCheckMe()
         login(data)
     } catch (err) {
         console.error(err)

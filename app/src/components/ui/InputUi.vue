@@ -3,7 +3,7 @@ import {computed, ref} from "vue";
 
 const props = withDefaults(
     defineProps<{
-      disabled: boolean
+      disabled?: boolean
       modelValue: string | number
       actionBtn?: {icon: any, func: Function, visible: boolean}
     }>(), {

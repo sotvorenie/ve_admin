@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.14",
+    "@formkit/auto-animate": "^0.10.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "^2.7.2",
     "@tauri-apps/plugin-opener": "^2",

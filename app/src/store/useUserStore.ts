@@ -1,10 +1,10 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import {User} from "@/types/user.ts";
+import {UserType} from "@/types/user.ts";
 
 const useUserStore = defineStore('userStore', () => {
     // данные о пользователе
-    const user = ref<User>({
+    const user = ref<UserType>({
         id: -1,
         name: 'Sotvorenie',
         avatarUrl: '/diane.jpg',

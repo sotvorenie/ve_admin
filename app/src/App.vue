@@ -1,11 +1,19 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import {onBeforeMount, ref} from "vue";
+import {useRouter} from "vue-router";
+
 import { checkMe } from "@utils/auth.ts";
 
-const visible = ref(false);
+import useUserStore from "@store/useUserStore.ts";
+const userStore = useUserStore();
 
-onMounted(async () => {
+const router = useRouter()
+
+const visible = ref(false)
+
+onBeforeMount(async () => {
   await checkMe()
+  if (!userStore.isLogged) await router.replace('/auth')
   visible.value = true
 })
 </script>
