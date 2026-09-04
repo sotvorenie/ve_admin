@@ -68,8 +68,8 @@ const total = ref(0)
 
 const isLoading = ref(true)
 
-const setToStore = (user: any) => {
-  veMusicStore.currentUser = user
+const setToStore = (music: any) => {
+  veMusicStore.currentMusic = music
 }
 
 const getUsers = async () => {
@@ -91,14 +91,20 @@ const getUsers = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список пользователей... Ошибка: ${err.message}`
+        `Не удалось загрузить список музыки... Ошибка: ${err.message}`
     )
   } finally {
     isLoading.value = false
   }
 }
 
-onBeforeMount(() => getUsers())
+onBeforeMount(() => {
+  getUsers()
+  veMusicStore.createBtnInfo = {
+    label: 'Добавить музыку',
+    to: '/ve_music/music/create',
+  }
+})
 </script>
 
 <template>

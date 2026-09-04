@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
+import {GenresListType} from "@/types/genre.ts";
 import {ListHeadType, ListItemType} from "@/types/list.ts";
-import {AppUsersResponseType} from "@/types/user.ts";
 
-import {apiGetAllUsers} from "@api/veMusic/user.ts";
+import {apiGetAllGenres} from "@api/veMusic/genre.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
-import Pagination from "@common/Pagination.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
@@ -40,55 +39,54 @@ const headItems: ListHeadType[] = [
   },
 ]
 
-const users = ref<ListItemType[]>([])
-
-const page = ref(1)
-const total = ref(0)
+const genres = ref<ListItemType[]>([])
 
 const isLoading = ref(true)
 
-const setToStore = (user: any) => {
-  veMusicStore.currentUser = user
+const setToStore = (genre: any) => {
+  veMusicStore.currentGenre = genre
 }
 
-const getUsers = async () => {
+const getGenres = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponseType = await apiGetAllUsers(page.value, 30, signal)
+    const response: GenresListType = await apiGetAllGenres(signal)
 
     if (response) {
-      page.value = response.page
-      total.value = response.total
-      users.value = response.users.map(user => ({
-        url: `/ve_music/users/${user.id}`,
+      genres.value = response.genres.map(genre => ({
+        url: `/ve_music/genres/${genre.id}`,
         info: {
-          ...user
+          ...genre
         }
       }))
     }
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список пользователей... Ошибка: ${err.message}`
+        `Не удалось загрузить список жанров... Ошибка: ${err.message}`
     )
   } finally {
     isLoading.value = false
   }
 }
 
-onBeforeMount(() => getUsers())
+onBeforeMount(() => {
+  getGenres()
+  veMusicStore.createBtnInfo = {
+    label: 'Добавить жанр',
+    to: '/ve_music/genres/create',
+  }
+})
 </script>
 
 <template>
 
-  <List :items="users"
+  <List :items="genres"
         :head-items="headItems"
         cols-style="4rem 9rem 9rem 1fr"
         :store-func="setToStore"
         :is-loading="isLoading"
   />
-
-  <Pagination v-model="page" :total="total"/>
 
 </template>

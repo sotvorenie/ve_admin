@@ -5,6 +5,11 @@ import {TabType} from "@/types/tab.ts";
 
 import Tabs from "@/components/common/Tabs.vue";
 
+import ButtonUi from "@ui/ButtonUi.vue";
+
+import useVeMusicStore from "@store/useVeMusicStore.ts";
+const veMusicStore = useVeMusicStore();
+
 const tabsList: TabType[] = [
   {
     key: 'users',
@@ -34,7 +39,15 @@ const activeTab = ref<TabType | null>(null)
 <template>
 
   <div class="ve-music">
-    <Tabs :items="tabsList" v-model="activeTab"/>
+    <div class="flex justify-between gap-20 pb-6">
+      <Tabs :items="tabsList" v-model="activeTab"/>
+
+      <RouterLink v-if="veMusicStore.createBtnInfo?.to"
+                  :to="veMusicStore.createBtnInfo.to"
+      >
+        <ButtonUi>{{veMusicStore.createBtnInfo.label}}</ButtonUi>
+      </RouterLink>
+    </div>
 
     <router-view/>
   </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, watch} from "vue";
+import {computed, watchEffect} from "vue";
 
 import {useRoute, useRouter} from "vue-router";
 
@@ -19,12 +19,7 @@ const handleBack = () => {
   router.back()
 }
 
-watch(
-    () => route.meta.title,
-    (title) => {
-      pageStore.pageTitle = title
-    }
-)
+watchEffect(() => pageStore.pageTitle = route.meta.title as string)
 </script>
 
 <template>

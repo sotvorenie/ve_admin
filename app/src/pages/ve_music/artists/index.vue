@@ -2,9 +2,9 @@
 import {onBeforeMount, ref} from "vue";
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
-import {AppUsersResponseType} from "@/types/user.ts";
+import {ArtistsListType} from "@/types/artist.ts";
 
-import {apiGetAllUsers} from "@api/veMusic/user.ts";
+import {apiGetAllArtists} from "@api/veMusic/artist.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -45,49 +45,55 @@ const headItems: ListHeadType[] = [
   },
 ]
 
-const users = ref<ListItemType[]>([])
+const artists = ref<ListItemType[]>([])
 
 const page = ref(1)
 const total = ref(0)
 
 const isLoading = ref(true)
 
-const setToStore = (user: any) => {
-  veMusicStore.currentUser = user
+const setToStore = (artist: any) => {
+  veMusicStore.currentArtist = artist
 }
 
-const getUsers = async () => {
+const getArtists = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponseType = await apiGetAllUsers(page.value, 30, signal)
+    const response: ArtistsListType = await apiGetAllArtists(page.value, 30, signal)
 
     if (response) {
       page.value = response.page
       total.value = response.total
-      users.value = response.users.map(user => ({
-        url: `/ve_music/users/${user.id}`,
+      artists.value = response.artists.map(artist => ({
+        url: `/ve_music/artists/${artist.id}`,
         info: {
-          ...user
+          ...artist
         }
       }))
     }
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список пользователей... Ошибка: ${err.message}`
+        `Не удалось загрузить список исполнителей... Ошибка: ${err.message}`
     )
   } finally {
     isLoading.value = false
   }
 }
 
-onBeforeMount(() => getUsers())
+onBeforeMount(() => {
+  getArtists()
+  veMusicStore.createBtnInfo = {
+    label: 'Добавить исполнителя',
+    to: '/ve_music/artists/create',
+  }
+})
 </script>
 
 <template>
 
-  <List :items="users"
+  <List :items="artists"
         :head-items="headItems"
         cols-style="4rem 9rem 9rem 10rem 1fr"
         :store-func="setToStore"

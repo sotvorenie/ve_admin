@@ -11,10 +11,13 @@ import veMusicUsers from "@pages/ve_music/users/index.vue";
 import veMusicUser from "@pages/ve_music/users/[id].vue";
 import veMusicMusic from "@pages/ve_music/music/index.vue";
 import veMusicMusicDetail from "@pages/ve_music/music/[id].vue";
+import veMusicMusicCreate from "@pages/ve_music/music/create.vue";
 import veMusicArtists from "@pages/ve_music/artists/index.vue";
 import veMusicArtist from "@pages/ve_music/artists/[id].vue";
+import veMusicArtistCreate from "@pages/ve_music/artists/create.vue";
 import veMusicGenres from "@pages/ve_music/genres/index.vue";
 import veMusicGenre from "@pages/ve_music/genres/[id].vue";
+import veMusicGenreCreate from "@pages/ve_music/genres/create.vue";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -101,6 +104,14 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
+                path: '/ve_music/music/create',
+                name: 've_music_music_create',
+                component: veMusicMusicCreate,
+                meta: {
+                    title: 'Новая музыка для VeMusic',
+                },
+            },
+            {
                 path: '/ve_music/artists/:id',
                 name: 've_music_artist',
                 component: veMusicArtist,
@@ -109,11 +120,27 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
+                path: '/ve_music/artists/create',
+                name: 've_music_artist_create',
+                component: veMusicArtistCreate,
+                meta: {
+                    title: 'Новый исполнитель для VeMusic',
+                },
+            },
+            {
                 path: '/ve_music/genres/:id',
                 name: 've_music_genre',
                 component: veMusicGenre,
                 meta: {
                     title: 'Жанр VeMusic',
+                },
+            },
+            {
+                path: '/ve_music/genres/create',
+                name: 've_music_genre_create',
+                component: veMusicGenreCreate,
+                meta: {
+                    title: 'Новый жанр для VeMusic',
                 },
             },
         ]

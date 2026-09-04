@@ -87,7 +87,13 @@ const getUsers = async () => {
   }
 }
 
-onBeforeMount(() => getUsers())
+onBeforeMount(() => {
+  getUsers()
+  veMusicStore.createBtnInfo = {
+    label: '',
+    to: '',
+  }
+})
 </script>
 
 <template>
