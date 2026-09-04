@@ -1,4 +1,4 @@
-import {MusicListType} from "@/types/music.ts";
+import {MusicForListType, MusicListType} from "@/types/music.ts";
 import {SuccessResponseType} from "@/types/success.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
@@ -12,6 +12,10 @@ export const apiGetAllMusic = async (
     signal?: AbortSignal
 ): Promise<MusicListType> => {
     return apiGet(`/music/list?page=${page}&limit=${limit}&name=${name}&genre_id=${genreId}&artist_id=${artistId}&is_admin=true`, undefined, signal)
+}
+
+export const apiGetMusic = async (id: number, signal?: AbortSignal): Promise<MusicForListType> => {
+    return apiGet(`/music/${id}`, undefined, signal)
 }
 
 export const apiRedactMusic = async (id: number, title: string, genreId: number, artists: number[], signal?: AbortSignal): Promise<SuccessResponseType> => {
