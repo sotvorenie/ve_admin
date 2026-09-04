@@ -44,7 +44,7 @@ const visibleActionBtn = computed(() => {
       <button v-if="actionBtn && visibleActionBtn"
               class="input__btn button-width-full-svg absolute-y-center rounded-full flex-center"
               type="button"
-              @click="actionBtn.func"
+              @click="actionBtn.func()"
       >
         <Component v-if="actionBtn?.icon" :is="actionBtn.icon"/>
       </button>
