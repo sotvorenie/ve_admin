@@ -23,23 +23,23 @@ export const apiRedactMusic = async (id: number, title: string, genreId: number,
         title,
         genre_id: genreId,
         artists,
-    }, signal)
+    }, undefined, signal)
 }
 
 export const apiRedactAudioUrlForMusic = async (id: number, audioUrl: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/music/redact_audio_url/${id}`, {url: audioUrl}, signal)
+    return apiPost(`/music/redact_audio_url/${id}`, {url: audioUrl}, undefined, signal)
 }
 
 export const apiRedactPreviewUrlForMusic = async (id: number, audioUrl: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/music/redact_preview_url/${id}`, {url: audioUrl}, signal)
+    return apiPost(`/music/redact_preview_url/${id}`, {url: audioUrl}, undefined, signal)
 }
 
 export const apiRedactVideoUrlForMusic = async (id: number, audioUrl: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/music/redact_video_url/${id}`, {url: audioUrl}, signal)
+    return apiPost(`/music/redact_video_url/${id}`, {url: audioUrl}, undefined, signal)
 }
 
 export const apiRedactAuditionsForMusic = async (id: number, auditionsCount: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/music/redact_auditions/${id}`, {auditions_count: auditionsCount}, signal)
+    return apiPatch(`/music/redact_auditions/${id}`, {auditions_count: auditionsCount}, undefined, signal)
 }
 
 export const apiDeleteMusic = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
@@ -47,9 +47,9 @@ export const apiDeleteMusic = async (id: number, signal?: AbortSignal): Promise<
 }
 
 export const apiDeleteMusicPreview = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/music/delete_preview/${id}`, undefined, signal)
+    return apiPatch(`/music/delete_preview/${id}`, undefined, undefined, signal)
 }
 
 export const apiDeleteMusicVideo = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/music/delete_video/${id}`, undefined, signal)
+    return apiPatch(`/music/delete_video/${id}`, undefined, undefined, signal)
 }

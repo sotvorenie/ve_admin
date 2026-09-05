@@ -1,69 +1,39 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {useRouter} from "vue-router";
 
-import {showConfirm} from "@utils/modals.ts";
-import {logout} from "@utils/auth.ts";
+import {useSignal} from "@composables/useSignal.ts";
 
-import InputUi from "@ui/InputUi.vue";
-import LabelUi from "@ui/LabelUi.vue";
-import ButtonUi from "@ui/ButtonUi.vue";
+import UserAvatar from "@components/user/UserAvatar.vue";
+import UserForm from "@components/user/UserForm.vue";
+import UserActions from "@components/user/UserActions.vue";
 
-import useUserStore from "@store/useUserStore.ts";
-const userStore = useUserStore();
+const signal = useSignal()
 
-const router = useRouter()
+const confirmTitle = 'Редактирование профиля'
+const errorTitle = 'Ошибка редактирования профиля'
 
-const userName = ref<string>(userStore.user.name)
-
-const handleRedact = async () => {
-  const confirm = await showConfirm(
-      'Редактирование профиля',
-      'Вы действительно хотите изменить имя пользователя?'
-  )
-  if (confirm) {
-    userStore.user.name = userName.value
-  }
-}
-
-const handleLogout = async () => {
-  const confirm = await showConfirm(
-      'Выход из профиля',
-      'Вы действительно хотите выйти?'
-  )
-  if (confirm) {
-    logout()
-    await router.replace('/auth')
-  }
-}
+const isLoading = ref(false)
 </script>
 
 <template>
 
   <div class="user h-100 flex-center">
     <div class="flex gap-20">
-      <div class="user__avatar img-container rounded-20">
-        <img :src="`${userStore.user.avatarUrl}?t=${Date.now()}`"
-             :alt="userStore.user.name"
-        >
+      <UserAvatar v-model:is-loading="isLoading"
+                  :confirm-title="confirmTitle"
+                  :error-title="errorTitle"
+                  :signal="signal"
+      />
+
+      <div class="flex flex-column gap-20">
+        <UserForm v-model:is-loading="isLoading"
+                  :confirm-title="confirmTitle"
+                  :error-title="errorTitle"
+                  :signal="signal"
+        />
+
+        <UserActions :is-loading="isLoading"/>
       </div>
-
-      <form novalidate class="user__form flex flex-column gap-20">
-        <p class="h4 text-w600">Данные пользователя</p>
-
-        <LabelUi text="Имя:">
-          <InputUi v-model="userName"/>
-        </LabelUi>
-
-        <div class="flex flex-column gap-10 mt-auto">
-          <ButtonUi :disabled="userName === userStore.user.name"
-                    @click="handleRedact"
-          >
-            Редактировать
-          </ButtonUi>
-          <ButtonUi @click="handleLogout">Выйти</ButtonUi>
-        </div>
-      </form>
     </div>
   </div>
 

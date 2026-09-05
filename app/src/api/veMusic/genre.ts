@@ -13,7 +13,7 @@ export const apiGetAllGenreMusic = async (id: number, page: number = 1, limit: n
 }
 
 export const apiCreateGenre = async (name: string, signal?: AbortSignal): Promise<CreatedGenreType> => {
-    return apiPost(`/genre/create`, {name}, signal)
+    return apiPost(`/genre/create`, {name}, undefined, signal)
 }
 
 export const apiDeleteGenre = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
@@ -21,5 +21,5 @@ export const apiDeleteGenre = async (id: number, signal?: AbortSignal): Promise<
 }
 
 export const apiRedactGenreName = async (id: number, name: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/genre/redact_name/${id}`, {name}, signal)
+    return apiPost(`/genre/redact_name/${id}`, {name}, undefined, signal)
 }

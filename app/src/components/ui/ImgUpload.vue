@@ -2,14 +2,16 @@
 import {showConfirm} from "@utils/modals.ts";
 
 import Upload from "@ui/Upload.vue";
+import Icon from "@ui/Icon.vue";
 
 import EditIcon from "@icons/EditIcon.vue";
 import CrossIcon from "@icons/CrossIcon.vue";
+import NotImageIcon from "@icons/NotImageIcon.vue";
 
 withDefaults(
     defineProps<{
-      imgUrl: string | undefined
-      disabled: boolean
+      imgUrl: string | undefined | null
+      disabled?: boolean
     }>(), {
       disabled: true,
     }
@@ -37,6 +39,7 @@ const handleUpload = async (file: File) => {
           :disabled="disabled"
           @select="(files: File[]) => handleUpload(files[0])"
           class="h-100"
+          :class="disabled && 'pointer-none'"
   >
     <div class="img-upload flex-center img-container position-relative rounded-20 h-100"
          :class="[
@@ -44,11 +47,17 @@ const handleUpload = async (file: File) => {
          ]"
          title="Загрузить фото"
     >
-      <span v-if="!imgUrl">Загрузите фото</span>
-      <img v-else
+
+      <img v-if="imgUrl"
            :src="imgUrl"
            alt="фото"
       >
+
+      <div v-else class="flex flex-column align-center gap-20">
+        <Icon :name="NotImageIcon" :size="80"/>
+
+        <span>Загрузите фото</span>
+      </div>
 
       <EditIcon class="img-upload__icon absolute-center transition-opacity z-1"/>
 

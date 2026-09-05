@@ -14,7 +14,7 @@ export const apiGetAllArtistMusic = async (id: number, page: number = 1, limit: 
 }
 
 export const apiCreateArtist = async (name: string, signal?: AbortSignal): Promise<CreatedArtistType> => {
-    return apiPost(`/artist/create`, {name}, signal)
+    return apiPost(`/artist/create`, {name}, undefined, signal)
 }
 
 export const apiDeleteArtist = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
@@ -22,20 +22,20 @@ export const apiDeleteArtist = async (id: number, signal?: AbortSignal): Promise
 }
 
 export const apiRedactArtistName = async (id: number, name: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/artist/redact_name/${id}`, {name}, signal)
+    return apiPost(`/artist/redact_name/${id}`, {name}, undefined, signal)
 }
 
 export const apiUploadArtistAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
     const formData = new FormData()
     formData.append('avatar', file)
 
-    return apiPost(`/artist/upload_avatar/${id}`, formData, signal)
+    return apiPost(`/artist/upload_avatar/${id}`, formData, undefined, signal)
 }
 
 export const apiRedactAvatarUrlForArtist = async (id: number, avatarUrl: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/artist/redact_avatar_url/${id}`, {url: avatarUrl}, signal)
+    return apiPost(`/artist/redact_avatar_url/${id}`, {url: avatarUrl}, undefined, signal)
 }
 
 export const apiDeleteArtistAvatar = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/artist/delete_avatar/${id}`,undefined, signal)
+    return apiPatch(`/artist/delete_avatar/${id}`,undefined, undefined, signal)
 }

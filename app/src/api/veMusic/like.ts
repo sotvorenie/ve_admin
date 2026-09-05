@@ -8,7 +8,7 @@ export const apiGetUserLikeMusic = async (userId: number, page: number = 1, limi
 }
 
 export const apiAddMusicToUserLike = async (musicId: number, userId: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPost(`/like/add/${musicId}?user_id=${userId}`, undefined, signal)
+    return apiPost(`/like/add/${musicId}?user_id=${userId}`, undefined, undefined, signal)
 }
 
 export const apiDeleteMusicFromUserLike = async (musicId: number, userId: number, signal?: AbortSignal): Promise<SuccessResponseType> => {

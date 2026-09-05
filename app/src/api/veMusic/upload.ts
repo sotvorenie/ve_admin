@@ -9,19 +9,19 @@ export const apiUploadMusic = async (filesList: File[], signal?: AbortSignal): P
     formData.append('preview', filesList[1])
     formData.append('video', filesList[2])
 
-    return apiPost(`/upload/music`, formData, signal)
+    return apiPost(`/upload/music`, formData, undefined, signal)
 }
 
 export const apiUploadMusicPreview = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
     const formData = new FormData()
     formData.append('preview', file)
 
-    return apiPost(`/upload/preview/${id}`, formData, signal)
+    return apiPost(`/upload/preview/${id}`, formData, undefined, signal)
 }
 
 export const apiUploadMusicVideo = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
     const formData = new FormData()
     formData.append('video', file)
 
-    return apiPost(`/upload/video/${id}`, formData, signal)
+    return apiPost(`/upload/video/${id}`, formData, undefined, signal)
 }

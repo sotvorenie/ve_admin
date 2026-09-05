@@ -13,15 +13,15 @@ export const apiGetUser = async (id: number, signal?: AbortSignal): Promise<AppU
 }
 
 export const apiRedactUserName = async (id: number, name: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/user/redact_name/${id}`,{name}, signal)
+    return apiPatch(`/user/redact_name/${id}`,{name}, undefined, signal)
 }
 
 export const apiRedactUserLogin = async (id: number, login: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/user/redact_login/${id}`,{login}, signal)
+    return apiPatch(`/user/redact_login/${id}`,{login}, undefined, signal)
 }
 
 export const apiRedactUserPassword = async (id: number, password: string, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/user/redact_login/${id}`,{password}, signal)
+    return apiPatch(`/user/redact_login/${id}`,{password}, undefined, signal)
 }
 
 export const apiDeleteUser = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
@@ -32,9 +32,9 @@ export const apiUploadUserAvatar = async (id: number, file: File, signal?: Abort
     const formData = new FormData()
     formData.append('avatar', file)
 
-    return apiPost(`/user/upload_avatar/${id}`, formData, signal)
+    return apiPost(`/user/upload_avatar/${id}`, formData, undefined, signal)
 }
 
 export const apiDeleteUserAvatar = async (id: number, signal?: AbortSignal): Promise<SuccessResponseType> => {
-    return apiPatch(`/user/delete_avatar/${id}`,undefined, signal)
+    return apiPatch(`/user/delete_avatar/${id}`,undefined, undefined, signal)
 }

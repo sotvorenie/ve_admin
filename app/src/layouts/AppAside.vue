@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import {productsData} from "@data/products.ts";
 
+import Icon from "@ui/Icon.vue";
+
+import NotImageIcon from "@icons/NotImageIcon.vue";``
+
 import useUserStore from "@store/useUserStore.ts";
 const userStore = useUserStore();
 </script>
@@ -35,9 +39,11 @@ const userStore = useUserStore();
 
     <RouterLink to="/user" class="aside__user mt-auto flex align-center gap-10">
       <div class="aside__avatar rounded-full img-container">
-        <img :src="`${userStore.user.avatarUrl}?t=${Date.now()}`"
+        <img v-if="userStore.user?.avatarUrl"
+             :src="`${userStore.user.avatarUrl}?t=${Date.now()}`"
              :alt="userStore.user.name"
         >
+        <Icon v-else :name="NotImageIcon" :size="15"/>
       </div>
 
       <span class="text-w500 text-ellipsis">{{userStore.user.name}}</span>

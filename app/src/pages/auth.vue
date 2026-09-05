@@ -7,6 +7,7 @@ import {UserWithTokenType} from "@/types/user.ts";
 import {apiAuth, apiRegister} from "@api/auth/auth.ts";
 
 import {onBlur, onInput, onSubmit} from "@composables/useFormValidation.ts";
+import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 import {login} from "@utils/auth.ts";
 
@@ -15,6 +16,7 @@ import InputUi from "@ui/InputUi.vue";
 import ButtonUi from "@ui/ButtonUi.vue";
 
 const router = useRouter()
+const signal = useSignal()
 
 const isAuth = ref<boolean>(true)
 
@@ -43,7 +45,8 @@ const logIn = async () => {
 
     const response: UserWithTokenType = await apiAuth(
         form.value.login,
-        form.value.password
+        form.value.password,
+        signal
     )
     if (response) auth(response)
   } catch (err: any) {
@@ -60,7 +63,8 @@ const register = async () => {
     const response: UserWithTokenType = await apiRegister(
         form.value.login,
         form.value.password,
-        form.value.name
+        form.value.name,
+        signal
     )
     if (response) auth(response)
   } catch (err: any) {
