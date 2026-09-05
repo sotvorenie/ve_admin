@@ -80,7 +80,7 @@ const getUsers = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список пользователей... Ошибка: ${err.message}`
+        `Не удалось загрузить список пользователей... Ошибка: ${err.detail}`
     )
   } finally {
     isLoading.value = false

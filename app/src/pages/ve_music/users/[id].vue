@@ -47,7 +47,7 @@ const getCurrentUser = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',
-        `Не удалось загрузить данные пользователя.. Ошибка: ${err.message}`
+        `Не удалось загрузить данные пользователя.. Ошибка: ${err.detail}`
     )
   } finally {
     isLoading.value = false

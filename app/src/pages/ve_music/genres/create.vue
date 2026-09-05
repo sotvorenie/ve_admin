@@ -38,7 +38,7 @@ const createGenre = async () => {
     const response: CreatedGenreType = await apiCreateGenre(name.value, signal)
     if (response) await router.replace('/ve_music/genres')
   } catch (err: any) {
-    await showError('Ошибка создания жанра', err.message)
+    await showError('Ошибка создания жанра', err.detail)
   } finally {
     isLoading.value = false
   }

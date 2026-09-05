@@ -47,7 +47,7 @@ const logIn = async () => {
     )
     if (response) auth(response)
   } catch (err: any) {
-    await showError('Ошибка авторизация', err.message)
+    await showError('Ошибка авторизация', err.detail)
   } finally {
     isLoading.value = false
   }
@@ -64,7 +64,7 @@ const register = async () => {
     )
     if (response) auth(response)
   } catch (err: any) {
-    await showError('Ошибка регистрации', err.message)
+    await showError('Ошибка регистрации', err.detail)
   } finally {
     isLoading.value = false
   }

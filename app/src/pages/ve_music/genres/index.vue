@@ -64,7 +64,7 @@ const getGenres = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список жанров... Ошибка: ${err.message}`
+        `Не удалось загрузить список жанров... Ошибка: ${err.detail}`
     )
   } finally {
     isLoading.value = false

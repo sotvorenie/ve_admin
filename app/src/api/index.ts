@@ -22,10 +22,8 @@ client.interceptors.response.use(
             return { data: null, error: 'canceled' as const }
         }
 
-        if (error.response?.status === 401) {
-            logout()
-        }
-        return Promise.reject(error)
+        if (error.response?.status === 401) logout()
+        return Promise.reject(error.response.data)
     }
 )
 

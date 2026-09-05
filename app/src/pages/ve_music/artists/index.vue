@@ -75,7 +75,7 @@ const getArtists = async () => {
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
-        `Не удалось загрузить список исполнителей... Ошибка: ${err.message}`
+        `Не удалось загрузить список исполнителей... Ошибка: ${err.detail}`
     )
   } finally {
     isLoading.value = false
