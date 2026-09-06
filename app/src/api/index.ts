@@ -18,12 +18,12 @@ client.interceptors.request.use((config) => {
 client.interceptors.response.use(
     response => response,
     async error => {
-        if (axios.isCancel(error) || error.code === 'ERR_CANCELED') {
-            return { data: null, error: 'canceled' as const }
-        }
+        if (axios.isCancel(error) || error.code === 'ERR_CANCELED') return { data: null, detail: 'canceled' as const }
 
         if (error.response?.status === 401) logout()
-        return Promise.reject(error.response.data)
+
+        const errorData = error.response?.data || { detail: error.message || "Ошибка сети" }
+        return Promise.reject(errorData)
     }
 )
 
