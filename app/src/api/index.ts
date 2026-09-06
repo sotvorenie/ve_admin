@@ -27,8 +27,8 @@ client.interceptors.response.use(
     }
 )
 
-export const apiGet = async <T>(url: string, params?: any, signal?: AbortSignal): Promise<T> => {
-    const res = await client.get(url, { params, signal })
+export const apiGet = async <T>(url: string, config?: any): Promise<T> => {
+    const res = await client.get(url, config)
     return res.data as T
 }
 
@@ -36,10 +36,8 @@ export const apiPost = async <T>(
     url: string,
     data?: any,
     config?: any,
-    signal?: AbortSignal
 ): Promise<T> => {
-    const finalConfig = { ...config, signal }
-    const res = await client.post(url, data, finalConfig)
+    const res = await client.post(url, data, config)
     return res.data as T
 }
 
@@ -47,25 +45,15 @@ export const apiPatch = async <T>(
     url: string,
     data?: any,
     config?: any,
-    signal?: AbortSignal
 ): Promise<T> => {
-    const finalConfig = {
-        ...config,
-        signal,
-    }
-    const res = await client.patch(url, data, finalConfig)
+    const res = await client.patch(url, data, config)
     return res.data as T
 }
 
 export const apiDelete = async <T>(
     url: string,
     config?: any,
-    signal?: AbortSignal
 ): Promise<T> => {
-    const finalConfig = {
-        ...config,
-        signal,
-    }
-    const res = await client.delete(url, finalConfig)
+    const res = await client.delete(url, config)
     return res.data as T
 }

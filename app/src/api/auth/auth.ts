@@ -6,7 +6,7 @@ export const apiAuth = async (login: string, password: string, signal?: AbortSig
     return apiPost(`/auth/login`, {
         login,
         password
-    }, undefined, signal)
+    }, {signal})
 }
 
 export const apiRegister = async (login: string, password: string, name: string, signal?: AbortSignal): Promise<UserWithTokenType> => {
@@ -14,7 +14,7 @@ export const apiRegister = async (login: string, password: string, name: string,
         login,
         password,
         name
-    }, undefined, signal)
+    }, {signal})
 }
 
 export const apiCheckMe = async (): Promise<UserWithTokenType> => {

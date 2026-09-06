@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 
-import {SuccessResponseType} from "@/types/success.ts";
-
 import {apiRedactName, apiRedactPassword} from "@api/user/user.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -47,8 +45,8 @@ const redactPassword = async () => {
   try {
     isLoading.value = true
 
-    const response: SuccessResponseType = await apiRedactPassword(form.value.password, props.signal)
-    if (response) form.value.password = ''
+    await apiRedactPassword(form.value.password, props.signal)
+    form.value.password = ''
   } catch (err: any) {
     await showError(
         props.errorTitle,
