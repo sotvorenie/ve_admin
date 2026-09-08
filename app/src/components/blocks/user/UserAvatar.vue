@@ -46,8 +46,8 @@ const deleteAvatar = async () => {
   try {
     isLoading.value = true
 
-    const response = await apiDeleteAvatar(props.signal)
-    if (response) userStore.user.avatarUrl = ''
+    await apiDeleteAvatar(props.signal)
+    userStore.user.avatarUrl = ''
   } catch {
     await showError(
         props.errorTitle,

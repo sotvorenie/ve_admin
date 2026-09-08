@@ -1,10 +1,14 @@
-import {CreatedGenreType, GenresListType} from "@/types/genre.ts";
+import {CreatedGenreType, GenresListType, GenreType} from "@/types/genre.ts";
 import {MusicListType} from "@/types/music.ts";
 
-import {apiDelete, apiGet, apiPost} from "@/api";
+import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
 export const apiGetAllGenres = async (signal?: AbortSignal): Promise<GenresListType> => {
     return apiGet(`/genre/all?is_admin=true`, {signal})
+}
+
+export const apiGetGenre = async (id: number, signal?: AbortSignal): Promise<GenreType> => {
+    return apiGet(`/genre/${id}`, {signal})
 }
 
 export const apiGetAllGenreMusic = async (id: number, page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<MusicListType> => {
@@ -20,5 +24,5 @@ export const apiDeleteGenre = async (id: number, signal?: AbortSignal): Promise<
 }
 
 export const apiRedactGenreName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPost(`/genre/redact_name/${id}`, {name}, {signal})
+    return apiPatch(`/genre/redact_name/${id}`, {name}, {signal})
 }

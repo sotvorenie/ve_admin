@@ -6,8 +6,8 @@ const useUserStore = defineStore('userStore', () => {
     // данные о пользователе
     const user = ref<UserType>({
         id: -1,
-        name: 'Sotvorenie',
-        avatarUrl: '/diane.jpg',
+        name: '',
+        avatarUrl: '',
     })
 
     // пользователь вошел или нет

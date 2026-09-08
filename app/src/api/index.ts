@@ -1,15 +1,18 @@
 import axios from 'axios'
 
-import {BASE_URL} from "@api/url.ts";
+import {logout} from "@utils/auth.ts";
 
-import {logout} from "../utils/auth.ts";
+import useApiUrlStore from "@store/useApiUrlStore.ts";
 
-const client = axios.create({
-    baseURL: `${BASE_URL}/api`,
+export const client = axios.create({
     timeout: 10000,
 })
 
 client.interceptors.request.use((config) => {
+    const apiUrlStore = useApiUrlStore()
+    const baseUrl = apiUrlStore.activeUrl || import.meta.env.VITE_API_ADMIN_URL
+    config.baseURL = `${baseUrl}/api`
+
     const token = localStorage.getItem('token')
 
     if (token) config.headers.Authorization = `Bearer ${token}`
@@ -20,11 +23,19 @@ client.interceptors.response.use(
     async error => {
         if (axios.isCancel(error) || error.code === 'ERR_CANCELED') return { data: null, detail: 'canceled' as const }
 
-        if (error.response?.status === 401) logout()
+        if (error.response?.status === 401) {
+            logout()
+            return { data: null, detail: 'canceled' as const }
+        }
+
+        if (error.response?.status === 404) {
+            const errorData = error.response?.data || { detail: "404: Ресурс не найден" }
+            return Promise.reject(errorData)
+        }
 
         const errorData = error.response?.data || { detail: error.message || "Ошибка сети" }
         return Promise.reject(errorData)
-    }
+    },
 )
 
 export const apiGet = async <T>(url: string, config?: any): Promise<T> => {

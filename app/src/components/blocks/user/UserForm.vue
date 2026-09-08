@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, ref, watchEffect} from "vue";
 
 import {apiRedactName, apiRedactPassword} from "@api/user/user.ts";
 
@@ -76,6 +76,10 @@ const handleRedactPassword = async () => {
   )
   if (confirm) await redactPassword()
 }
+
+watchEffect(() => {
+  form.value.name = userStore.user.name
+})
 </script>
 
 <template>
