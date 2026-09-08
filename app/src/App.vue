@@ -4,6 +4,8 @@ import {useRouter} from "vue-router";
 
 import { checkMe } from "@utils/auth.ts";
 
+import Message from "@ui/Message.vue";
+
 import useUserStore from "@store/useUserStore.ts";
 const userStore = useUserStore();
 
@@ -18,6 +20,8 @@ onBeforeMount(async () => {
 })
 </script>
 
-<template>
-  <router-view v-if="visible" />
+<template v-if="visible">
+  <Message/>
+
+  <router-view />
 </template>

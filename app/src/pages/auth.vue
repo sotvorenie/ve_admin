@@ -15,6 +15,9 @@ import LabelUi from "@ui/LabelUi.vue";
 import InputUi from "@ui/InputUi.vue";
 import ButtonUi from "@ui/ButtonUi.vue";
 
+import useMessageStore from "@store/useMessageStore.ts";
+const messageStore = useMessageStore();
+
 const router = useRouter()
 const signal = useSignal()
 
@@ -49,6 +52,7 @@ const logIn = async () => {
         signal
     )
     if (response) auth(response)
+    messageStore.show(`Добро пожаловать, ${response?.user?.name}!!`)
   } catch (err: any) {
     await showError('Ошибка авторизация', err.detail)
   } finally {
@@ -67,6 +71,7 @@ const register = async () => {
         signal
     )
     if (response) auth(response)
+    messageStore.show(`Добро пожаловать, ${form.value.name.trim()}!!`)
   } catch (err: any) {
     await showError('Ошибка регистрации', err.detail)
   } finally {

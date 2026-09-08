@@ -17,7 +17,7 @@ $colors: (
         'dark-alt': var(--color-dark-alt, #343a40),
         'dark-muted': var(--color-dark-muted, #495057),
 
-        'accent': var(--color-accent, #6610f2),
+        'accent': var(--color-accent, #fe7971),
 
         'success': var(--success, #28a745),
 
@@ -202,6 +202,7 @@ $spaces: (
 .cursor-default { cursor: default !important; }
 .cursor-text {cursor: text !important;}
 .pointer-none {pointer-events: none !important;}
+.pointer-auto {pointer-events: auto !important;}
 .transition-all { transition: all var(--transition-duration, 0.2s) !important; }
 .transition-colors {
   transition:

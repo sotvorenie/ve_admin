@@ -66,6 +66,8 @@
     polyline,
     line,
     ellipse {
+      color: currentColor !important;
+
       &[stroke]:not([stroke="none"]) {
         stroke: currentColor !important;
       }
