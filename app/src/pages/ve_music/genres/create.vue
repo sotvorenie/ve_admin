@@ -49,10 +49,11 @@ const createGenre = async () => {
 
   <div class="h-100 flex-center">
     <div class="w-50 flex flex-column gap-20">
-      <form novalidate class="flex flex-column gap-10 w-50 w-100">
+      <form novalidate class="flex flex-column gap-10 w-100">
         <LabelUi text="Название жанра:">
           <InputUi v-model="name"
                    :disabled="isLoading"
+                   maxlength="50"
                    :action-btn="{
                       icon: CrossIcon,
                       func: () => name = '',
@@ -62,7 +63,7 @@ const createGenre = async () => {
         </LabelUi>
       </form>
 
-      <div class="flex gap-10 w-50 w-100">
+      <div class="flex gap-10 w-100">
         <ButtonUi :disabled="isLoading"
                   @click="router.replace('/ve_music/genres')"
         >

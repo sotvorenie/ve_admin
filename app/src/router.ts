@@ -9,6 +9,7 @@ import user from "@pages/user.vue";
 import veMusic from "@pages/ve_music/index.vue";
 import veMusicUsers from "@pages/ve_music/users/index.vue";
 import veMusicUser from "@pages/ve_music/users/[id].vue";
+import veMusicUserCreate from "@pages/ve_music/users/create.vue";
 import veMusicMusic from "@pages/ve_music/music/index.vue";
 import veMusicMusicDetail from "@pages/ve_music/music/[id].vue";
 import veMusicMusicCreate from "@pages/ve_music/music/create.vue";
@@ -106,6 +107,15 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicUser,
                 meta: {
                     title: 'Пользователь VeMusic',
+                    apiTarget: 'veMusic',
+                },
+            },
+            {
+                path: '/ve_music/users/create',
+                name: 've_music_user_create',
+                component: veMusicUserCreate,
+                meta: {
+                    title: 'Новый пользователь VeMusic',
                     apiTarget: 'veMusic',
                 },
             },
