@@ -42,7 +42,8 @@ const getUsers = async () => {
       music.value = response.music.map(m => ({
         url: `/ve_music/music/${m.id}`,
         info: {
-          ...m
+          ...m,
+          artistId: m.artists.map(a => a.id)
         }
       }))
     }

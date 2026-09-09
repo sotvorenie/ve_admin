@@ -6,16 +6,18 @@ import Icon from "@ui/Icon.vue";
 
 import EditIcon from "@icons/EditIcon.vue";
 import CrossIcon from "@icons/CrossIcon.vue";
-import NotImageIcon from "@icons/NotImageIcon.vue";
+import VideoIcon from "@icons/VideoIcon.vue";
+import NotVideoIcon from "@icons/NotVideoIcon.vue";
 
 const props = withDefaults(
     defineProps<{
-      imgUrl: string | undefined | null
+      videoUrl: string | undefined | null
       showConfirm?: boolean
+      videoTitle?: string | undefined
       disabled?: boolean
     }>(), {
-      showConfirm: true,
       disabled: true,
+      showConfirm: true,
     }
 )
 
@@ -26,16 +28,18 @@ const emits = defineEmits<{
 
 const handleUpload = async (file: File) => {
   const confirm = props.showConfirm ? await showConfirm(
-      'Загрузка фото',
-      'Вы действительно хотите загрузить/изменить фото?'
+      'Загрузка видео',
+      'Вы действительно хотите загрузить/изменить видео?'
   ) : true
-  if (confirm) emits('select', file)
+  if (confirm) {
+    emits('select', file)
+  }
 }
 </script>
 
 <template>
 
-  <Upload accept=".jpg,.jpeg,.png,.webp"
+  <Upload accept=".mp4,.mkv,.avi,.mov"
           :disabled="disabled"
           @select="(files: File[]) => handleUpload(files[0])"
           class="h-100"
@@ -43,25 +47,25 @@ const handleUpload = async (file: File) => {
   >
     <div class="img-upload flex-center img-container position-relative rounded-20 h-100"
          :class="[
-             !imgUrl && 'border border-light-alt',
+             !videoUrl && 'border border-light-alt',
          ]"
-         title="Загрузить фото"
+         title="Загрузить видео"
     >
+      <div v-if="videoUrl" class="flex-center flex-column gap-20 px-12 w-100">
+        <Icon :name="VideoIcon" :size="80"/>
 
-      <img v-if="imgUrl"
-           :src="imgUrl"
-           alt="фото"
-      >
+        <span class="text-12 text-ellipsis text-center">{{videoTitle}}</span>
+      </div>
 
       <div v-else class="flex flex-column align-center gap-20 w-100">
-        <Icon :name="NotImageIcon" :size="80"/>
+        <Icon :name="NotVideoIcon" :size="80"/>
 
-        <span class="text-ellipsis text-center">Загрузите фото</span>
+        <span class="text-ellipsis text-center">Загрузите видео</span>
       </div>
 
       <EditIcon class="img-upload__icon absolute-center transition-opacity z-1"/>
 
-      <button v-if="imgUrl"
+      <button v-if="videoUrl"
               class="img-upload__delete button-width-svg rounded-full border flex-center z-10 hover:text-accent position-absolute transition-opacity"
               :disabled="disabled"
               type="button"

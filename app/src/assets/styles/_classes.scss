@@ -112,6 +112,7 @@ $font-sizes: (10, 11, 12, 13, 14, 15, 16, 17, 18);
 .w-screen { width: 100vw !important; }
 .min-h-screen { min-height: 100vh !important; }
 .min-w-screen { min-width: 100vw !important; }
+.min-w-0 { min-width: 0 !important; }
 
 // --- отступы ---
 $spaces: (
@@ -181,6 +182,10 @@ $spaces: (
 .aspect-1 {aspect-ratio: 1 !important;}
 .aspect-16_9 {aspect-ratio: 16/9 !important;}
 .aspect-4_3 {aspect-ratio: 4/3 !important;}
+.rotate-90 {transform: rotate(90deg) !important;}
+.rotate-180 {transform: rotate(180deg) !important;}
+.rotate--90 {transform: rotate(-90deg) !important;}
+.rotate--180 {transform: rotate(-180deg) !important;}
 
 // --- отображение и переполнение ---
 .d-inline-block { display: inline-block !important; }
@@ -229,8 +234,10 @@ $spaces: (
 
 // --- скругление ---
 .rounded-none { border-radius: 0 !important; }
-@for $r from 1 through 30 {
+@for $r from 0 through 30 {
   .rounded-#{$r} { border-radius: rem($r) !important; }
+  .rounded-b-#{$r} { border-bottom-left-radius: rem($r) !important; border-bottom-right-radius: rem($r) !important; }
+  .rounded-t-#{$r} { border-top-left-radius: rem($r) !important; border-top-right-radius: rem($r) !important; }
 }
 .rounded-full { border-radius: 9999px !important; }
 

@@ -39,7 +39,7 @@ export const musicHeadItems: ListHeadType[] = [
         key: 'artistName',
         type: 'text',
         to: {
-            page: '/artists/',
+            page: '/ve_music/artists/',
             id: 'artistId'
         }
     },

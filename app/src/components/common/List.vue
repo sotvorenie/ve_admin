@@ -76,12 +76,16 @@ const handleItem = (row: ListItemType) => {
                :key="item.key"
                class="flex-center first:border-l border-r py-8 px-5"
           >
-            <RouterLink v-if="item.to"
-                        :to="`${item.to.page}${row.info?.[item.to?.id ?? '']}`"
-                        class="text-ellipsis"
-            >
-              {{row.info?.[item.key]}}
-            </RouterLink>
+            <div v-if="item.to?.id" class="flex gap-4">
+              <RouterLink v-for="id in row.info?.[item.to.id]"
+                          :key="id"
+                          :to="`${item.to.page}${id}`"
+                          class="text-ellipsis p-8"
+                          @click.stop
+              >
+                {{id}}
+              </RouterLink>
+            </div>
 
             <template v-else>
               <span v-if="item.type === 'text'" class="text-ellipsis">

@@ -32,7 +32,7 @@ const visibleActionBtn = computed(() => {
         v-bind="$attrs"
         :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        class="w-100 p-10 text-16 border border-light-alt rounded-12 transition-colors focus:border-accent placeholder:text-dark-muted"
+        class="w-100 p-10 text-16 border border-light-alt rounded-12 transition-colors focus:border-accent text-light placeholder:text-light-alt"
         :class="[
           actionBtn?.visible && 'pr-50',
         ]"

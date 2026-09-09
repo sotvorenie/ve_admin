@@ -94,3 +94,10 @@
     height: auto;
   }
 }
+
+.square-20 {
+  @include square(20);
+}
+.square-40 {
+  @include square(40);
+}
