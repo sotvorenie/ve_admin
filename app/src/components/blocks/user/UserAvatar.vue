@@ -18,7 +18,7 @@ const props = defineProps<{
 
 const isLoading = defineModel<boolean>('is-loading')
 
-const updateAvatar = async (avatarFile: File) => {
+const uploadAvatar = async (avatarFile: File) => {
   try {
     isLoading.value = true
 
@@ -63,7 +63,7 @@ const deleteAvatar = async () => {
 
   <ImgUpload :img-url="userStore.user?.avatarUrl ? `${userStore.user.avatarUrl}?t=${Date.now()}` : null"
              :disabled="isLoading"
-             @select="updateAvatar($event)"
+             @select="uploadAvatar($event)"
              @delete="handleDeleteAvatar"
              class="user__avatar"
   />

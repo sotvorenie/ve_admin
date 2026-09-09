@@ -17,7 +17,7 @@ const props = defineProps<{
 
 const isLoading = defineModel<boolean>('isLoading', {default: true})
 
-const handleUploadAvatar = async (file: File) => {
+const uploadAvatar = async (file: File) => {
   try {
     isLoading.value = true
 
@@ -64,7 +64,7 @@ const deleteAvatar = async () => {
   <div class="user__avatar">
     <ImgUpload :img-url="veMusicStore.currentArtist?.avatarUrl"
                :disabled="isLoading"
-               @select="(file: File) => handleUploadAvatar(file)"
+               @select="(file: File) => uploadAvatar(file)"
                @delete="handleDeleteAvatar"
     />
   </div>

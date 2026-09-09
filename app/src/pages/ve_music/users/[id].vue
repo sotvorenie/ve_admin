@@ -71,7 +71,10 @@ watchEffect(() => {
 
   <div class="user h-100 flex-center">
     <div class="flex gap-20">
-      <VeMusicUserAvatar :is-loading="isLoading"/>
+      <VeMusicUserAvatar v-model:is-loading="isLoading"
+                         :user-id="+userId"
+                         :signal="signal"
+      />
 
       <div class="flex flex-column justify-between">
         <VeMusicUserInfo v-model:is-loading="isLoading"
