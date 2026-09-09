@@ -7,6 +7,10 @@ import {ListHeadType, ListItemType} from "@/types/list.ts";
 
 import {formatDate} from "@composables/useFormatDate.ts";
 
+import Icon from "@ui/Icon.vue";
+
+import LoadingIcon from "@icons/LoadingIcon.vue";
+
 const props = withDefaults(
     defineProps<{
       headItems: ListHeadType[]
@@ -106,7 +110,9 @@ const handleItem = (row: ListItemType) => {
       Данных нет..
     </div>
 
-    <div v-else></div>
+    <div v-else class="w-100 p-30 flex-center">
+      <Icon :name="LoadingIcon" :size="32"/>
+    </div>
   </div>
 
 </template>
