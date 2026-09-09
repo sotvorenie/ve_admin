@@ -20,7 +20,7 @@ export const apiRedactUserLogin = async (id: number, login: string, signal?: Abo
 }
 
 export const apiRedactUserPassword = async (id: number, password: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/redact_login/${id}`,{password}, {signal})
+    return apiPatch(`/user/redact_password/${id}`,{password}, {signal})
 }
 
 export const apiDeleteUser = async (id: number, signal?: AbortSignal): Promise<void> => {

@@ -76,9 +76,12 @@ watchEffect(() => {
       <div class="flex flex-column justify-between">
         <VeMusicUserInfo v-model:is-loading="isLoading"
                          v-model:form="form"
+                         :user-id="+userId"
         />
 
-        <VeMusicUserActions v-model:is-loading="isLoading"/>
+        <VeMusicUserActions v-model:is-loading="isLoading"
+                            :user-id="+userId"
+        />
       </div>
     </div>
   </div>

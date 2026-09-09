@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import {VeMusicUserForm} from "@pages/ve_music/users/[id].vue";
 
-import {showConfirm} from "@utils/modals.ts";
+import {apiRedactUserLogin, apiRedactUserName, apiRedactUserPassword} from "@api/veMusic/user.ts";
+
+import {useSignal} from "@composables/useSignal.ts";
+import {showConfirm, showError} from "@utils/modals.ts";
 
 import LabelUi from "@ui/LabelUi.vue";
 import InputUi from "@ui/InputUi.vue";
@@ -10,6 +13,12 @@ import EditIcon from "@icons/EditIcon.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
+
+const props = defineProps<{
+  userId: number
+}>()
+
+const signal = useSignal()
 
 const form = defineModel<VeMusicUserForm>('form', {required: true})
 const isLoading = defineModel<boolean>('isLoading', {default: true})
@@ -21,8 +30,22 @@ const handleRedactName = async () => {
       'Редактирование данных пользователя',
       'Вы действительно хотите редактировать имя пользователя?'
   )
-  if (confirm) {
+  if (confirm) await redactName()
+}
+
+const redactName = async () => {
+  try {
     isLoading.value = true
+
+    await apiRedactUserName(props.userId, form.value.name, signal)
+    veMusicStore.currentUser!.name = form.value.name
+  } catch (err: any) {
+    await showError(
+        'Ошибка редактирования пользователя',
+        `Не удалось редактировать имя пользователя.. Ошибка: ${err?.detail}`
+    )
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -33,8 +56,22 @@ const handleRedactLogin = async () => {
       'Редактирование данных пользователя',
       'Вы действительно хотите редактировать логин пользователя?'
   )
-  if (confirm) {
+  if (confirm) await redactLogin()
+}
+
+const redactLogin = async () => {
+  try {
     isLoading.value = true
+
+    await apiRedactUserLogin(props.userId, form.value.login, signal)
+    veMusicStore.currentUser!.login = form.value.login
+  } catch (err: any) {
+    await showError(
+        'Ошибка редактирования пользователя',
+        err?.detail
+    )
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -43,8 +80,22 @@ const handleRedactPassword = async () => {
       'Редактирование данных пользователя',
       'Вы действительно хотите редактировать пароль пользователя?'
   )
-  if (confirm) {
+  if (confirm) await redactPassword()
+}
+
+const redactPassword = async () => {
+  try {
     isLoading.value = true
+
+    await apiRedactUserPassword(props.userId, form.value.password, signal)
+    form.value.password = ''
+  } catch (err: any) {
+    await showError(
+        'Ошибка редактирования пользователя',
+        err?.detail
+    )
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -55,6 +106,7 @@ const handleRedactPassword = async () => {
     <LabelUi text="Имя:">
       <InputUi v-model="form.name"
                minlength="4"
+               maxlength="20"
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
@@ -67,6 +119,7 @@ const handleRedactPassword = async () => {
     <LabelUi text="Логин:">
       <InputUi v-model="form.login"
                minlength="4"
+               maxlength="20"
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
@@ -79,6 +132,7 @@ const handleRedactPassword = async () => {
     <LabelUi text="Пароль:">
       <InputUi v-model="form.password"
                minlength="4"
+               maxlength="20"
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
