@@ -22,7 +22,7 @@ const useVeMusicStore = defineStore('veMusicStore', () => {
     const currentGenre = ref<GenreType | null>(null)
 
     // выбранный исполнитель
-    const currentArtist = ref<ArtistType[] | null>(null)
+    const currentArtist = ref<ArtistType | null>(null)
 
     return {
         createBtnInfo,

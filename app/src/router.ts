@@ -14,7 +14,6 @@ import veMusicMusicDetail from "@pages/ve_music/music/[id].vue";
 import veMusicMusicCreate from "@pages/ve_music/music/create.vue";
 import veMusicArtists from "@pages/ve_music/artists/index.vue";
 import veMusicArtist from "@pages/ve_music/artists/[id].vue";
-import veMusicArtistRedact from "@pages/ve_music/artists/redact/[id].vue";
 import veMusicArtistCreate from "@pages/ve_music/artists/create.vue";
 import veMusicGenres from "@pages/ve_music/genres/index.vue";
 import veMusicGenre from "@pages/ve_music/genres/[id].vue";
@@ -143,15 +142,6 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicArtistCreate,
                 meta: {
                     title: 'Новый исполнитель для VeMusic',
-                    apiTarget: 'veMusic',
-                },
-            },
-            {
-                path: '/ve_music/artists/redact/:id',
-                name: 've_music_artist_redact',
-                component: veMusicArtistRedact,
-                meta: {
-                    title: 'Исполнитель VeMusic',
                     apiTarget: 'veMusic',
                 },
             },

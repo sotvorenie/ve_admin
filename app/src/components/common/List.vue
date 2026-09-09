@@ -10,6 +10,7 @@ import {formatDate} from "@composables/useFormatDate.ts";
 import Icon from "@ui/Icon.vue";
 
 import LoadingIcon from "@icons/LoadingIcon.vue";
+import NotImageIcon from "@icons/NotImageIcon.vue";
 
 const props = withDefaults(
     defineProps<{
@@ -90,13 +91,22 @@ const handleItem = (row: ListItemType) => {
                 {{formatDate(row.info?.[item.key])}}
               </span>
               <div v-else
-                   class="img-container border border-transparent hover:border-accent transition-colors"
+                   class="img-container border border-transparent transition-colors"
                    :class="[
-                    item.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
-                 ]"
-                   @click.stop="openFancybox(row.info?.[item.key])"
+                      item.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
+                      row.info?.[item.key] && 'hover:border-accent',
+                   ]"
+                   @click="row.info?.[item.key] && (() => {
+                       $event.stopPropagation()
+                       openFancybox(row.info[item.key])
+                   })()"
               >
-                <img :src="row.info?.[item.key]" alt="фото">
+                <img v-if="row.info?.[item.key]"
+                     :src="row.info[item.key]"
+                     alt="фото"
+                >
+
+                <Icon v-else :name="NotImageIcon" :size="15"/>
               </div>
             </template>
           </div>

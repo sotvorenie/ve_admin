@@ -3,7 +3,6 @@ import {VeMusicUserForm} from "@pages/ve_music/users/[id].vue";
 
 import {apiRedactUserLogin, apiRedactUserName, apiRedactUserPassword} from "@api/veMusic/user.ts";
 
-import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
 
 import LabelUi from "@ui/LabelUi.vue";
@@ -16,9 +15,8 @@ const veMusicStore = useVeMusicStore();
 
 const props = defineProps<{
   userId: number
+  signal: AbortSignal
 }>()
-
-const signal = useSignal()
 
 const form = defineModel<VeMusicUserForm>('form', {required: true})
 const isLoading = defineModel<boolean>('isLoading', {default: true})
@@ -37,7 +35,7 @@ const redactName = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserName(props.userId, form.value.name, signal)
+    await apiRedactUserName(props.userId, form.value.name, props.signal)
     veMusicStore.currentUser!.name = form.value.name
   } catch (err: any) {
     await showError(
@@ -63,7 +61,7 @@ const redactLogin = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserLogin(props.userId, form.value.login, signal)
+    await apiRedactUserLogin(props.userId, form.value.login, props.signal)
     veMusicStore.currentUser!.login = form.value.login
   } catch (err: any) {
     await showError(
@@ -87,7 +85,7 @@ const redactPassword = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserPassword(props.userId, form.value.password, signal)
+    await apiRedactUserPassword(props.userId, form.value.password, props.signal)
     form.value.password = ''
   } catch (err: any) {
     await showError(

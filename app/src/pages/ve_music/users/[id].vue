@@ -77,6 +77,7 @@ watchEffect(() => {
         <VeMusicUserInfo v-model:is-loading="isLoading"
                          v-model:form="form"
                          :user-id="+userId"
+                         :signal="signal"
         />
 
         <VeMusicUserActions v-model:is-loading="isLoading"

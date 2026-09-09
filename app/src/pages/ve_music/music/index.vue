@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {ListHeadType, ListItemType} from "@/types/list.ts";
+import {ListItemType} from "@/types/list.ts";
 import {MusicListType} from "@/types/music.ts";
+
+import {musicColsStyle, musicHeadItems} from "@data/music.ts";
 
 import {apiGetAllMusic} from "@api/veMusic/music.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
-import {formatDuration} from "@composables/useFormstDuration.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
@@ -17,49 +18,6 @@ import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
 const signal = useSignal()
-
-const headItems: ListHeadType[] = [
-  {
-    label: 'id',
-    key: 'id',
-    type: 'text',
-  },
-  {
-    label: 'Дата создания',
-    key: 'createdAt',
-    type: 'date',
-  },
-  {
-    label: 'Дата обновления',
-    key: 'updatedAt',
-    type: 'date',
-  },
-  {
-    label: 'Название',
-    key: 'name',
-    type: 'text',
-  },
-  {
-    label: 'Обложка',
-    key: 'previewUrl',
-    type: 'preview',
-  },
-  {
-    label: 'Длительность',
-    key: 'duration',
-    type: 'text',
-    formatFunction: formatDuration
-  },
-  {
-    label: 'Исполнитель',
-    key: 'artistName',
-    type: 'text',
-    to: {
-      page: '/artists/',
-      id: 'artistId'
-    }
-  },
-]
 
 const music = ref<ListItemType[]>([])
 
@@ -110,8 +68,8 @@ onBeforeMount(() => {
 <template>
 
   <List :items="music"
-        :head-items="headItems"
-        cols-style="4rem 9rem 9rem 1fr 10rem 6rem 1fr"
+        :head-items="musicHeadItems"
+        :cols-style="musicColsStyle"
         :store-func="setToStore"
         :is-loading="isLoading"
   />

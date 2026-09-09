@@ -1,11 +1,15 @@
-import {ArtistsListType, CreatedArtistType} from "@/types/artist.ts";
+import {ArtistsListType, ArtistType, CreatedArtistType} from "@/types/artist.ts";
 import {MusicListType} from "@/types/music.ts";
 import {UrlType} from "@/types/url.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
-export const apiGetAllArtists = async (page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<ArtistsListType> => {
-    return apiGet(`/artist/all?page=${page}&limit=${limit}&is_admin=true`, {signal})
+export const apiGetArtists = async (name: string = '', page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<ArtistsListType> => {
+    return apiGet(`/artist/list?name=${name}&page=${page}&limit=${limit}&is_admin=true`, {signal})
+}
+
+export const apiGetArtist = async (id: number, signal?: AbortSignal): Promise<ArtistType> => {
+    return apiGet(`/artist/${id}`, {signal})
 }
 
 export const apiGetAllArtistMusic = async (id: number, page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<MusicListType> => {
@@ -21,7 +25,7 @@ export const apiDeleteArtist = async (id: number, signal?: AbortSignal): Promise
 }
 
 export const apiRedactArtistName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPost(`/artist/redact_name/${id}`, {name}, {signal})
+    return apiPatch(`/artist/redact_name/${id}`, {name}, {signal})
 }
 
 export const apiUploadArtistAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {

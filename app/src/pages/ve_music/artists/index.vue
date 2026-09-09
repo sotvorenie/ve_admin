@@ -4,7 +4,7 @@ import {onBeforeMount, ref} from "vue";
 import {ListHeadType, ListItemType} from "@/types/list.ts";
 import {ArtistsListType} from "@/types/artist.ts";
 
-import {apiGetAllArtists} from "@api/veMusic/artist.ts";
+import {apiGetArtists} from "@api/veMusic/artist.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -60,7 +60,7 @@ const getArtists = async () => {
   isLoading.value = true
 
   try {
-    const response: ArtistsListType = await apiGetAllArtists(page.value, 30, signal)
+    const response: ArtistsListType = await apiGetArtists('', page.value, 30, signal)
 
     if (response) {
       page.value = response.page
