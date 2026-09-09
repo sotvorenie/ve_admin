@@ -5,7 +5,7 @@ import {UrlType} from "@/types/url.ts";
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
 export const apiGetAllArtists = async (page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<ArtistsListType> => {
-    return apiGet(`/artist/all?page=${page}&limit=${limit}`, {signal})
+    return apiGet(`/artist/all?page=${page}&limit=${limit}&is_admin=true`, {signal})
 }
 
 export const apiGetAllArtistMusic = async (id: number, page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<MusicListType> => {

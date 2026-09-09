@@ -47,9 +47,9 @@ const createGenre = async () => {
 
 <template>
 
-  <div class="genre h-100 flex-center">
+  <div class="h-100 flex-center">
     <div class="w-50 flex flex-column gap-20">
-      <form novalidate class="genre__form flex flex-column gap-10 w-50 w-100">
+      <form novalidate class="flex flex-column gap-10 w-50 w-100">
         <LabelUi text="Название жанра:">
           <InputUi v-model="name"
                    :disabled="isLoading"

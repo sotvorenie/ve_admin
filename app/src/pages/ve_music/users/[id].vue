@@ -9,9 +9,9 @@ import {apiGetUser} from "@api/veMusic/user.ts";
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
-import VeMusicUserAvatar from "@components/veMusic/VeMusicUserAvatar.vue";
-import VeMusicUserInfo from "@components/veMusic/VeMusicUserInfo.vue";
-import VeMusicUserActions from "@components/veMusic/VeMusicUserActions.vue";
+import VeMusicUserAvatar from "@components/veMusic/user/VeMusicUserAvatar.vue";
+import VeMusicUserInfo from "@components/veMusic/user/VeMusicUserInfo.vue";
+import VeMusicUserActions from "@components/veMusic/user/VeMusicUserActions.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
@@ -81,6 +81,7 @@ watchEffect(() => {
 
         <VeMusicUserActions v-model:is-loading="isLoading"
                             :user-id="+userId"
+                            :signal="signal"
         />
       </div>
     </div>
