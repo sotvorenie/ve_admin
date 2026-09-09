@@ -19,11 +19,17 @@ import veMusicGenres from "@pages/ve_music/genres/index.vue";
 import veMusicGenre from "@pages/ve_music/genres/[id].vue";
 import veMusicGenreCreate from "@pages/ve_music/genres/create.vue";
 
+import useApiUrlStore from "@store/useApiUrlStore.ts";
+
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/auth',
         name: 'auth',
         component: auth,
+        meta: {
+            title: 'Авторизация',
+            apiTarget: 'admin',
+        }
     },
     {
         path: '/',
@@ -35,6 +41,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: index,
                 meta: {
                     title: 'Главная',
+                    apiTarget: 'admin',
                 },
             },
             {
@@ -43,6 +50,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: user,
                 meta: {
                     title: 'Пользователь',
+                    apiTarget: 'admin',
                 },
             },
             {
@@ -51,6 +59,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusic,
                 meta: {
                     title: 'veMusic',
+                    apiTarget: 'veMusic',
                 },
                 children: [
                     {
@@ -59,6 +68,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: veMusicUsers,
                         meta: {
                             title: 'Пользователи veMusic',
+                            apiTarget: 'veMusic',
                         },
                     },
                     {
@@ -67,6 +77,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: veMusicMusic,
                         meta: {
                             title: 'Аудио veMusic',
+                            apiTarget: 'veMusic',
                         },
                     },
                     {
@@ -75,6 +86,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: veMusicArtists,
                         meta: {
                             title: 'Исполнители veMusic',
+                            apiTarget: 'veMusic',
                         },
                     },
                     {
@@ -83,6 +95,7 @@ const routes: Array<RouteRecordRaw> = [
                         component: veMusicGenres,
                         meta: {
                             title: 'Жанры veMusic',
+                            apiTarget: 'veMusic',
                         },
                     },
                 ]
@@ -93,6 +106,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicUser,
                 meta: {
                     title: 'Пользователь VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
             {
@@ -101,6 +115,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicMusicDetail,
                 meta: {
                     title: 'Аудио VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
             {
@@ -109,6 +124,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicMusicCreate,
                 meta: {
                     title: 'Новая музыка для VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
             {
@@ -117,6 +133,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicArtist,
                 meta: {
                     title: 'Исполнитель VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
             {
@@ -125,6 +142,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicArtistCreate,
                 meta: {
                     title: 'Новый исполнитель для VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
             {
@@ -133,6 +151,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicGenre,
                 meta: {
                     title: 'Жанр VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
             {
@@ -141,6 +160,7 @@ const routes: Array<RouteRecordRaw> = [
                 component: veMusicGenreCreate,
                 meta: {
                     title: 'Новый жанр для VeMusic',
+                    apiTarget: 'veMusic',
                 },
             },
         ]
@@ -151,5 +171,13 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+router.afterEach((to) => {
+    const apiUrlStore = useApiUrlStore()
+    const target = to.meta.apiTarget
+    if (target) apiUrlStore.setUrl(apiUrlStore.allUrls[target])
+})
+
+
 
 export default router

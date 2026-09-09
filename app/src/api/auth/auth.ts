@@ -1,6 +1,6 @@
 import {UserWithTokenType} from "@/types/user.ts";
 
-import {apiGet, apiPost} from "@api/index.ts";
+import {apiCheckMeGet, apiPost} from "@api/index.ts";
 
 export const apiAuth = async (login: string, password: string, signal?: AbortSignal): Promise<UserWithTokenType> => {
     return apiPost(`/auth/login`, {
@@ -18,5 +18,5 @@ export const apiRegister = async (login: string, password: string, name: string,
 }
 
 export const apiCheckMe = async (): Promise<UserWithTokenType> => {
-    return apiGet('/auth/me')
+    return apiCheckMeGet('/auth/me')
 }

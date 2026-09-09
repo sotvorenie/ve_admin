@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosRequestConfig} from 'axios'
 
 import {logout} from "@utils/auth.ts";
 
@@ -23,7 +23,7 @@ client.interceptors.response.use(
     async error => {
         if (axios.isCancel(error) || error.code === 'ERR_CANCELED') return { data: null, detail: 'canceled' as const }
 
-        if (error.response?.status === 401) {
+        if (error.response?.status === 401 && error.response?.data?.code === 'JWT_INVALID') {
             logout()
             return { data: null, detail: 'canceled' as const }
         }
@@ -38,15 +38,28 @@ client.interceptors.response.use(
     },
 )
 
-export const apiGet = async <T>(url: string, config?: any): Promise<T> => {
+export const apiGet = async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
     const res = await client.get(url, config)
     return res.data as T
 }
 
+export const apiCheckMeGet = async <T>(
+    url: string,
+    config?: AxiosRequestConfig,
+): Promise<T> => {
+    const baseUrl = import.meta.env.VITE_API_ADMIN_URL
+    const res = await client.get<T>(url, {
+        ...config,
+        baseURL: `${baseUrl}/api`,
+    })
+    return res.data
+}
+
+
 export const apiPost = async <T>(
     url: string,
-    data?: any,
-    config?: any,
+    data?: unknown,
+    config?: AxiosRequestConfig,
 ): Promise<T> => {
     const res = await client.post(url, data, config)
     return res.data as T
@@ -54,8 +67,8 @@ export const apiPost = async <T>(
 
 export const apiPatch = async <T>(
     url: string,
-    data?: any,
-    config?: any,
+    data?: unknown,
+    config?: AxiosRequestConfig,
 ): Promise<T> => {
     const res = await client.patch(url, data, config)
     return res.data as T
@@ -63,7 +76,7 @@ export const apiPatch = async <T>(
 
 export const apiDelete = async <T>(
     url: string,
-    config?: any,
+    config?: AxiosRequestConfig,
 ): Promise<T> => {
     const res = await client.delete(url, config)
     return res.data as T
