@@ -74,7 +74,7 @@ const handleItem = (row: ListItemType) => {
         >
           <div v-for="item in headItems"
                :key="item.key"
-               class="flex-center first:border-l border-r py-8 px-5"
+               class="flex-center first:border-l border-r py-8 px-5 min-w-0"
           >
             <div v-if="item.to?.id" class="flex gap-4">
               <RouterLink v-for="id in row.info?.[item.to.id]"
