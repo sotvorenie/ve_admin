@@ -8,6 +8,7 @@ import Tabs from "@/components/common/Tabs.vue";
 import ButtonUi from "@ui/ButtonUi.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
+import {onBeforeRouteUpdate} from "vue-router";
 const veMusicStore = useVeMusicStore();
 
 const tabsList: TabType[] = [
@@ -34,6 +35,13 @@ const tabsList: TabType[] = [
 ]
 
 const activeTab = ref<TabType | null>(null)
+
+onBeforeRouteUpdate(() => {
+  veMusicStore.createBtnInfo = {
+    label: '',
+    to: '',
+  }
+})
 </script>
 
 <template>
