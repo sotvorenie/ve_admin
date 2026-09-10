@@ -27,9 +27,9 @@ const props = defineProps<{
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
 const form = ref<MusicInfoType>({
-  title: veMusicStore.currentMusic?.name ?? '',
-  genre: veMusicStore.currentMusic?.genreId ?? -1,
-  artistsIds: veMusicStore.currentMusic?.artists?.map(a => a.id) ?? [],
+  title: '',
+  genre: -1,
+  artistsIds: [],
 })
 
 const visibleRedactBtn = computed(() => {

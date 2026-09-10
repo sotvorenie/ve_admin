@@ -30,8 +30,8 @@ const route = useRoute()
 const userId = computed(() => route.params.id)
 
 const form = ref<VeMusicUserForm>({
-  name: veMusicStore.currentUser?.name ?? '',
-  login: veMusicStore.currentUser?.login ?? '',
+  name: '',
+  login: '',
   password: '',
 })
 

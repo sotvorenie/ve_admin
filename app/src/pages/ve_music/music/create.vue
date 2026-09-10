@@ -81,7 +81,7 @@ const isSaveBtnDisabled = computed(() => {
 
       <div class="flex gap-10 w-100">
         <ButtonUi :disabled="isLoading"
-                  @click="router.replace('/ve_music/genres')"
+                  @click="router.replace('/ve_music/music')"
         >
           Отмена
         </ButtonUi>

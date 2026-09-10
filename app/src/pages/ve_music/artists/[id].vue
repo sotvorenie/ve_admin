@@ -7,6 +7,7 @@ import {ArtistType} from "@/types/artist.ts";
 import {apiGetArtist} from "@api/veMusic/artist.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
+import {formatPath} from "@composables/useFormatPath.ts";
 import {showError} from "@utils/modals.ts";
 
 import VeMusicArtistAvatar from "@components/veMusic/artist/VeMusicArtistAvatar.vue";
@@ -21,11 +22,19 @@ const pageStore = usePageStore();
 const signal = useSignal()
 const route = useRoute()
 
+export interface ArtistForm {
+  name: string
+  avatarUrl: string
+}
+
 const artistId = computed(() => route.params.id)
 
 const isLoading = ref<boolean>(true)
 
-const name = ref<string>(veMusicStore.currentArtist?.name ?? '')
+const form = ref<ArtistForm>({
+  name: '',
+  avatarUrl: ''
+})
 
 const getCurrentArtist = async () => {
   isLoading.value = true
@@ -51,7 +60,8 @@ watchEffect(() => {
       `Исполнитель veMusic: (${veMusicStore.currentArtist?.id}) "${veMusicStore.currentArtist?.name}"`
 
   if (veMusicStore.currentArtist) {
-    name.value = veMusicStore.currentArtist.name
+    form.value.name = veMusicStore.currentArtist.name
+    form.value.avatarUrl = formatPath(veMusicStore.currentArtist?.avatarUrl ?? '', 'veMusic')
   }
 })
 </script>
@@ -66,7 +76,7 @@ watchEffect(() => {
       />
 
       <div class="flex flex-column justify-between">
-        <VeMusicArtistInfo v-model:name="name"
+        <VeMusicArtistInfo v-model:form="form"
                            v-model:is-loading="isLoading"
                            :artist-id="+artistId"
                            :signal="signal"

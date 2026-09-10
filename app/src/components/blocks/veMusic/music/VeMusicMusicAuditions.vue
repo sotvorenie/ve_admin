@@ -19,7 +19,7 @@ const props = defineProps<{
 
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
-const auditionsCount = ref<number>(veMusicStore.currentMusic?.auditionsCount ?? 0)
+const auditionsCount = ref<number>(0)
 
 const visibleRedactAuditionsBtn = computed(() => {
   return auditionsCount.value !== veMusicStore.currentMusic?.auditionsCount && auditionsCount.value >= 0

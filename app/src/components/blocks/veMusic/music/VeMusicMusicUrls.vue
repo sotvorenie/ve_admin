@@ -5,6 +5,7 @@ import {UrlType} from "@/types/url.ts";
 
 import {apiRedactAudioUrlForMusic, apiRedactPreviewUrlForMusic, apiRedactVideoUrlForMusic} from "@api/veMusic/music.ts";
 
+import {formatPath} from "@composables/useFormatPath.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
 
 import InputUi from "@ui/InputUi.vue";
@@ -28,32 +29,24 @@ interface Form {
   videoUrl: string
 }
 
-const formatPath = (url: string) => {
-  if (!url) return ''
-  const formattedUrl = url
-      .replace('/static/', '')
-      .replace(/\//g, '\\')
-  return `${import.meta.env.VITE_VE_MUSIC_PATH}\\${formattedUrl}`
-}
-
 const form = ref<Form>({
-  audioUrl: formatPath(veMusicStore.currentMusic?.url ?? ''),
-  previewUrl: formatPath(veMusicStore.currentMusic?.previewUrl ?? ''),
-  videoUrl: formatPath(veMusicStore.currentMusic?.videoClipUrl ?? ''),
+  audioUrl: '',
+  previewUrl: '',
+  videoUrl: '',
 })
 
 const editAudioVisible = computed(() => {
-  return form.value.audioUrl !== formatPath(veMusicStore.currentMusic?.url ?? '')
+  return form.value.audioUrl !== formatPath(veMusicStore.currentMusic?.url ?? '', 'veMusic')
       && form.value.audioUrl?.length > 0
 })
 
 const editPreviewVisible = computed(() => {
-  return form.value.previewUrl !== formatPath(veMusicStore.currentMusic?.previewUrl ?? '')
+  return form.value.previewUrl !== formatPath(veMusicStore.currentMusic?.previewUrl ?? '', 'veMusic')
       && form.value.previewUrl?.length > 0
 })
 
 const editVideoVisible = computed(() => {
-  return form.value.videoUrl !== formatPath(veMusicStore.currentMusic?.videoClipUrl ?? '')
+  return form.value.videoUrl !== formatPath(veMusicStore.currentMusic?.videoClipUrl ?? '', 'veMusic')
       && form.value.videoUrl?.length > 0
 })
 
@@ -129,9 +122,9 @@ const redactVideo = async () => {
 
 watchEffect(() => {
   if (veMusicStore.currentMusic) {
-    form.value.audioUrl = formatPath(veMusicStore.currentMusic.url, 'music')
-    form.value.previewUrl = formatPath(veMusicStore.currentMusic.previewUrl ?? '', 'previews')
-    form.value.videoUrl = formatPath(veMusicStore.currentMusic.videoClipUrl ?? '', 'videos')
+    form.value.audioUrl = formatPath(veMusicStore.currentMusic.url, 'veMusic')
+    form.value.previewUrl = formatPath(veMusicStore.currentMusic.previewUrl ?? '', 'veMusic')
+    form.value.videoUrl = formatPath(veMusicStore.currentMusic.videoClipUrl ?? '', 'veMusic')
   }
 })
 </script>
