@@ -13,9 +13,11 @@ const props = withDefaults(
       imgUrl: string | undefined | null
       showConfirm?: boolean
       disabled?: boolean
+      canDelete?: boolean
     }>(), {
       showConfirm: true,
       disabled: true,
+      canDelete: true,
     }
 )
 
@@ -61,7 +63,7 @@ const handleUpload = async (file: File) => {
 
       <EditIcon class="img-upload__icon absolute-center transition-opacity z-1"/>
 
-      <button v-if="imgUrl"
+      <button v-if="imgUrl && canDelete"
               class="img-upload__delete button-width-svg rounded-full border flex-center z-10 hover:text-accent position-absolute transition-opacity"
               :disabled="disabled"
               type="button"

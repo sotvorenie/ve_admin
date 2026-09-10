@@ -1,4 +1,5 @@
-import {MusicForListType, MusicListType} from "@/types/music.ts";
+import {MusicListType, MusicType} from "@/types/music.ts";
+import {UrlType} from "@/types/url.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
@@ -13,28 +14,28 @@ export const apiGetAllMusic = async (
     return apiGet(`/music/list?page=${page}&limit=${limit}&name=${name}&genre_id=${genreId}&artist_id=${artistId}&is_admin=true`, {signal})
 }
 
-export const apiGetMusic = async (id: number, signal?: AbortSignal): Promise<MusicForListType> => {
-    return apiGet(`/music/${id}`, {signal})
+export const apiGetMusic = async (id: number, signal?: AbortSignal): Promise<MusicType> => {
+    return apiGet(`/music/${id}?is_admin=true`, {signal})
 }
 
 export const apiRedactMusic = async (id: number, title: string, genreId: number, artists: number[], signal?: AbortSignal): Promise<void> => {
     return apiPatch(`/music/redact/${id}`, {
         title,
-        genre_id: genreId,
-        artists,
+        genre_id: String(genreId),
+        artists: artists.join(','),
     }, {signal})
 }
 
-export const apiRedactAudioUrlForMusic = async (id: number, audioUrl: string, signal?: AbortSignal): Promise<void> => {
-    return apiPost(`/music/redact_audio_url/${id}`, {url: audioUrl}, {signal})
+export const apiRedactAudioUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
+    return apiPost(`/music/redact_audio_url/${id}`, {path: audioPath}, {signal})
 }
 
-export const apiRedactPreviewUrlForMusic = async (id: number, audioUrl: string, signal?: AbortSignal): Promise<void> => {
-    return apiPost(`/music/redact_preview_url/${id}`, {url: audioUrl}, {signal})
+export const apiRedactPreviewUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
+    return apiPost(`/music/redact_preview_url/${id}`, {path: audioPath}, {signal})
 }
 
-export const apiRedactVideoUrlForMusic = async (id: number, audioUrl: string, signal?: AbortSignal): Promise<void> => {
-    return apiPost(`/music/redact_video_url/${id}`, {url: audioUrl}, {signal})
+export const apiRedactVideoUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
+    return apiPost(`/music/redact_video_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactAuditionsForMusic = async (id: number, auditionsCount: number, signal?: AbortSignal): Promise<void> => {

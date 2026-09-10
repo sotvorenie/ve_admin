@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {CreateMusicInfo} from "@pages/ve_music/music/create.vue";
 import {GenresListType} from "@/types/genre.ts";
+import {MusicInfoType} from "@/types/music.ts";
 
 import {apiGetAllGenres} from "@api/veMusic/genre.ts";
 
-import VeMusicCreateMusicArtists from "@components/veMusic/createMusic/VeMusicCreateMusicArtists.vue";
+import VeMusicArtists from "@components/veMusic/VeMusicArtists.vue";
 
 import InputUi from "@ui/InputUi.vue";
 import LabelUi from "@ui/LabelUi.vue";
@@ -18,7 +18,7 @@ defineProps<{
   isLoading: boolean
 }>()
 
-const form = defineModel<CreateMusicInfo>('form', {required: true})
+const form = defineModel<MusicInfoType>('form', {required: true})
 
 const genres = ref<Option[]>([])
 
@@ -27,7 +27,7 @@ const getGenres = async () => {
     const response: GenresListType = await apiGetAllGenres()
     if (response) {
       genres.value = response.genres.map(genre => ({
-        id: genre.name,
+        id: genre.id,
         label: genre.name,
       }))
     }
@@ -59,7 +59,7 @@ onBeforeMount(() => getGenres())
       />
     </LabelUi>
 
-    <VeMusicCreateMusicArtists v-model:artists="form.artistsIds"/>
+    <VeMusicArtists v-model:artists="form.artistsIds"/>
   </form>
 
 </template>

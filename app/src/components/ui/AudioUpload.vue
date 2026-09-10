@@ -15,9 +15,11 @@ const props = withDefaults(
       showConfirm?: boolean
       audioTitle?: string | undefined
       disabled?: boolean
+      canDelete?: boolean
     }>(), {
       disabled: true,
       showConfirm: true,
+      canDelete: true,
     }
 )
 
@@ -65,7 +67,7 @@ const handleUpload = async (file: File) => {
 
       <EditIcon class="img-upload__icon absolute-center transition-opacity z-1"/>
 
-      <button v-if="audioUrl"
+      <button v-if="audioUrl && canDelete"
               class="img-upload__delete button-width-svg rounded-full border flex-center z-10 hover:text-accent position-absolute transition-opacity"
               :disabled="disabled"
               type="button"

@@ -18,6 +18,13 @@ export const apiUploadMusic = async (form: CreateMusicForm, signal?: AbortSignal
     return apiPost(`/upload/music`, formData, { signal })
 }
 
+export const apiUploadMusicAudio = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
+    const formData = new FormData()
+    formData.append('music', file)
+
+    return apiPost(`/upload/audio/${id}`, formData, {signal})
+}
+
 export const apiUploadMusicPreview = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
     const formData = new FormData()
     formData.append('preview', file)

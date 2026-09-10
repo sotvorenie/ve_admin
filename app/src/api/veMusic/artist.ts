@@ -35,8 +35,8 @@ export const apiUploadArtistAvatar = async (id: number, file: File, signal?: Abo
     return apiPost(`/artist/upload_avatar/${id}`, formData, {signal})
 }
 
-export const apiRedactAvatarUrlForArtist = async (id: number, avatarUrl: string, signal?: AbortSignal): Promise<void> => {
-    return apiPost(`/artist/redact_avatar_url/${id}`, {url: avatarUrl}, {signal})
+export const apiRedactAvatarUrlForArtist = async (id: number, avatarPath: string, signal?: AbortSignal): Promise<UrlType> => {
+    return apiPost(`/artist/redact_avatar_url/${id}`, {path: avatarPath}, {signal})
 }
 
 export const apiDeleteArtistAvatar = async (id: number, signal?: AbortSignal): Promise<void> => {

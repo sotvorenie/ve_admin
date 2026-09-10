@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {CreateMusicFiles} from "@pages/ve_music/music/create.vue";
+import {MusicFilesType} from "@/types/music.ts";
 
 import AudioUpload from "@ui/AudioUpload.vue";
 import ImgUpload from "@ui/ImgUpload.vue";
@@ -9,7 +9,7 @@ defineProps<{
   isLoading: boolean
 }>()
 
-const form = defineModel<CreateMusicFiles>('form', {required: true})
+const form = defineModel<MusicFilesType>('form', {required: true})
 
 const URL = window.URL
 </script>

@@ -17,6 +17,7 @@ export interface MusicType {
     name: string
     duration: number
     url: string
+    genreId: number
     auditionsCount: number
     likesCount: number
     previewUrl: string
@@ -28,4 +29,16 @@ export interface MusicType {
 
 export interface MusicListType extends BasePaginationType {
     music: MusicForListType[]
+}
+
+export interface MusicFilesType {
+    audio: File | null
+    preview: File | null
+    video: File | null
+}
+
+export interface MusicInfoType {
+    title: string
+    genre: number
+    artistsIds: number[]
 }

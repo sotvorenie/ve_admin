@@ -2,27 +2,21 @@
 import {computed, ref} from "vue";
 import {useRouter} from "vue-router";
 
+import {MusicFilesType, MusicInfoType} from "@/types/music.ts";
+
+import {apiUploadMusic} from "@api/veMusic/upload.ts";
+
+import {useSignal} from "@composables/useSignal.ts";
+import {showConfirm, showError} from "@utils/modals.ts";
+
 import VeMusicCreateMusicFiles from "@components/veMusic/createMusic/VeMusicCreateMusicFiles.vue";
 import VeMusicCreateMusicInfo from "@components/veMusic/createMusic/VeMusicCreateMusicInfo.vue";
 
 import ButtonUi from "@ui/ButtonUi.vue";
-import {showError} from "@utils/modals.ts";
-import {apiUploadMusic} from "@api/veMusic/upload.ts";
-import {useSignal} from "@composables/useSignal.ts";
 
-export interface CreateMusicFiles {
-  audio: File | null
-  preview: File | null
-  video: File | null
-}
-export interface CreateMusicInfo {
-  title: string
-  genre: number
-  artistsIds: number[]
-}
 export interface CreateMusicForm {
-  files: CreateMusicFiles
-  info: CreateMusicInfo
+  files: MusicFilesType
+  info: MusicInfoType
 }
 
 const router = useRouter()
@@ -44,6 +38,14 @@ const form = ref<CreateMusicForm>({
 const isLoading = ref<boolean>(false)
 
 const handleCreateMusic = async () => {
+  const confirm = await showConfirm(
+      'Создание музыки',
+      'Вы действительно хотите создать новую музыку?'
+  )
+  if (confirm) await createMusic()
+}
+
+const createMusic = async () => {
   try {
     isLoading.value = true
 
