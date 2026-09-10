@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onBeforeMount, ref, watchEffect} from "vue";
+import {type Component, computed, onBeforeMount, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 
 import {AppUserType} from "@/types/user.ts";
@@ -9,33 +9,46 @@ import {apiGetUser} from "@api/veMusic/user.ts";
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
-import VeMusicUserAvatar from "@components/veMusic/user/VeMusicUserAvatar.vue";
-import VeMusicUserInfo from "@components/veMusic/user/VeMusicUserInfo.vue";
-import VeMusicUserActions from "@components/veMusic/user/VeMusicUserActions.vue";
+import VeMusicUserData from "@components/veMusic/user/VeMusicUserData.vue";
+import VeMusicUserHistory from "@components/veMusic/user/VeMusicUserHistory.vue";
+import VeMusicUserLikes from "@components/veMusic/user/VeMusicUserLikes.vue";
+
+import ButtonUi from "@ui/ButtonUi.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 import usePageStore from "@store/usePageStore.ts";
 const pageStore = usePageStore();
 
-export interface VeMusicUserForm {
-  name: string
-  login: string
-  password: string
-}
-
 const signal = useSignal()
 const route = useRoute()
 
 const userId = computed(() => route.params.id)
 
-const form = ref<VeMusicUserForm>({
-  name: '',
-  login: '',
-  password: '',
-})
-
 const isLoading = ref<boolean>(true)
+
+const activeTab = ref<string>('data')
+
+const tabs = [
+  {
+    key: 'data',
+    label: 'Информация',
+  },
+  {
+    key: 'history',
+    label: 'История',
+  },
+  {
+    key: 'likes',
+    label: 'Лайки',
+  },
+]
+
+const components: Record<string, Component> = {
+  data: VeMusicUserData,
+  history: VeMusicUserHistory,
+  likes: VeMusicUserLikes,
+}
 
 const getCurrentUser = async () => {
   isLoading.value = true
@@ -59,35 +72,31 @@ onBeforeMount(() => getCurrentUser())
 watchEffect(() => {
   pageStore.pageTitle =
       `Пользователь veMusic: (${veMusicStore.currentUser?.id}) "${veMusicStore.currentUser?.name}"`
-
-  if (veMusicStore.currentUser) {
-    form.value.name = veMusicStore.currentUser.name
-    form.value.login = veMusicStore.currentUser.login
-  }
 })
 </script>
 
 <template>
 
   <div class="user h-100 flex-center">
-    <div class="flex gap-20">
-      <VeMusicUserAvatar v-model:is-loading="isLoading"
-                         :user-id="+userId"
-                         :signal="signal"
-      />
-
-      <div class="flex flex-column justify-between">
-        <VeMusicUserInfo v-model:is-loading="isLoading"
-                         v-model:form="form"
-                         :user-id="+userId"
-                         :signal="signal"
-        />
-
-        <VeMusicUserActions v-model:is-loading="isLoading"
-                            :user-id="+userId"
-                            :signal="signal"
-        />
+    <div class="w-75 flex flex-column gap-20">
+      <div class="flex gap-10">
+        <ButtonUi v-for="tab in tabs"
+                  :key="tab.key"
+                  :class="activeTab === tab.key && 'bg-light text-dark pointer-none'"
+                  @click="activeTab = tab.key"
+        >
+          {{tab.label}}
+        </ButtonUi>
       </div>
+
+      <KeepAlive>
+        <Component :is="components[activeTab]"
+                   v-model:is-loading="isLoading"
+                   :user-id="+userId"
+                   :signal="signal"
+                   class="w-100"
+        />
+      </KeepAlive>
     </div>
   </div>
 

@@ -7,6 +7,7 @@ const props = withDefaults(
     defineProps<{
       total: number
       limit?: number
+      isLoading?: boolean
     }>(), {
       limit: 30
     }
@@ -82,7 +83,7 @@ const handlePage = (page: number) => {
 
     <button :class="['pagination__next', btnClass]"
             type="button"
-            :disabled="activePage === maxPage"
+            :disabled="activePage === maxPage || isLoading"
             @click="activePage = Math.min(maxPage, activePage + 1)"
     >
       <SelectArrowIcon/>
