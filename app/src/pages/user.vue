@@ -17,15 +17,16 @@ const isLoading = ref(false)
 
 <template>
 
-  <div class="user h-100 flex-center">
-    <div class="flex gap-20">
+  <div class="h-100 flex-center">
+    <div class="row gap-20 w-75">
       <UserAvatar v-model:is-loading="isLoading"
                   :confirm-title="confirmTitle"
                   :error-title="errorTitle"
                   :signal="signal"
+                  class="col-6"
       />
 
-      <div class="flex flex-column gap-20">
+      <div class="flex flex-column gap-20 col-6">
         <UserForm v-model:is-loading="isLoading"
                   :confirm-title="confirmTitle"
                   :error-title="errorTitle"

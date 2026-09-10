@@ -65,7 +65,7 @@ const deleteAvatar = async () => {
              :disabled="isLoading"
              @select="uploadAvatar($event)"
              @delete="handleDeleteAvatar"
-             class="user__avatar"
+             class="aspect-1"
   />
 
 </template>

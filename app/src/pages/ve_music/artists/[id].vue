@@ -68,14 +68,15 @@ watchEffect(() => {
 
 <template>
 
-  <div class="user h-100 flex-center">
-    <div class="flex gap-20">
+  <div class="h-100 flex-center">
+    <div class="row w-75 gap-20">
       <VeMusicArtistAvatar v-model:is-loading="isLoading"
                            :artist-id="+artistId"
                            :signal="signal"
+                           class="col-6"
       />
 
-      <div class="flex flex-column justify-between">
+      <div class="flex flex-column justify-between col-6">
         <VeMusicArtistInfo v-model:form="form"
                            v-model:is-loading="isLoading"
                            :artist-id="+artistId"
