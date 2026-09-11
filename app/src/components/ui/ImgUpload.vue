@@ -8,6 +8,9 @@ import EditIcon from "@icons/EditIcon.vue";
 import CrossIcon from "@icons/CrossIcon.vue";
 import NotImageIcon from "@icons/NotImageIcon.vue";
 
+import useApiUrlStore from "@store/useApiUrlStore.ts";
+const apiUrlStore = useApiUrlStore();
+
 const props = withDefaults(
     defineProps<{
       imgUrl: string | undefined | null
@@ -49,9 +52,8 @@ const handleUpload = async (file: File) => {
          ]"
          title="Загрузить фото"
     >
-
       <img v-if="imgUrl"
-           :src="imgUrl"
+           :src="imgUrl?.includes('blob') ? imgUrl : `${apiUrlStore.activeUrl}${imgUrl}`"
            alt="фото"
       >
 

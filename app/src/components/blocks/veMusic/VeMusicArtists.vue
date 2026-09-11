@@ -18,6 +18,9 @@ import InputUi from "@ui/InputUi.vue";
 import NotImageIcon from "@icons/NotImageIcon.vue";
 import SearchIcon from "@icons/SearchIcon.vue";
 
+import useApiUrlStore from "@store/useApiUrlStore.ts";
+const apiUrlStore = useApiUrlStore();
+
 const artists = defineModel<number[]>('artists', {required: true})
 
 const signal = useSignal()
@@ -108,7 +111,7 @@ onBeforeMount(() => getArtists())
             <div class="flex align-center gap-20">
               <div class="square-40 rounded-full img-container flex-center">
                 <img v-if="artist?.avatarUrl"
-                     :src="artist.avatarUrl"
+                     :src="`${apiUrlStore.activeUrl}${artist.avatarUrl}`"
                      :alt="artist.name"
                 >
                 <Icon v-else

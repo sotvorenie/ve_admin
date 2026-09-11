@@ -12,6 +12,9 @@ import Icon from "@ui/Icon.vue";
 import LoadingIcon from "@icons/LoadingIcon.vue";
 import NotImageIcon from "@icons/NotImageIcon.vue";
 
+import useApiUrlStore from "@store/useApiUrlStore.ts";
+const apiUrlStore = useApiUrlStore();
+
 const props = withDefaults(
     defineProps<{
       headItems: ListHeadType[]
@@ -102,11 +105,11 @@ const handleItem = (row: ListItemType) => {
                    ]"
                    @click="row.info?.[item.key] && (() => {
                        $event.stopPropagation()
-                       openFancybox(row.info[item.key])
+                       openFancybox(`${apiUrlStore.activeUrl}${row.info[item.key]}`)
                    })()"
               >
                 <img v-if="row.info?.[item.key]"
-                     :src="row.info[item.key]"
+                     :src="`${apiUrlStore.activeUrl}${row.info[item.key]}`"
                      alt="фото"
                 >
 
