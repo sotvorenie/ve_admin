@@ -16,8 +16,12 @@ export const apiGetAllArtistMusic = async (id: number, page: number = 1, limit: 
     return apiGet(`/artist/music/${id}?page=${page}&limit=${limit}`, {signal})
 }
 
-export const apiCreateArtist = async (name: string, signal?: AbortSignal): Promise<CreatedArtistType> => {
-    return apiPost(`/artist/create`, {name}, {signal})
+export const apiCreateArtist = async (name: string, avatarFile: File, signal?: AbortSignal): Promise<CreatedArtistType> => {
+    const form = new FormData()
+    form.append('name', name)
+    form.append('avatar', avatarFile)
+
+    return apiPost(`/artist/create`, form, {signal})
 }
 
 export const apiDeleteArtist = async (id: number, signal?: AbortSignal): Promise<void> => {
