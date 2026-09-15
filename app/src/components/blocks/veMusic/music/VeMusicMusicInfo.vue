@@ -16,6 +16,8 @@ import LabelUi from "@ui/LabelUi.vue";
 import SelectUi, {Option} from "@ui/SelectUi.vue";
 import ButtonUi from "@ui/ButtonUi.vue";
 
+import CrossIcon from "@icons/CrossIcon.vue";
+
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
@@ -33,7 +35,7 @@ const form = ref<MusicInfoType>({
 })
 
 const visibleRedactBtn = computed(() => {
-  return form.value.title?.length > 0 && form.value.genre && form.value.artistsIds?.length > 0
+  return form.value.title?.length > 0 && form.value.genre >= 0 && form.value.artistsIds?.length > 0
 })
 
 const genres = ref<Option[]>([])
