@@ -40,7 +40,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleEsc))
   <Transition name="fade">
     <Teleport to="body">
       <div class="modal z-10000 flex-center position-absolute inset-0" v-if="isVisible" @click="close">
-        <div class="bg-dark-alt p-20 rounded-20" :style="{width: `${size / 16}rem`}" @click.stop>
+        <div class="modal__content bg-dark-alt p-20 rounded-20 overflow-y-auto" :style="{width: `${size / 16}rem`}" @click.stop>
           <slot name="default" :close="close"/>
 
           <ButtonUi v-if="closeVisible"
