@@ -63,7 +63,7 @@ const createMusic = async () => {
 
 const isSaveBtnDisabled = computed(() => {
   const f = form.value
-  return !f.files.audio || !f.files.preview || !f.info.title || f.info.genre < 0 || f.info.artistsIds.length === 0
+  return !f.files.audio || !f.info.title || f.info.genre < 0 || f.info.artistsIds.length === 0
 })
 </script>
 
