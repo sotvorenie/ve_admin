@@ -31,11 +31,11 @@ export const apiRedactAudioUrlForMusic = async (id: number, audioPath: string, s
 }
 
 export const apiRedactPreviewUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPost(`/music/redact_preview_url/${id}`, {path: audioPath}, {signal})
+    return apiPatch(`/music/redact_preview_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactVideoUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPost(`/music/redact_video_url/${id}`, {path: audioPath}, {signal})
+    return apiPatch(`/music/redact_video_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactAuditionsForMusic = async (id: number, auditionsCount: number, signal?: AbortSignal): Promise<void> => {

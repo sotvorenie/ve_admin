@@ -13,6 +13,8 @@ import List from "@common/List.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
+import usePageStore from "@store/usePageStore.ts";
+const pageStore = usePageStore();
 
 const signal = useSignal()
 
@@ -72,17 +74,20 @@ const getGenres = async () => {
 }
 
 onBeforeMount(() => {
-  getGenres()
-  veMusicStore.createBtnInfo = {
+  pageStore.createBtnInfo = {
     label: 'Добавить жанр',
     to: '/ve_music/genres/create',
   }
+
+  getGenres()
 })
 </script>
 
 <template>
 
-  <List :items="genres"
+  <List :page="1"
+        :total="genres?.length"
+        :items="genres"
         :head-items="headItems"
         cols-style="4rem 9rem 9rem 1fr"
         :store-func="setToStore"

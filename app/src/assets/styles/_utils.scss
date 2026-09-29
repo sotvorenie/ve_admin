@@ -98,6 +98,19 @@
 .square-20 {
   @include square(20);
 }
+.square-30 {
+  @include square(30);
+}
 .square-40 {
   @include square(40);
+}
+
+.gap-10 {
+  gap: rem(10);
+}
+.gap-20 {
+  gap: rem(20);
+}
+.gap-30 {
+  gap: rem(30);
 }

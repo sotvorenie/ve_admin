@@ -3,8 +3,8 @@ import {UrlType} from "@/types/url.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
-export const apiGetAllUsers = async (page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<AppUsersResponseType> => {
-    return apiGet(`/user/all?page=${page}&limit=${limit}`, {signal})
+export const apiGetAllUsers = async (name: string = '', page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<AppUsersResponseType> => {
+    return apiGet(`/user/list?name=${name}&page=${page}&limit=${limit}`, {signal})
 }
 
 export const apiGetUser = async (id: number, signal?: AbortSignal): Promise<AppUserType> => {

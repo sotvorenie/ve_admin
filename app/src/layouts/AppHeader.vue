@@ -24,9 +24,9 @@ watchEffect(() => pageStore.pageTitle = route.meta.title as string)
 
 <template>
 
-  <header class="header flex align-center gap-20">
+  <header class="flex align-center gap-20">
     <button v-if="visibleBack"
-            class="header__btn rounded-10 button-width-svg border flex-center"
+            class="square-40 rotate-90 rounded-10 button-width-svg border flex-center"
             type="button"
             @click="handleBack"
     >

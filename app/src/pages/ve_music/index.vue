@@ -1,15 +1,7 @@
 <script setup lang="ts">
-import {ref} from "vue";
-
 import {TabType} from "@/types/tab.ts";
 
-import Tabs from "@/components/common/Tabs.vue";
-
-import ButtonUi from "@ui/ButtonUi.vue";
-
-import useVeMusicStore from "@store/useVeMusicStore.ts";
-import {onBeforeRouteUpdate} from "vue-router";
-const veMusicStore = useVeMusicStore();
+import AppPage from "@layouts/AppPage.vue";
 
 const tabsList: TabType[] = [
   {
@@ -33,31 +25,10 @@ const tabsList: TabType[] = [
     url: '/ve_music/artists',
   },
 ]
-
-const activeTab = ref<TabType | null>(null)
-
-onBeforeRouteUpdate(() => {
-  veMusicStore.createBtnInfo = {
-    label: '',
-    to: '',
-  }
-})
 </script>
 
 <template>
 
-  <div class="ve-music">
-    <div class="flex justify-between gap-20 pb-6">
-      <Tabs :items="tabsList" v-model="activeTab"/>
-
-      <RouterLink v-if="veMusicStore.createBtnInfo?.to"
-                  :to="veMusicStore.createBtnInfo.to"
-      >
-        <ButtonUi>{{veMusicStore.createBtnInfo.label}}</ButtonUi>
-      </RouterLink>
-    </div>
-
-    <router-view/>
-  </div>
+  <AppPage :tabs-list="tabsList"/>
 
 </template>

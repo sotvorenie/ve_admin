@@ -42,7 +42,7 @@ const visibleActionBtn = computed(() => {
 
     <Transition name="fade">
       <button v-if="actionBtn && visibleActionBtn"
-              class="input__btn button-width-full-svg absolute-y-center rounded-full flex-center"
+              class="input__btn square-30 button-width-full-svg absolute-y-center rounded-full flex-center"
               type="button"
               @click="actionBtn.func()"
       >

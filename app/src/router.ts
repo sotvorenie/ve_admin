@@ -21,6 +21,7 @@ import veMusicGenre from "@pages/ve_music/genres/[id].vue";
 import veMusicGenreCreate from "@pages/ve_music/genres/create.vue";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
+import useSearchStore from "@store/useSearchStore.ts";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -184,8 +185,11 @@ const router = createRouter({
 
 router.afterEach((to) => {
     const apiUrlStore = useApiUrlStore()
+    const searchStore = useSearchStore()
     const target = to.meta.apiTarget
     if (target) apiUrlStore.setUrl(apiUrlStore.allUrls[target])
+    searchStore.searchActive = false
+    searchStore.searchName = ''
 })
 
 

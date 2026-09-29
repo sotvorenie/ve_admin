@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {productsData} from "@data/products.ts";
 
+import {BASE_URL} from "@api/url.ts";
+
 import Icon from "@ui/Icon.vue";
 
 import NotImageIcon from "@icons/NotImageIcon.vue";``
@@ -11,7 +13,7 @@ const userStore = useUserStore();
 
 <template>
 
-  <aside class="aside border-r border-light-alt py-20 px-12 flex flex-column">
+  <aside class="border-r border-light-alt py-20 px-12 flex flex-column">
     <RouterLink to="/" class="w-100 flex-center mb-30 text-w600 h3">
       Админка
     </RouterLink>
@@ -29,7 +31,7 @@ const userStore = useUserStore();
           >
             <Component v-if="item.icon"
                        :is="item.icon"
-                       class="aside__icon"
+                       class="square-40"
             />
             <span class="text-w500 text-ellipsis">{{item.label}}</span>
           </RouterLink>
@@ -38,9 +40,9 @@ const userStore = useUserStore();
     </nav>
 
     <RouterLink to="/user" class="aside__user mt-auto flex align-center gap-10">
-      <div class="aside__avatar rounded-full img-container">
+      <div class="square-40 rounded-full img-container">
         <img v-if="userStore.user?.avatarUrl"
-             :src="`${userStore.user.avatarUrl}?t=${Date.now()}`"
+             :src="`${BASE_URL}${userStore.user.avatarUrl}?t=${Date.now()}`"
              :alt="userStore.user.name"
         >
         <Icon v-else :name="NotImageIcon" :size="15"/>

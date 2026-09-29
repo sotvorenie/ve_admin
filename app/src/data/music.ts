@@ -26,7 +26,7 @@ export const musicHeadItems: ListHeadType[] = [
     {
         label: 'Обложка',
         key: 'previewUrl',
-        type: 'preview',
+        type: 'poster',
     },
     {
         label: 'Длительность',

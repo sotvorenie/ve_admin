@@ -84,7 +84,7 @@ const formatSize = (bytes: number) => {
 
 <template>
 
-  <div class="upload flex flex-column gap-10">
+  <div class="flex flex-column gap-10">
     <label @dragenter.prevent="isDragging = true"
            @dragleave.prevent="isDragging = false"
            @dragover.prevent
@@ -114,7 +114,7 @@ const formatSize = (bytes: number) => {
           <span class="text-12">{{formatSize(file.size)}}</span>
         </div>
 
-        <button class="upload__btn button-width-full-svg rounded-full position-absolute"
+        <button class="square-30 button-width-full-svg rounded-full position-absolute"
                 type="button"
                 @click="handleDelete(index)"
         >

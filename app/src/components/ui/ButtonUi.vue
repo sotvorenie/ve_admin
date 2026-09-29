@@ -29,7 +29,8 @@ withDefaults(
           :size="25"
           class="absolute-center"
     />
-    <span :style="{
+    <span class="flex flex-column"
+          :style="{
             opacity: isLoading ? 0 : 1,
           }"
     >

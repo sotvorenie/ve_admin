@@ -10,10 +10,13 @@ import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
-import Pagination from "@common/Pagination.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
+import usePageStore from "@store/usePageStore.ts";
+const pageStore = usePageStore();
+import useSearchStore from "@store/useSearchStore.ts";
+const searchStore = useSearchStore();
 
 const signal = useSignal()
 
@@ -60,7 +63,7 @@ const getArtists = async () => {
   isLoading.value = true
 
   try {
-    const response: ArtistsListType = await apiGetArtists('', page.value, 30, signal)
+    const response: ArtistsListType = await apiGetArtists(searchStore.searchName, page.value, 30, signal)
 
     if (response) {
       page.value = response.page
@@ -83,23 +86,25 @@ const getArtists = async () => {
 }
 
 onBeforeMount(() => {
-  getArtists()
-  veMusicStore.createBtnInfo = {
+  pageStore.createBtnInfo = {
     label: 'Добавить исполнителя',
     to: '/ve_music/artists/create',
   }
+  searchStore.searchFunc = () => getArtists()
+
+  getArtists()
 })
 </script>
 
 <template>
 
-  <List :items="artists"
+  <List v-model:page="page"
+        :items="artists"
+        :total="total"
         :head-items="headItems"
         cols-style="4rem 9rem 9rem 10rem 1fr"
         :store-func="setToStore"
         :is-loading="isLoading"
   />
-
-  <Pagination v-model="page" :total="total"/>
 
 </template>

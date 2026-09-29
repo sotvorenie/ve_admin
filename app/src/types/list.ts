@@ -1,7 +1,7 @@
 export interface ListHeadType {
     label: string
     key: string
-    type: 'text' | 'avatar' | 'preview' | 'date'
+    type: 'text' | 'avatar' | 'preview' | 'poster' | 'date'
     formatFunction?: Function
     to?: {
         page: string

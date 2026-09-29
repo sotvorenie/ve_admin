@@ -2,8 +2,9 @@
 
 .list {
 
-  &__avatar {
-    @include square(40);
+  &__content {
+    scrollbar-width: none;
+    max-height: 70vh;
   }
 
   &__preview {

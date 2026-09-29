@@ -7,6 +7,8 @@ import {ListHeadType, ListItemType} from "@/types/list.ts";
 
 import {formatDate} from "@composables/useFormatDate.ts";
 
+import Pagination from "@common/Pagination.vue";
+
 import Icon from "@ui/Icon.vue";
 
 import LoadingIcon from "@icons/LoadingIcon.vue";
@@ -20,12 +22,17 @@ const props = withDefaults(
       headItems: ListHeadType[]
       items: ListItemType[]
       isLoading: boolean
+      total: number
+      limit?: number
       storeFunc?: Function
       colsStyle?: string
     }>(), {
-      isLoading: true
+      isLoading: true,
+      limit: 30
     }
 )
+
+const page = defineModel<number>('page', {required: true, default: 1})
 
 const router = useRouter()
 
@@ -50,7 +57,7 @@ const handleItem = (row: ListItemType) => {
 
 <template>
 
-  <div class="list">
+  <div class="list flex flex-column h-100">
     <ul class="border-b border-t"
         :class="colsClass"
         :style="colsStyles"
@@ -63,7 +70,7 @@ const handleItem = (row: ListItemType) => {
       </li>
     </ul>
 
-    <ul v-if="items?.length" class="flex flex-column">
+    <ul v-if="items?.length" class="list__content flex flex-column overflow-x-hidden overflow-y-auto">
       <li v-for="row in items"
           :key="row.info.id"
           class="cursor-pointer"
@@ -100,7 +107,8 @@ const handleItem = (row: ListItemType) => {
               <div v-else
                    class="img-container border border-transparent transition-colors"
                    :class="[
-                      item.type === 'avatar' ? 'list__avatar rounded-full' : 'list__preview aspect-16_9',
+                      item.type === 'avatar' ? 'square-40 rounded-full'
+                      : item.type === 'preview' ? 'list__preview aspect-16_9' : 'list__preview aspect-1 w-50',
                       row.info?.[item.key] && 'hover:border-accent',
                    ]"
                    @click="row.info?.[item.key] && (() => {
@@ -130,6 +138,11 @@ const handleItem = (row: ListItemType) => {
     <div v-else class="w-100 p-30 flex-center">
       <Icon :name="LoadingIcon" :size="32"/>
     </div>
+
+    <Pagination v-if="items?.length"
+                v-model="page"
+                :total="total"
+    />
   </div>
 
 </template>

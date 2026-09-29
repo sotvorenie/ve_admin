@@ -18,7 +18,7 @@ const activePage = defineModel<number>({
   default: 1
 })
 
-const btnClass = 'pagination__btn button-width-svg flex-center text-center rounded-12 border border-dark-muted hover:border-accent hover:text-accent'
+const btnClass = 'square-40 button-width-svg flex-center text-center rounded-12 border border-dark-muted hover:border-accent hover:text-accent'
 
 const maxPage = computed(() => Math.ceil(props.total / props.limit))
 
@@ -55,8 +55,8 @@ const handlePage = (page: number) => {
 
 <template>
 
-  <div v-if="maxPage > 1" class="pagination flex-center gap-20 mt-24 user-select-none">
-    <button :class="['pagination__prev', btnClass]"
+  <div v-if="maxPage > 1" class="flex-center gap-20 mt-24 user-select-none">
+    <button :class="['rotate-90', btnClass]"
             :disabled="activePage === 1"
             type="button"
             @click="activePage = Math.max(1, activePage - 1)"
@@ -81,7 +81,7 @@ const handlePage = (page: number) => {
       </template>
     </div>
 
-    <button :class="['pagination__next', btnClass]"
+    <button :class="['rotate--90', btnClass]"
             type="button"
             :disabled="activePage === maxPage || isLoading"
             @click="activePage = Math.min(maxPage, activePage + 1)"

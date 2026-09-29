@@ -6,12 +6,6 @@ import {GenreType} from "@/types/genre.ts";
 import {ArtistType} from "@/types/artist.ts";
 
 const useVeMusicStore = defineStore('veMusicStore', () => {
-    // данные для кнопки добавления
-    const createBtnInfo = ref<{label: string, to: string}>({
-        label: '',
-        to: '',
-    })
-
     // выбранный пользователь
     const currentUser = ref<AppUserType | null>(null)
 
@@ -25,7 +19,6 @@ const useVeMusicStore = defineStore('veMusicStore', () => {
     const currentArtist = ref<ArtistType | null>(null)
 
     return {
-        createBtnInfo,
         currentUser,
         currentMusic,
         currentGenre,

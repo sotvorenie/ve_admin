@@ -12,10 +12,13 @@ import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
-import Pagination from "@common/Pagination.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
+import usePageStore from "@store/usePageStore.ts";
+const pageStore = usePageStore();
+import useSearchStore from "@store/useSearchStore.ts";
+const searchStore = useSearchStore();
 
 const signal = useSignal()
 
@@ -30,11 +33,11 @@ const setToStore = (music: any) => {
   veMusicStore.currentMusic = music
 }
 
-const getUsers = async () => {
+const getMusic = async () => {
   isLoading.value = true
 
   try {
-    const response: MusicListType = await apiGetAllMusic('', -1, -1, page.value, 30, signal)
+    const response: MusicListType = await apiGetAllMusic(searchStore.searchName, -1, -1, page.value, 30, signal)
 
     if (response) {
       page.value = response.page
@@ -58,23 +61,26 @@ const getUsers = async () => {
 }
 
 onBeforeMount(() => {
-  getUsers()
-  veMusicStore.createBtnInfo = {
+  pageStore.createBtnInfo = {
     label: 'Добавить музыку',
     to: '/ve_music/music/create',
   }
+  searchStore.searchFunc = () => getMusic()
+
+  getMusic()
+
 })
 </script>
 
 <template>
 
-  <List :items="music"
+  <List v-model:page="page"
+        :items="music"
+        :total="total"
         :head-items="musicHeadItems"
         :cols-style="musicColsStyle"
         :store-func="setToStore"
         :is-loading="isLoading"
   />
-
-  <Pagination v-model="page" :total="total"/>
 
 </template>
