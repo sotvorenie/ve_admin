@@ -6,7 +6,6 @@ import {ArtistsListType, ArtistType} from "@/types/artist.ts";
 import {apiGetArtists} from "@api/veMusic/artist.ts";
 
 import {pluralize} from "@composables/usePluralize.ts";
-import {debounce} from "@composables/useDebounce.ts";
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
@@ -27,6 +26,8 @@ const signal = useSignal()
 
 const isLoading = ref<boolean>(true)
 
+const isVisible = ref<boolean>(false)
+
 const artistsList = ref<ArtistType[]>([])
 
 const searchName = ref<string>('')
@@ -44,7 +45,7 @@ const getArtists = async () => {
         signal
     )
     if (response) {
-      page.value = response.page + 1
+      page.value = response.page
       artistsList.value = response.artists
     }
   } catch (err: any) {
@@ -69,24 +70,26 @@ const isSelected = (id: number) => {
   return artists.value?.includes(id)
 }
 
+const handleCancel = () => {
+  artists.value = []
+  isVisible.value = false
+}
+
 onBeforeMount(() => getArtists())
 </script>
 
 <template>
 
-  <Modal :size="600">
+  <Modal v-model="isVisible" :size="600">
     <template #activator="{open}">
-      <ButtonUi @click="() => {
-                  open()
-                  }"
-      >
+      <ButtonUi @click="open" class="w-full">
         Выбрать исполнителей
       </ButtonUi>
     </template>
 
-    <template #default>
-      <div class="flex flex-column gap-20">
-        <p class="text-14 text-w600">
+    <template #default="{close}">
+      <div class="flex flex-col gap-5">
+        <p class="text-sm font-semibold">
           {{pluralize(artists?.length ?? 0, ['Выбран', 'Выбраны', 'Выбрано'])}} {{artists?.length}} {{pluralize(artists?.length ?? 0, ['исполнитель', 'исполнителя', 'исполнителей'])}}
         </p>
 
@@ -98,18 +101,18 @@ onBeforeMount(() => getArtists())
                       func: () => getArtists(),
                       visible: !!searchName?.length
                    }"
-                 @update:model-value="() => debounce(getArtists, 500)"
+                 @keydown.enter="getArtists"
         />
 
-        <ul class="flex flex-column gap-10">
+        <ul class="flex flex-col gap-2.5">
           <li v-for="artist in artistsList"
               :key="artist.id"
-              class="flex align-center justify-between gap-20 px-16 py-10 border border-light-alt rounded-12 cursor-pointer hover:border-accent transition-colors"
+              class="flex items-center justify-between gap-5 px-4 py-2.5 border border-white rounded-xl cursor-pointer hover:border-accent transition-colors"
               :class="isSelected(artist.id) && 'border-accent'"
               @click="handleArtist(artist.id)"
           >
-            <div class="flex align-center gap-20">
-              <div class="square-40 rounded-full img-container flex-center">
+            <div class="flex items-center gap-5">
+              <div class="img-container w-10 aspect-square rounded-full">
                 <img v-if="artist?.avatarUrl"
                      :src="`${apiUrlStore.activeUrl}${artist.avatarUrl}`"
                      :alt="artist.name"
@@ -120,16 +123,26 @@ onBeforeMount(() => getArtists())
                 />
               </div>
 
-              <p class="text-ellipsis text-w600">{{artist.name}}</p>
+              <p class="truncate font-semibold">{{artist.name}}</p>
             </div>
 
-            <div class="square-20 rounded-full border border-light-alt flex-center">
-              <div class="w-50 aspect-1 rounded-full transition-colors"
+            <div class="w-5 aspect-square rounded-full border border-white flex items-center justify-center">
+              <div class="w-1/2 aspect-square rounded-full transition-colors"
                     :class="isSelected(artist.id) && 'bg-accent'"
               />
             </div>
           </li>
         </ul>
+
+        <div v-if="artists?.length" class="grid grid-cols-2 gap-2.5">
+          <ButtonUi @click="handleCancel">
+            Отмена
+          </ButtonUi>
+
+          <ButtonUi @click="close">
+            Подтвердить
+          </ButtonUi>
+        </div>
       </div>
     </template>
   </Modal>

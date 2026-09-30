@@ -84,14 +84,14 @@ watchEffect(() => {
 
 <template>
 
-  <div class="h-100 flex-center">
-    <div class="w-75 flex flex-column gap-20">
-      <div class="flex gap-10">
+  <div class="h-full flex items-center justify-center">
+    <div class="w-3/4 2xl:w-1/2 flex flex-col gap-5">
+      <div class="flex w-full gap-2.5">
         <ButtonUi v-for="tab in tabs"
                   :key="tab.key"
                   @click="activeTab = tab.key"
-                  class="text-16"
-                  :class="tab.key === activeTab && 'bg-light text-dark pointer-none'"
+                  :class="tab.key === activeTab && 'bg-white text-black pointer-events-none'"
+                  class="cursor-pointer transition-colors w-full"
         >
           {{tab.label}}
         </ButtonUi>

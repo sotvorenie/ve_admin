@@ -4,25 +4,25 @@ import {productsData} from "@data/products.ts";
 
 <template>
 
-  <div class="index h-100">
-    <ul class="grid-cols-3 align-center gap-20 h-100 px-30">
+  <div class="flex items-center justify-center h-full">
+    <ul class="grid grid-cols-3 items-center gap-[1.2rem] px-[2rem] 2xl:w-3/4">
       <li v-for="item in productsData"
           :key="item.label"
       >
         <RouterLink
             :to="item.url"
-            class="index__link w-100 position-relative border border-dark-muted rounded-20 aspect-1 hover:border-accent flex-center"
+            class="w-full relative border border-white/50 rounded-[1rem] aspect-square hover:border-accent flex flex-col items-center justify-center transition-colors"
         >
           <div
               v-if="item?.icon"
-              class="index__icon-container absolute-x-center flex-center rounded-20 border bg-dark transition-colors"
+              class="recolor-svg absolute -translate-y-1/2 top-0 bg-text flex items-center justify-center rounded-[1rem] border transition-colors"
           >
             <Component :is="item.icon"
-                       class="index__icon h-100 w-100"
+                       class="w-[5rem] h-auto aspect-square"
             />
           </div>
 
-          <span class="h1 text-w600">{{item.label}}</span>
+          <span class="text-3xl font-semibold">{{item.label}}</span>
         </RouterLink>
       </li>
     </ul>

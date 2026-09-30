@@ -100,7 +100,7 @@ const redactPassword = async () => {
 
 <template>
 
-  <form novalidate class="user__form flex flex-column gap-10">
+  <form novalidate class="flex flex-col gap-2.5">
     <LabelUi text="Имя:">
       <InputUi v-model="form.name"
                minlength="4"

@@ -94,7 +94,7 @@ watchEffect(() => {
 
 <template>
 
-  <form novalidate class="flex flex-column gap-20 w-100">
+  <form novalidate class="flex flex-col gap-5 w-full">
     <LabelUi text="Название трека:">
       <InputUi v-model="form.title"
                :disabled="isLoading"
@@ -114,8 +114,8 @@ watchEffect(() => {
       />
     </LabelUi>
 
-    <div class="gap-10"
-         :class="visibleRedactBtn && 'grid-cols-2'"
+    <div class="gap-2.5"
+         :class="visibleRedactBtn && 'grid grid-cols-2'"
     >
       <VeMusicArtists v-model:artists="form.artistsIds"/>
 

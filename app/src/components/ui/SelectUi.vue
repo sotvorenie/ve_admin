@@ -49,44 +49,44 @@ onUnmounted(() => globalThis.removeEventListener('click', closeDropdown))
 </script>
 
 <template>
-  <div class="position-relative" ref="dropdownRef">
+  <div class="relative" ref="dropdownRef">
     <button
         @click.stop="isOpen = !isOpen"
-        class="flex align-center justify-between w-100 h-100 bg-dark-alt text-w600 gap-12 p-12 md:px-20 md:py-4 text-14 cursor-pointer text-nowrap transition-colors text-left text-light"
+        class="recolor-svg flex items-center justify-between w-full h-full bg-text-alt font-semibold gap-3 p-3 text-sm cursor-pointer text-nowrap transition-colors text-left text-white"
         :class="[
           isOpen
-            ? 'rounded-t-12 rounded-b-none border-b-0'
-            : 'rounded-12'
+            ? 'rounded-t-xl rounded-b-none border-b-0'
+            : 'rounded-xl'
         ]"
         type="button"
     >
-      <span class="text-ellipsis"
-            :class="isSelected() ? 'text-light' : 'text-light-alt'"
+      <span class="truncate"
+            :class="isSelected() ? 'text-accent' : 'text-white'"
       >
         {{ selectedLabel }}
       </span>
       <Icon
           :name="SelectArrowIcon"
           :size="20"
-          class="flex-shrink-0 text-light-alt"
-          :class="{ 'rotate-180': isOpen }"
+          class="shrink-0"
+          :class="isOpen && 'rotate-180'"
       />
     </button>
 
     <div
         v-if="isOpen"
-        class="bg-dark-alt p-12 md:px-20 pt-0 md:py-4 flex flex-column rounded-b-12 position-absolute left-0 top-100 w-100 z-10"
+        class="bg-text-alt p-3 pt-0 flex flex-col rounded-b-xl absolute left-0 top-full w-full z-10 max-h-25 overflow-y-auto"
     >
-      <div class="flex flex-column gap-4 overflow-y-auto">
+      <div class="flex flex-col gap-1 overflow-y-auto">
         <button
             v-for="opt in options"
             :key="opt.id"
             @click="selectOption(opt.id)"
-            class="flex align-center w-100 mb-4 last:mb-0 text-light text-14 text-left hover:text-accent"
-            :class="modelValue === opt?.id && 'pointer-none text-accent'"
+            class="flex items-center w-full not-last:mb-1 text-white text-sm text-left hover:text-accent cursor-pointer transition-colors"
+            :class="modelValue === opt?.id && 'pointer-events-none text-accent'"
             type="button"
         >
-          <span class="text-ellipsis">{{ opt.label }}</span>
+          <span class="truncate">{{ opt.label }}</span>
         </button>
       </div>
     </div>

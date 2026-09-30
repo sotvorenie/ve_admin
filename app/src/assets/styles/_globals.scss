@@ -1,79 +1,20 @@
-@use 'helpers' as *;
-
-html {
-  overflow: hidden;
-
-  &.is-lock {
-    overflow: hidden;
+@media (min-width: 1920px) {
+  html {
+    font-size: clamp(
+            16px,
+            calc(16px + (100vw - 1920px) / 100),
+            20px
+    );
+  }
+}
+@media (any-hover: hover) {
+  a:hover {
+    color: var(--color-accent);
   }
 }
 
 body {
-  @include fluid-text(18, 14);
-
-  display: flex;
-  flex-direction: column;
-  font-family: var(--font-family-base);
-  color: var(--color-light);
-  background-color: var(--color-dark);
-}
-
-main, #app {
-  flex-grow: 1;
-}
-
-h1, .h1 {
-  @include fluid-text(30, 26);
-}
-
-h2, .h2 {
-  @include fluid-text(28, 24);
-}
-
-h3, .h3 {
-  @include fluid-text(26, 22);
-}
-
-h4, .h4 {
-  @include fluid-text(24, 20);
-}
-
-h5, .h5 {
-  @include fluid-text(22, 18);
-}
-
-h6, .h6 {
-  @include fluid-text(20, 16);
-}
-
-a,
-button,
-label,
-input,
-textarea,
-select,
-svg * {
-  transition-duration: var(--transition-duration);
-  outline: none;
-  background: transparent;
-  border: none;
-  color: currentColor;
-}
-
-a {
-  color: inherit;
-
-  @include hover {
-    color: var(--color-accent);
-  }
-
-  &[class] {
-    text-decoration: none;
-  }
-}
-
-button:disabled {
-  opacity: 50%;
-  cursor: not-allowed;
-  pointer-events: none;
+  background: var(--color-text);
+  color: var(--color-white);
+  font-family: var(--font-base);
 }

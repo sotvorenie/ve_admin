@@ -42,7 +42,7 @@ const deleteMusic = async () => {
 
 <template>
 
-  <div class="flex gap-20">
+  <div class="grid grid-cols-2 gap-2.5">
     <ButtonUi :disabled="isLoading"
               @click="router.back()"
     >

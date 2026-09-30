@@ -13,34 +13,32 @@ const userStore = useUserStore();
 
 <template>
 
-  <aside class="border-r border-light-alt py-20 px-12 flex flex-column">
-    <RouterLink to="/" class="w-100 flex-center mb-30 text-w600 h3">
+  <aside class="border-r border-white/50 py-4 px-4 flex flex-col">
+    <RouterLink to="/" class="text-center mb-8 font-semibold text-2xl transition-colors">
       Админка
     </RouterLink>
 
     <nav>
-      <ul class="aside__list flex flex-column gap-10">
+      <ul class="flex flex-col gap-3">
         <li v-for="item in productsData"
             :key="item.label"
         >
           <RouterLink :to="item.url"
-                      class="w-100 p-6 rounded-12 border border-dark-muted flex align-center gap-6"
-                      :class="[
-                          $route.path.includes(item.url) && 'bg-dark-muted',
-                      ]"
+                      class="recolor-svg w-full p-1 rounded-xl border border-white/50 hover:bg-white/10 flex items-center gap-2 transition-colors"
+                      :class="$route.path.includes(item.url) && 'bg-white/25'"
           >
             <Component v-if="item.icon"
                        :is="item.icon"
-                       class="square-40"
+                       class="w-10 2xl:w-13 h-auto aspect-square"
             />
-            <span class="text-w500 text-ellipsis">{{item.label}}</span>
+            <span class="font-semibold truncate text-xl">{{item.label}}</span>
           </RouterLink>
         </li>
       </ul>
     </nav>
 
-    <RouterLink to="/user" class="aside__user mt-auto flex align-center gap-10">
-      <div class="square-40 rounded-full img-container">
+    <RouterLink to="/user" class="mt-auto flex items-center gap-3 transition-colors">
+      <div class="w-10 aspect-square rounded-full bg-black/50 img-container recolor-svg">
         <img v-if="userStore.user?.avatarUrl"
              :src="`${BASE_URL}${userStore.user.avatarUrl}?t=${Date.now()}`"
              :alt="userStore.user.name"
@@ -48,7 +46,7 @@ const userStore = useUserStore();
         <Icon v-else :name="NotImageIcon" :size="15"/>
       </div>
 
-      <span class="text-w500 text-ellipsis">{{userStore.user.name}}</span>
+      <span class="font-semibold truncate text-lg">{{userStore.user.name}}</span>
     </RouterLink>
   </aside>
 

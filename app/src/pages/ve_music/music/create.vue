@@ -69,8 +69,8 @@ const isSaveBtnDisabled = computed(() => {
 
 <template>
 
-  <div class="h-100 flex-center">
-    <div class="w-50 flex flex-column gap-20">
+  <div class="h-full flex items-center justify-center">
+    <div class="w-1/2 flex flex-col gap-5">
       <VeMusicCreateMusicFiles v-model:form="form.files"
                                :is-loading="isLoading"
       />
@@ -79,7 +79,7 @@ const isSaveBtnDisabled = computed(() => {
                               :is-loading="isLoading"
       />
 
-      <div class="flex gap-10 w-100">
+      <div class="grid grid-cols-2 gap-2.5">
         <ButtonUi :disabled="isLoading"
                   @click="router.replace('/ve_music/music')"
         >
@@ -88,6 +88,7 @@ const isSaveBtnDisabled = computed(() => {
 
         <ButtonUi :disabled="isLoading || isSaveBtnDisabled"
                   @click="handleCreateMusic"
+                  class="not-disabled:cursor-pointer disabled:pointer-events-none transition-colors"
         >
           Добавить
         </ButtonUi>

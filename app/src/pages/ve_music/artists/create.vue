@@ -55,21 +55,21 @@ const URL = window.URL
 
 <template>
 
-  <div class="h-100 flex-center">
-    <div class="w-25 flex flex-column gap-20">
+  <div class="h-full flex items-center justify-center">
+    <div class="w-1/4 flex flex-col gap-5">
       <ImgUpload :img-url="avatarFile ? URL.createObjectURL(avatarFile) : ''"
                  :disabled="isLoading"
                  :show-confirm="false"
                  @select="(file: File) => avatarFile = file"
                  @delete="avatarFile = null"
-                 class="aspect-1 min-w-0"
+                 class="aspect-square min-w-0"
       />
 
       <VeMusicCreateArtistInfo v-model:name="name"
                                :is-loading="isLoading"
       />
 
-      <div class="flex gap-10 w-100">
+      <div class="grid grid-cols-2 gap-2.5">
         <ButtonUi :disabled="isLoading"
                   @click="router.replace('/ve_music/artists')"
         >

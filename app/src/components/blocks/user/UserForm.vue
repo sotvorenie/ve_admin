@@ -84,8 +84,8 @@ watchEffect(() => {
 
 <template>
 
-  <form class="user__form flex flex-column gap-20">
-    <p class="h4 text-w600">Данные пользователя</p>
+  <form class="flex flex-col gap-[1.2rem]">
+    <p class="text-xl font-semibold">Данные пользователя</p>
 
     <LabelUi text="Имя:">
       <InputUi v-model="form.name"

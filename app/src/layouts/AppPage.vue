@@ -51,27 +51,27 @@ onBeforeRouteLeave(() => {
 
 <template>
 
-  <div class="app-page ve-music h-100 overflow-hidden">
-    <div class="flex justify-between gap-20 pb-6">
+  <div class="h-full overflow-hidden">
+    <div class="flex justify-between gap-4 pb-2">
       <Tabs :items="tabsList" v-model="activeTab"/>
 
-      <div :class="`flex align-center flex-1 gap-10 justify-end`">
+      <div :class="`flex items-center flex-1 gap-3 justify-end`">
         <template v-if="searchStore.searchActive">
-          <LabelUi text="" class="w-100" style="max-width: 400px">
+          <LabelUi text="" class="w-full max-w-100">
             <InputUi v-model="searchStore.searchName"
                      :disabled="false"
                      placeholder="Поиск.."
             />
           </LabelUi>
 
-          <ButtonUi class="flex-center rounded-full w-fit"
+          <ButtonUi class="recolor-svg flex items-center justify-center rounded-full w-fit cursor-pointer"
                     title="Поиск"
                     @click="searchStore.searchFunc()"
           >
             <Icon :name="SearchIcon" :size="20"/>
           </ButtonUi>
 
-          <ButtonUi class="flex-center rounded-full w-fit"
+          <ButtonUi class="recolor-svg flex items-center justify-center rounded-full w-fit cursor-pointer"
                     title="Закрыть"
                     @click="searchStore.searchActive = false"
           >
@@ -81,7 +81,7 @@ onBeforeRouteLeave(() => {
 
         <template v-else>
           <ButtonUi v-if="!unSearchablePages.includes($route.path)"
-                    class="flex-center w-fit"
+                    class="recolor-svg flex items-center justify-center w-fit cursor-pointer"
                     @click="searchStore.searchActive = true"
           >
             <Icon :name="SearchIcon" :size="22"/>
@@ -90,7 +90,9 @@ onBeforeRouteLeave(() => {
           <RouterLink v-if="pageStore.createBtnInfo?.to"
                       :to="pageStore.createBtnInfo.to"
           >
-            <ButtonUi>{{pageStore.createBtnInfo.label}}</ButtonUi>
+            <ButtonUi class="cursor-pointer">
+              {{pageStore.createBtnInfo.label}}
+            </ButtonUi>
           </RouterLink>
         </template>
       </div>

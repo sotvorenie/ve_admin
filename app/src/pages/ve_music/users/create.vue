@@ -54,9 +54,9 @@ const createUser = async () => {
 
 <template>
 
-  <div class="h-100 flex-center">
-    <div class="w-25 flex flex-column gap-20">
-      <form novalidate class="flex flex-column gap-10 w-100">
+  <div class="h-full flex items-center justify-center">
+    <div class="w-1/4 flex flex-col gap-5">
+      <form novalidate class="flex flex-col gap-2.5 w-full">
         <LabelUi text="Логин:">
           <InputUi v-model="form.login"
                    :disabled="isLoading"
@@ -97,7 +97,7 @@ const createUser = async () => {
         </LabelUi>
       </form>
 
-      <div class="flex gap-10 w-50 w-100">
+      <div class="grid grid-cols-2 gap-2.5">
         <ButtonUi :disabled="isLoading"
                   @click="router.replace('/ve_music/users')"
         >

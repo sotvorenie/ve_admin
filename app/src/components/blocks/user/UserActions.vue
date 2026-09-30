@@ -19,7 +19,7 @@ const handleLogout = async () => {
 
 <template>
 
-  <div class="flex flex-column gap-10 mt-auto">
+  <div class="flex flex-col gap-2.5 mt-auto">
     <ButtonUi :disabled="isLoading"
               @click="handleLogout"
     >

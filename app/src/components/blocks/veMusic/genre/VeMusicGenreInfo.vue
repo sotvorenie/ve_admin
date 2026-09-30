@@ -52,7 +52,7 @@ watchEffect(() => {
 
 <template>
 
-  <form novalidate class="genre__form flex flex-column gap-10 w-50 w-100">
+  <form novalidate>
     <LabelUi text="Название жанра:">
       <InputUi v-model="name"
                :disabled="isLoading"

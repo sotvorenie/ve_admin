@@ -37,14 +37,13 @@ watchEffect(() => {
 
 <template>
 
-  <div class="row gap-20 w-100">
+  <div class="grid grid-cols-2 gap-5 w-full">
     <VeMusicUserAvatar v-model:is-loading="isLoading"
                        :user-id="userId"
                        :signal="signal"
-                       class="col-6"
     />
 
-    <div class="flex flex-column justify-between w-100 col-6">
+    <div class="flex flex-col justify-between w-full">
       <VeMusicUserInfo v-model:is-loading="isLoading"
                        v-model:form="form"
                        :user-id="userId"

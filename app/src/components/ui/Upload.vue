@@ -7,6 +7,7 @@ const props = withDefaults(
       accept?: string
       multiple?: boolean
       showFiles?: boolean
+      canDelete?: boolean
     }>(), {
       disabled: true,
       multiple: false,
@@ -84,18 +85,16 @@ const formatSize = (bytes: number) => {
 
 <template>
 
-  <div class="flex flex-column gap-10">
+  <div class="flex flex-col gap-3">
     <label @dragenter.prevent="isDragging = true"
            @dragleave.prevent="isDragging = false"
            @dragover.prevent
            @drop.prevent="onDrop"
-           class="cursor-pointer h-100"
-           :class="[
-               isDragging && 'bg-accent',
-           ]"
+           class="cursor-pointer h-full"
+           :class="isDragging && 'bg-accent'"
     >
       <input type="file"
-             class="visually-hidden"
+             class="hidden"
              :multiple="multiple"
              :accept="accept"
              :disabled="disabled"
@@ -104,17 +103,17 @@ const formatSize = (bytes: number) => {
       <slot/>
     </label>
 
-    <ul v-if="showFiles" class="flex gap-4">
+    <ul v-if="showFiles" class="flex gap-1">
       <li v-for="(file, index) in files"
           :key="index"
-          class="border rounded-8 flex align-center justify-between gap-10"
+          class="border rounded-sm flex items-center justify-between gap-3"
       >
-        <div class="flex flex-column gap-4">
-          <span class="text-14 text-w500">{{file.name}}</span>
-          <span class="text-12">{{formatSize(file.size)}}</span>
+        <div class="flex flex-col gap-1">
+          <span class="text-sm font-semibold">{{file.name}}</span>
+          <span class="text-xs">{{formatSize(file.size)}}</span>
         </div>
 
-        <button class="square-30 button-width-full-svg rounded-full position-absolute"
+        <button class="w-8 aspect-square rounded-full absolute"
                 type="button"
                 @click="handleDelete(index)"
         >

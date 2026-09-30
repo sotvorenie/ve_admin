@@ -6,8 +6,8 @@ defineProps<{
 
 <template>
 
-  <label class="text-w600 text-light-alt cursor-pointer flex flex-column">
-    <span class="flex mb-4 text-15">{{ text }}</span>
+  <label class="font-semibold text-white/90 cursor-pointer flex flex-col">
+    <span class="flex mb-1">{{ text }}</span>
     <slot/>
   </label>
 

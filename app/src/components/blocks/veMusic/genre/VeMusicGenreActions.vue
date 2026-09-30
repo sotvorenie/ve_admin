@@ -41,7 +41,7 @@ const deleteGenre = async () => {
 
 <template>
 
-  <div class="flex gap-10 w-50 w-100">
+  <div class="grid grid-cols-2 gap-2.5">
     <ButtonUi :disabled="isLoading"
               @click="router.replace('/ve_music/genres')"
     >

@@ -131,7 +131,7 @@ watchEffect(() => {
 
 <template>
 
-  <form novalidate class="flex flex-column gap-20 w-100">
+  <form novalidate class="flex flex-col gap-5 w-full">
     <LabelUi text="Url аудио:">
       <InputUi v-model="form.audioUrl"
                :disabled="isLoading"

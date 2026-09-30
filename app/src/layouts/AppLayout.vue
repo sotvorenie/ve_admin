@@ -5,13 +5,13 @@ import AppHeader from "@layouts/AppHeader.vue";
 
 <template>
 
-  <div class="row h-screen overflow-hidden">
-    <AppAside class="col-2"/>
+  <div class="grid grid-cols-12 h-screen overflow-hidden">
+    <AppAside class="col-span-2"/>
 
-    <div class="flex flex-column gap-30 py-20 px-40 w-100 col-10 overflow-x-hidden">
+    <div class="flex flex-col gap-8 py-4 px-10 w-full col-span-10 overflow-x-hidden">
       <AppHeader/>
 
-      <main class="overflow-x-hidden overflow-y-auto position-relative">
+      <main class="overflow-x-hidden h-full overflow-y-auto relative">
         <router-view/>
       </main>
     </div>

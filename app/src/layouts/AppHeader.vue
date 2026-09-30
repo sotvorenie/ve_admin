@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {computed, watchEffect} from "vue";
-
 import {useRoute, useRouter} from "vue-router";
+
+import Icon from "@ui/Icon.vue";
 
 import SelectArrowIcon from "@icons/SelectArrowIcon.vue";
 
@@ -14,9 +15,7 @@ const route = useRoute()
 const visibleBack = computed(() => route.path !== '/')
 
 const handleBack = () => {
-  if (!visibleBack.value) return
-
-  router.back()
+  if (visibleBack.value) router.back()
 }
 
 watchEffect(() => pageStore.pageTitle = route.meta.title as string)
@@ -24,16 +23,18 @@ watchEffect(() => pageStore.pageTitle = route.meta.title as string)
 
 <template>
 
-  <header class="flex align-center gap-20">
+  <header class="flex items-center gap-[1rem]">
     <button v-if="visibleBack"
-            class="square-40 rotate-90 rounded-10 button-width-svg border flex-center"
+            class="w-10 aspect-square rotate-90 rounded-xl border flex items-center justify-center recolor-svg cursor-pointer hover:text-accent transition-colors"
             type="button"
+            aria-label="Назад"
+            title="Назад"
             @click="handleBack"
     >
-      <SelectArrowIcon/>
+      <Icon :name="SelectArrowIcon" :size="22"/>
     </button>
 
-    <span class="text-w600 h5">{{pageStore.pageTitle}}</span>
+    <span class="font-semibold text-xl">{{pageStore.pageTitle}}</span>
   </header>
 
 </template>

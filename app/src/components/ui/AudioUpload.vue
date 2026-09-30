@@ -44,37 +44,35 @@ const handleUpload = async (file: File) => {
   <Upload accept=".mp3,.wav"
           :disabled="disabled"
           @select="(files: File[]) => handleUpload(files[0])"
-          class="h-100"
+          class="h-full"
           :class="disabled && 'pointer-none'"
   >
-    <div class="img-upload flex-center img-container position-relative rounded-20 h-100"
-         :class="[
-             !audioUrl && 'border border-light-alt',
-         ]"
+    <div class="img-upload recolor-svg img-container relative rounded-xl h-full bg-text-alt"
+         :class="!audioUrl && 'border'"
          title="Загрузить аудио"
     >
-      <div v-if="audioUrl" class="flex-center flex-column gap-20 px-12 w-100">
+      <div v-if="audioUrl" class="flex items-center justify-center flex-col gap-5 px-3 w-full">
         <Icon :name="AudioIcon" :size="80"/>
 
-        <span class="text-12 text-ellipsis text-center">{{audioTitle}}</span>
+        <span class="text-xs truncate text-center">{{audioTitle}}</span>
       </div>
 
-      <div v-else class="flex flex-column align-center gap-20 w-100">
+      <div v-else class="flex flex-col items-center gap-5 w-full">
         <Icon :name="NotAudioIcon" :size="80"/>
 
-        <span class="text-ellipsis text-center">Загрузите аудио</span>
+        <span class="truncate text-center">Загрузите аудио</span>
       </div>
 
-      <EditIcon class="img-upload__icon absolute-center transition-opacity z-1"/>
+      <EditIcon class="img-upload__icon absolute -translate-1/2 top-1/2 left-1/2 transition-opacity z-1"/>
 
       <button v-if="audioUrl && canDelete"
-              class="img-upload__delete button-width-svg rounded-full border flex-center z-10 hover:text-accent position-absolute transition-opacity"
+              class="img-upload__delete rounded-full border flex items-center justify-center z-10 hover:text-accent absolute transition-all cursor-pointer"
               :disabled="disabled"
               type="button"
               title="Удалить"
               @click.stop="emits('delete')"
       >
-        <CrossIcon/>
+        <Icon :name="CrossIcon" :size="18"/>
       </button>
     </div>
   </Upload>

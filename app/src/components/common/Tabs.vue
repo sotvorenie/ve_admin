@@ -22,13 +22,13 @@ const handleTab = (tab: TabType) => {
 <template>
 
   <ul class="flex">
-    <li class="border-r rounded-6"
+    <li class="border-r rounded-[7px]"
         v-for="tab in items"
         :key="tab.key"
     >
-      <button class="py-6 px-10 text-w500 hover:text-accent"
+      <button class="py-1.5 px-2.5 font-medium hover:text-accent cursor-pointer transition-colors"
               :class="[
-                $route.path.includes(tab.url) && 'text-accent pointer-none'
+                $route.path.includes(tab.url) && 'text-accent pointer-events-none'
               ]"
               type="button"
               @click="handleTab(tab)"

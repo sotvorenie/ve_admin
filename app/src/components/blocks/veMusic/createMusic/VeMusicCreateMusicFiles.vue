@@ -16,7 +16,7 @@ const URL = window.URL
 
 <template>
 
-  <div class="grid-cols-3 gap-10">
+  <div class="grid grid-cols-3 gap-2.5">
     <AudioUpload
         :audio-url="form.audio ? URL.createObjectURL(form.audio) : ''"
         :disabled="isLoading"
@@ -24,7 +24,7 @@ const URL = window.URL
         :show-confirm="false"
         @select="(file: File) => form.audio = file"
         @delete="form.audio = null"
-        class="aspect-1 min-w-0"
+        class="aspect-square min-w-0"
     />
 
     <ImgUpload
@@ -33,7 +33,7 @@ const URL = window.URL
         :show-confirm="false"
         @select="(file: File) => form.preview = file"
         @delete="form.preview = null"
-        class="aspect-1 min-w-0"
+        class="aspect-square min-w-0"
     />
 
     <VideoUpload
@@ -43,7 +43,7 @@ const URL = window.URL
         :show-confirm="false"
         @select="(file: File) => form.video = file"
         @delete="form.video = null"
-        class="aspect-1 min-w-0"
+        class="aspect-square min-w-0"
     />
   </div>
 

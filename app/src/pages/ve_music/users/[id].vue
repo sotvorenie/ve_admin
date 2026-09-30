@@ -77,13 +77,14 @@ watchEffect(() => {
 
 <template>
 
-  <div class="user h-100 flex-center">
-    <div class="w-75 flex flex-column gap-20">
-      <div class="flex gap-10">
+  <div class="h-full flex items-center justify-center">
+    <div class="w-3/4 2xl:w-3/5 flex flex-col gap-5">
+      <div class="flex gap-2.5">
         <ButtonUi v-for="tab in tabs"
                   :key="tab.key"
-                  :class="activeTab === tab.key && 'bg-light text-dark pointer-none'"
+                  :class="activeTab === tab.key && 'bg-white text-black pointer-events-none'"
                   @click="activeTab = tab.key"
+                  class="w-full cursor-pointer transition-colors"
         >
           {{tab.label}}
         </ButtonUi>
@@ -94,7 +95,7 @@ watchEffect(() => {
                    v-model:is-loading="isLoading"
                    :user-id="+userId"
                    :signal="signal"
-                   class="w-100"
+                   class="w-full"
         />
       </KeepAlive>
     </div>

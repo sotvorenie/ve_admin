@@ -43,13 +43,11 @@ const handleUpload = async (file: File) => {
   <Upload accept=".jpg,.jpeg,.png,.webp"
           :disabled="disabled"
           @select="(files: File[]) => handleUpload(files[0])"
-          class="h-100"
-          :class="disabled && 'pointer-none'"
+          class="h-full"
+          :class="disabled && 'pointer-events-none'"
   >
-    <div class="img-upload flex-center img-container position-relative rounded-20 h-100"
-         :class="[
-             !imgUrl && 'border border-light-alt',
-         ]"
+    <div class="img-upload recolor-svg img-container relative rounded-xl h-full bg-text-alt"
+         :class="!imgUrl && 'border'"
          title="Загрузить фото"
     >
       <img v-if="imgUrl"
@@ -57,22 +55,22 @@ const handleUpload = async (file: File) => {
            alt="фото"
       >
 
-      <div v-else class="flex flex-column align-center gap-20 w-100">
+      <div v-else class="flex flex-col items-center gap-5 w-full flex-1">
         <Icon :name="NotImageIcon" :size="80"/>
 
-        <span class="text-ellipsis text-center">Загрузите фото</span>
+        <span class="truncate text-center">Загрузите фото</span>
       </div>
 
-      <EditIcon class="img-upload__icon absolute-center transition-opacity z-1"/>
+      <EditIcon class="img-upload__icon absolute -translate-1/2 top-1/2 left-1/2 transition-opacity z-1"/>
 
       <button v-if="imgUrl && canDelete"
-              class="img-upload__delete button-width-svg rounded-full border flex-center z-10 hover:text-accent position-absolute transition-opacity"
+              class="img-upload__delete rounded-full border flex items-center justify-center z-10 hover:text-accent absolute transition-all cursor-pointer"
               :disabled="disabled"
               type="button"
               title="Удалить"
               @click.stop="emits('delete')"
       >
-        <CrossIcon/>
+        <Icon :name="CrossIcon" :size="18"/>
       </button>
     </div>
   </Upload>

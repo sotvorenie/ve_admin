@@ -45,7 +45,7 @@ const openFancybox = (src: string) => {
   ])
 }
 
-const colsClass = computed(() => props.colsStyle ? 'd-grid' : `grid-cols-${props.headItems.length}`)
+const colsClass = computed(() => props.colsStyle ? 'grid' : `grid grid-cols-[${props.headItems.length}]`)
 const colsStyles = computed(() => props.colsStyle && `grid-template-columns: ${props.colsStyle}`)
 
 const handleItem = (row: ListItemType) => {
@@ -57,40 +57,40 @@ const handleItem = (row: ListItemType) => {
 
 <template>
 
-  <div class="list flex flex-column h-100">
+  <div class="flex flex-col h-full">
     <ul class="border-b border-t"
         :class="colsClass"
         :style="colsStyles"
     >
       <li v-for="headItem in headItems"
           :key="headItem.label"
-          class="text-center flex-center first:border-l border-r p-5 break-words"
+          class="break-words text-center flex items-center justify-center first:border-l border-r p-1"
       >
         {{headItem.label}}
       </li>
     </ul>
 
-    <ul v-if="items?.length" class="list__content flex flex-column overflow-x-hidden overflow-y-auto">
+    <ul v-if="items?.length" class="flex flex-col overflow-x-hidden overflow-y-auto">
       <li v-for="row in items"
           :key="row.info.id"
           class="cursor-pointer"
       >
         <div
             v-if="row?.info"
-            class="border-b border-light text-center hover:bg-dark-alt"
+            class="border-b border-white text-center hover:bg-black/10 transition-colors"
             :class="colsClass"
             :style="colsStyles"
             @click="handleItem(row)"
         >
           <div v-for="item in headItems"
                :key="item.key"
-               class="flex-center first:border-l border-r py-8 px-5 min-w-0"
+               class="flex items-center justify-center first:border-l border-r py-2 px-1 min-w-0"
           >
-            <div v-if="item.to?.id" class="flex gap-4">
+            <div v-if="item.to?.id" class="flex gap-1">
               <RouterLink v-for="id in row.info?.[item.to.id]"
                           :key="id"
                           :to="`${item.to.page}${id}`"
-                          class="text-ellipsis p-8"
+                          class="truncate p-2"
                           @click.stop
               >
                 {{id}}
@@ -98,7 +98,7 @@ const handleItem = (row: ListItemType) => {
             </div>
 
             <template v-else>
-              <span v-if="item.type === 'text'" class="text-ellipsis">
+              <span v-if="item.type === 'text'" class="truncate">
                 {{item?.formatFunction ? item.formatFunction(row.info?.[item.key]) : row.info?.[item.key]}}
               </span>
               <span v-else-if="item.type === 'date'">
@@ -107,8 +107,8 @@ const handleItem = (row: ListItemType) => {
               <div v-else
                    class="img-container border border-transparent transition-colors"
                    :class="[
-                      item.type === 'avatar' ? 'square-40 rounded-full'
-                      : item.type === 'preview' ? 'list__preview aspect-16_9' : 'list__preview aspect-1 w-50',
+                      item.type === 'avatar' ? 'w-10 aspect-square rounded-full'
+                      : item.type === 'preview' ? 'aspect-16/9' : 'aspect-square w-1/2',
                       row.info?.[item.key] && 'hover:border-accent',
                    ]"
                    @click="row.info?.[item.key] && (() => {
@@ -130,12 +130,12 @@ const handleItem = (row: ListItemType) => {
     </ul>
 
     <div v-else-if="!isLoading"
-         class="flex-center text-center p-50 border-l border-r border-b text-w500"
+         class="flex items-center justify-center text-center p-12.5 border-l border-r border-b font-medium"
     >
       Данных нет..
     </div>
 
-    <div v-else class="w-100 p-30 flex-center">
+    <div v-else class="recolor-svg w-full p-7.5 flex items-center justify-center">
       <Icon :name="LoadingIcon" :size="32"/>
     </div>
 

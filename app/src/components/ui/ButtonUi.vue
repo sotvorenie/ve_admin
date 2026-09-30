@@ -22,14 +22,14 @@ withDefaults(
   <button
       :type="type"
       :disabled="disabled || isLoading"
-      class="flex-center position-relative gap-10 text-center text-ellipsis rounded-12 border border-light-alt hover:border-accent hover:text-accent p-10 text-w500"
+      class="recolor-svg 2xl:text-lg flex items-center justify-center relative gap-2.5 text-center truncate rounded-xl border border-white hover:border-accent transition-all hover:text-accent p-2.5 2xl:p-3 font-medium cursor-pointer"
   >
     <Icon v-show="isLoading"
           :name="LoadingIcon"
           :size="25"
-          class="absolute-center"
+          class="absolute -translate-1/2 top-1/2 left-1/2"
     />
-    <span class="flex flex-column"
+    <span class="flex flex-col"
           :style="{
             opacity: isLoading ? 0 : 1,
           }"

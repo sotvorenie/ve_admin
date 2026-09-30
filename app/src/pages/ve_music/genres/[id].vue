@@ -52,8 +52,8 @@ watchEffect(() => {
 
 <template>
 
-  <div class="genre h-100 flex-center">
-    <div class="w-50 flex flex-column gap-20">
+  <div class="h-full flex items-center justify-center">
+    <div class="w-1/2 2xl:w-1/3 flex flex-col gap-5">
       <VeMusicGenreInfo v-model:is-loading="isLoading"
                         :genre-id="+genreId"
                         :signal="signal"

@@ -95,18 +95,18 @@ const handleIsAuthType = () => {
 
 <template>
 
-  <div class="auth h-screen flex-center">
+  <div class="h-screen flex items-center justify-center">
 
-    <div class="flex flex-column gap-20 w-25">
+    <div class="max-w-[500px] flex flex-col gap-5 w-1/4">
       <form novalidate
             data-js-form
-            class="flex flex-column gap-24"
+            class="flex flex-col gap-8"
             @submit="handleSubmit"
       >
-        <p class="h3 text-center">{{isAuth ? 'Авторизация' : 'Регистрация'}}</p>
+        <p class="text-2xl text-center leading-1">{{isAuth ? 'Авторизация' : 'Регистрация'}}</p>
 
-        <div class="flex flex-column gap-24" v-auto-animate>
-          <LabelUi text="Логин" class="position-relative">
+        <div class="flex flex-col gap-6" v-auto-animate>
+          <LabelUi text="Логин" class="relative">
             <InputUi v-model="form.login"
                      :disabled="isLoading"
                      id="login"
@@ -116,12 +116,12 @@ const handleIsAuthType = () => {
                      @blur="onBlur"
                      required
             />
-            <span class="text-accent text-14 position-absolute top-100"
+            <span class="text-accent text-sm absolute top-full"
                   data-js-error-for-login
             />
           </LabelUi>
 
-          <LabelUi text="Пароль" class="position-relative">
+          <LabelUi text="Пароль" class="relative">
             <InputUi v-model="form.password"
                      :disabled="isLoading"
                      id="password"
@@ -132,14 +132,14 @@ const handleIsAuthType = () => {
                      @blur="onBlur"
                      required
             />
-            <span class="text-accent text-14 position-absolute top-100"
+            <span class="text-accent text-sm absolute top-full"
                   data-js-error-for-password
             />
           </LabelUi>
 
           <LabelUi v-if="!isAuth"
                    text="Имя пользователя"
-                   class="position-relative"
+                   class="relative"
           >
             <InputUi v-model="form.name"
                      :disabled="isLoading"
@@ -151,22 +151,24 @@ const handleIsAuthType = () => {
                      :required="!isAuth"
 
             />
-            <span class="text-accent text-14 position-absolute top-100"
+            <span class="text-accent text-sm absolute top-25"
                   data-js-error-for-name
             />
           </LabelUi>
         </div>
 
-        <ButtonUi :is-loading="isLoading" type="submit">
+        <ButtonUi :is-loading="isLoading"
+                  type="submit"
+        >
           {{isAuth ? 'Войти' : 'Зарегистрироваться'}}
         </ButtonUi>
       </form>
 
-      <div class="flex-center gap-4 text-14">
+      <div class="flex items-center justify-center gap-1 text-sm">
         <span>
           {{isAuth ? 'Еще не зарегистрированы?' : 'Уже есть аккаунт?'}}
         </span>
-        <button class="text-accent"
+        <button class="text-accent cursor-pointer"
                 type="button"
                 @click="handleIsAuthType"
         >

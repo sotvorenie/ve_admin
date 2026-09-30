@@ -54,7 +54,7 @@ const handleCancel = () => {
 
 <template>
 
-  <div class="flex flex-column gap-10">
+  <div class="flex flex-col gap-2.5">
     <VeMusicArtistMusic/>
 
     <ButtonUi :disabled="isLoading"

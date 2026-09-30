@@ -27,14 +27,14 @@ const visibleActionBtn = computed(() => {
 </script>
 
 <template>
-  <div class="input position-relative">
+  <div class="relative">
     <input
         v-bind="$attrs"
         :value="modelValue"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-        class="w-100 p-10 text-16 border border-light-alt rounded-12 transition-colors focus:border-accent text-light placeholder:text-light-alt"
+        class="w-full p-2.5 border border-white/90 rounded-[0.8rem] transition-colors outline-0"
         :class="[
-          actionBtn?.visible && 'pr-50',
+          actionBtn?.visible && 'pr-12.5',
         ]"
         :disabled="disabled"
         ref="inputRef"
@@ -42,11 +42,14 @@ const visibleActionBtn = computed(() => {
 
     <Transition name="fade">
       <button v-if="actionBtn && visibleActionBtn"
-              class="input__btn square-30 button-width-full-svg absolute-y-center rounded-full flex-center"
+              class="recolor-svg w-7.5 aspect-square absolute -translate-y-1/2 top-1/2 right-2 rounded-full flex items-center justify-center cursor-pointer hover:text-accent transition-colors"
               type="button"
               @click="actionBtn.func()"
       >
-        <Component v-if="actionBtn?.icon" :is="actionBtn.icon"/>
+        <Component v-if="actionBtn?.icon"
+                   :is="actionBtn.icon"
+                   class="w-5 h-auto aspect-square"
+        />
       </button>
     </Transition>
   </div>

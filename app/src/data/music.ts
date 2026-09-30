@@ -45,4 +45,4 @@ export const musicHeadItems: ListHeadType[] = [
     },
 ]
 
-export const musicColsStyle = '4rem 9rem 9rem 1fr 10rem 6rem 1fr'
+export const musicColsStyle = '4rem 9rem 9rem 1fr 10rem 9rem 1fr'

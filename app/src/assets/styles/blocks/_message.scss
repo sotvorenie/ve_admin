@@ -1,9 +1,0 @@
-@use '../helpers' as *;
-
-.message {
-  top: rem(16);
-
-  &__content {
-    max-width: rem(420);
-  }
-}

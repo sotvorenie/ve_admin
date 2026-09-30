@@ -77,22 +77,22 @@ onBeforeMount(() => getMusic())
 
 <template>
 
-  <div class="flex-center flex-column gap-20">
+  <div class="flex items-center justify-center flex-col gap-5">
     <Icon v-if="isLoading" :name="LoadingIcon" :size="30"/>
 
     <template v-else-if="musicList?.length">
-      <ul class="flex flex-column gap-10">
+      <ul class="flex flex-col gap-2.5">
         <li v-for="music in musicList"
             :key="music.id"
-            class="flex justify-between align-center gap-20"
+            class="flex justify-between items-center gap-5"
         >
-          <div class="flex align-center gap-20">
+          <div class="flex items-center gap-5">
             <span>{{music?.artists?.join(', ')}}</span>
             <span>-</span>
             <span>{{music?.name}}</span>
           </div>
 
-          <button class="square-40 rounded-full border border-light-alt flex-center"
+          <button class="w-10 aspect-square rounded-full border border-white flex items-center justify-center"
                   type="button"
                   @click="handleDelete(music.id)"
           >

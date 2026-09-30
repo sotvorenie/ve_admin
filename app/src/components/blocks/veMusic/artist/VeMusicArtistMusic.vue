@@ -12,7 +12,6 @@ import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
 
 import List from "@common/List.vue";
-import Pagination from "@common/Pagination.vue";
 
 import Modal from "@ui/Modal.vue";
 import ButtonUi from "@ui/ButtonUi.vue";
@@ -71,15 +70,15 @@ const getTracks = async () => {
     </template>
 
     <template #default>
-      <p class="text-20 text-w600 mb-12 text-center">Треки исполнителя</p>
+      <p class="text-xl font-semibold mb-3 text-center">Треки исполнителя</p>
 
-      <List :head-items="musicHeadItems"
+      <List v-model:page="page"
+            :total="total"
+            :head-items="musicHeadItems"
             :items="music"
             :cols-style="musicColsStyle"
             :is-loading="isLoading"
       />
-
-      <Pagination v-model="page" :total="total"/>
     </template>
   </Modal>
 

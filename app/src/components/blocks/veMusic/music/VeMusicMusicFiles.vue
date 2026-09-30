@@ -122,13 +122,13 @@ const deleteVideo = async () => {
 
 <template>
 
-  <div class="grid-cols-3 gap-10">
+  <div class="grid grid-cols-3 gap-2.5">
     <AudioUpload
         :audio-url="veMusicStore.currentMusic?.previewUrl"
         :disabled="isLoading"
         :can-delete="false"
         @select="(file: File) => uploadAudio(file)"
-        class="aspect-1 min-w-0"
+        class="aspect-square min-w-0"
     />
 
     <ImgUpload
@@ -136,7 +136,7 @@ const deleteVideo = async () => {
         :disabled="isLoading"
         @select="(file: File) => uploadPreview(file)"
         @delete="deletePreview"
-        class="aspect-1 min-w-0"
+        class="aspect-square min-w-0"
     />
 
     <VideoUpload
@@ -144,7 +144,7 @@ const deleteVideo = async () => {
         :disabled="isLoading"
         @select="(file: File) => uploadVideo(file)"
         @delete="deleteVideo"
-        class="aspect-1 min-w-0"
+        class="aspect-square min-w-0"
     />
   </div>
 

@@ -18,7 +18,7 @@ const activePage = defineModel<number>({
   default: 1
 })
 
-const btnClass = 'square-40 button-width-svg flex-center text-center rounded-12 border border-dark-muted hover:border-accent hover:text-accent'
+const btnClass = 'w-10 aspect-square flex items-center justify-center text-center rounded-xl border border-black/50 hover:border-accent hover:text-accent'
 
 const maxPage = computed(() => Math.ceil(props.total / props.limit))
 
@@ -55,7 +55,7 @@ const handlePage = (page: number) => {
 
 <template>
 
-  <div v-if="maxPage > 1" class="flex-center gap-20 mt-24 user-select-none">
+  <div v-if="maxPage > 1" class="flex items-center justify-center gap-5 mt-6 select-none">
     <button :class="['rotate-90', btnClass]"
             :disabled="activePage === 1"
             type="button"
@@ -64,15 +64,15 @@ const handlePage = (page: number) => {
       <SelectArrowIcon/>
     </button>
 
-    <div class="flex align-end gap-4">
+    <div class="flex items-end gap-1">
       <template v-for="page in pages"
                 :key="page"
       >
-        <span v-if="page === -1" class="mx-8">...</span>
+        <span v-if="page === -1" class="mx-2">...</span>
         <button v-else
                 :class="[
                     btnClass,
-                    page === activePage && 'border-accent pointer-none text-accent'
+                    page === activePage && 'border-accent pointer-events-none text-accent'
                 ]"
                 @click="handlePage(page)"
         >
@@ -81,7 +81,7 @@ const handlePage = (page: number) => {
       </template>
     </div>
 
-    <button :class="['rotate--90', btnClass]"
+    <button :class="['-rotate-90', btnClass]"
             type="button"
             :disabled="activePage === maxPage || isLoading"
             @click="activePage = Math.min(maxPage, activePage + 1)"

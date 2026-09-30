@@ -8,10 +8,10 @@
     inset: 0;
     background: rgba(0,0,0,.4);
     opacity: 0;
-    transition: opacity var(--transition-duration);
+    transition: opacity 0.2s;
   }
 
-  @include hover {
+  @include hover() {
 
     &::after {
       opacity: 1;
@@ -29,7 +29,7 @@
   }
 
   &__delete {
-    @include square(40);
+    @include square(35);
 
     top: rem(10);
     right: rem(10);

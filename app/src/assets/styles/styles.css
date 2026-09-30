@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+    --color-accent: #fe7971;
+    --color-text: #2A2A2A;
+    --color-text-alt: #434242;
+}
+
+@theme inline {
+    --font-base: 'Montserrat', sans-serif;
+    --tracking-wide: -0.03em;
+
+    --color-accent: var(--color-accent);
+    --color-text: var(--color-text);
+    --color-text-alt: var(--color-text-alt);
+}

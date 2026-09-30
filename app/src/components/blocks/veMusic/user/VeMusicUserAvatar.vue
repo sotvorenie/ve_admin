@@ -61,7 +61,7 @@ const deleteAvatar = async () => {
 
 <template>
 
-  <div class="aspect-1">
+  <div class="aspect-square">
     <ImgUpload :img-url="veMusicStore.currentUser?.avatarUrl"
                :disabled="isLoading"
                @select="(file: File) => uploadAvatar(file)"

@@ -11,15 +11,15 @@ const messageStore = useMessageStore();
   <Transition name="message-slide">
     <div
         v-if="messageStore.isVisible"
-        class="message position-fixed left-0 right-0 z-1000 px-16 flex justify-center pointer-none text-dark-muted"
+        class="fixed left-0 right-0 z-1000 px-4 flex justify-center pointer-events-none text-black/80"
     >
-      <div class="message__content px-16 py-12 flex align-center gap-12 pointer-auto bg-light rounded-20">
-        <span class="text-ellipsis flex-1 text-13 text-w700">{{ messageStore.message }}</span>
+      <div class="px-4 py-3 flex items-center gap-3 absolute -translate-x-1/2 left-1/2 top-3 pointer-events-auto bg-white rounded-xl">
+        <span class="truncate flex-1 text-sm font-bold ">{{ messageStore.message }}</span>
 
         <button
             type="button"
             @click="messageStore.hide"
-            class="transition-colors cursor-pointer flex-shrink-0 flex align-center justify-center"
+            class="transition-colors cursor-pointer shrink-0 flex items-center justify-center"
             title="Закрыть"
         >
           <Icon :name="CrossIcon" :size="16" />

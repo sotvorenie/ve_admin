@@ -13,7 +13,7 @@ const name = defineModel<string>('name', {required: true})
 
 <template>
 
-  <form novalidate class="flex flex-column gap-10 w-100">
+  <form novalidate class="flex flex-col gap-2.5 w-full">
     <LabelUi text="Исполнитель:">
       <InputUi v-model="name"
                :disabled="isLoading"

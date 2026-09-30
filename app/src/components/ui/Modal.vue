@@ -2,6 +2,9 @@
 import {onBeforeUnmount, onMounted} from "vue";
 
 import ButtonUi from "@ui/ButtonUi.vue";
+import Icon from "@ui/Icon.vue";
+
+import CrossIcon from "@icons/CrossIcon.vue";
 
 withDefaults(
     defineProps<{
@@ -39,12 +42,24 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleEsc))
 
   <Transition name="fade">
     <Teleport to="body">
-      <div class="modal z-10000 flex-center position-absolute inset-0" v-if="isVisible" @click="close">
-        <div class="modal__content bg-dark-alt p-20 rounded-20 overflow-y-auto" :style="{width: `${size / 16}rem`}" @click.stop>
-          <slot name="default" :close="close"/>
+      <div class="z-10000 flex items-center justify-center absolute bg-black/50 backdrop-blur-xs inset-0" v-if="isVisible" @click="close">
+        <div class="bg-text-alt p-5 rounded-xl relative" :style="{width: `${size / 16}rem`}" @click.stop>
+          <div class="w-full h-full max-h-[70vh] overflow-y-auto">
+            <slot name="default" :close="close"/>
+          </div>
+
+          <ButtonUi class="!absolute !rounded-full -top-4 -right-4 bg-text-alt"
+                    aria-label="Закрыть"
+                    title="Закрыть"
+                    @click="close"
+          >
+            <Icon :name="CrossIcon"
+                  :size="18"
+            />
+          </ButtonUi>
 
           <ButtonUi v-if="closeVisible"
-                    class="modal__close text-upper"
+                    class="uppercase"
                     @click="close"
           >
             {{closeText}}
