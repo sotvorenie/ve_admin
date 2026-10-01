@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-import {apiUploadMusicAudio, apiUploadMusicPreview, apiUploadMusicVideo} from "@api/veMusic/upload.ts";
+import {
+  apiUploadMusicAudio,
+  apiUploadMusicPreview,
+  apiUploadMusicPreviewPath,
+  apiUploadMusicVideo
+} from "@api/veMusic/upload.ts";
 import {apiDeleteMusicPreview, apiDeleteMusicVideo} from "@api/veMusic/music.ts";
 
-import {showError} from "@utils/modals.ts";
+import {showConfirm, showError} from "@utils/modals.ts";
 
 import {MusicFilesType} from "@/types/music.ts";
 import {UrlType} from "@/types/url.ts";
+
+import VeMusicPosters from "@components/veMusic/VeMusicPosters.vue";
 
 import AudioUpload from "@ui/AudioUpload.vue";
 import ImgUpload from "@ui/ImgUpload.vue";
@@ -26,6 +33,7 @@ const isLoading = defineModel<boolean>('isLoading', {required: true})
 const files = ref<MusicFilesType>({
   audio: null,
   preview: null,
+  previewPath: null,
   video: null,
 })
 
@@ -65,9 +73,34 @@ const uploadPreview = async (file: File) => {
 
     const response: UrlType = await apiUploadMusicPreview(props.musicId, file, props.signal)
     if (response) {
-      files.value.audio = file
+      files.value.preview = file
       veMusicStore.currentMusic!.previewUrl = response.url
     }
+  } catch (err: any) {
+    await showUploadError(err, 'обложку')
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const handleUploadPreviewPath = async (path: string) => {
+  const confirm = await showConfirm(
+      'Редактирование постера музыки',
+      'Вы действитиельно хотите загрузить новый постер для трека?'
+  )
+
+  if (confirm) {
+    files.value.preview = null
+    await uploadPreviewPath(path)
+  }
+}
+
+const uploadPreviewPath = async (path: string) => {
+  try {
+    isLoading.value = true
+
+    await apiUploadMusicPreviewPath(props.musicId, path, props.signal)
+    veMusicStore.currentMusic!.previewUrl = path
   } catch (err: any) {
     await showUploadError(err, 'обложку')
   } finally {
@@ -128,23 +161,27 @@ const deleteVideo = async () => {
         :disabled="isLoading"
         :can-delete="false"
         @select="(file: File) => uploadAudio(file)"
-        class="aspect-square min-w-0"
     />
 
-    <ImgUpload
-        :img-url="veMusicStore.currentMusic?.previewUrl"
-        :disabled="isLoading"
-        @select="(file: File) => uploadPreview(file)"
-        @delete="deletePreview"
-        class="aspect-square min-w-0"
-    />
+    <div class="flex flex-col gap-2">
+      <ImgUpload
+          :img-url="veMusicStore.currentMusic?.previewUrl"
+          :disabled="isLoading"
+          @select="(file: File) => uploadPreview(file)"
+          @delete="deletePreview"
+          class="aspect-square min-w-0"
+      />
+
+      <VeMusicPosters v-model:form="files"
+                      @update-poster="handleUploadPreviewPath($event)"
+      />
+    </div>
 
     <VideoUpload
         :video-url="veMusicStore.currentMusic?.videoClipUrl"
         :disabled="isLoading"
         @select="(file: File) => uploadVideo(file)"
         @delete="deleteVideo"
-        class="aspect-square min-w-0"
     />
   </div>
 

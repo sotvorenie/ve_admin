@@ -26,6 +26,7 @@ const form = ref<CreateMusicForm>({
   files: {
     audio: null,
     preview: null,
+    previewPath: null,
     video: null
   },
   info: {

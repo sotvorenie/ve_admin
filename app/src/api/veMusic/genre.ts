@@ -8,21 +8,21 @@ export const apiGetAllGenres = async (signal?: AbortSignal): Promise<GenresListT
 }
 
 export const apiGetGenre = async (id: number, signal?: AbortSignal): Promise<GenreType> => {
-    return apiGet(`/genre/${id}`, {signal})
+    return apiGet(`/genre/admin/${id}`, {signal})
 }
 
 export const apiGetAllGenreMusic = async (id: number, page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<MusicListType> => {
-    return apiGet(`/genre/music/${id}?page=${page}&limit=${limit}`, {signal})
+    return apiGet(`/genre/admin/music/${id}?page=${page}&limit=${limit}`, {signal})
 }
 
 export const apiCreateGenre = async (name: string, signal?: AbortSignal): Promise<CreatedGenreType> => {
-    return apiPost(`/genre/create`, {name}, {signal})
+    return apiPost(`/genre/admin/create`, {name}, {signal})
 }
 
 export const apiDeleteGenre = async (id: number, signal?: AbortSignal): Promise<void> => {
-    return apiDelete(`/genre/delete/${id}`, {signal})
+    return apiDelete(`/genre/admin/delete/${id}`, {signal})
 }
 
 export const apiRedactGenreName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/genre/redact_name/${id}`, {name}, {signal})
+    return apiPatch(`/genre/admin/redact_name/${id}`, {name}, {signal})
 }

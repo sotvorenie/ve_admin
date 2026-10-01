@@ -1,5 +1,6 @@
 import {MusicListType, MusicType} from "@/types/music.ts";
 import {UrlType} from "@/types/url.ts";
+import {PostersResponse} from "@/types/posters.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
@@ -19,7 +20,7 @@ export const apiGetMusic = async (id: number, signal?: AbortSignal): Promise<Mus
 }
 
 export const apiRedactMusic = async (id: number, title: string, genreId: number, artists: number[], signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/music/redact/${id}`, {
+    return apiPatch(`/music/admin/redact/${id}`, {
         title,
         genre_id: String(genreId),
         artists: artists.join(','),
@@ -27,29 +28,33 @@ export const apiRedactMusic = async (id: number, title: string, genreId: number,
 }
 
 export const apiRedactAudioUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPost(`/music/redact_audio_url/${id}`, {path: audioPath}, {signal})
+    return apiPost(`/music/admin/redact_audio_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactPreviewUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPatch(`/music/redact_preview_url/${id}`, {path: audioPath}, {signal})
+    return apiPatch(`/music/admin/redact_preview_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactVideoUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPatch(`/music/redact_video_url/${id}`, {path: audioPath}, {signal})
+    return apiPatch(`/music/admin/redact_video_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactAuditionsForMusic = async (id: number, auditionsCount: number, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/music/redact_auditions/${id}`, {auditions_count: auditionsCount}, {signal})
+    return apiPatch(`/music/admin/redact_auditions/${id}`, {auditions_count: auditionsCount}, {signal})
 }
 
 export const apiDeleteMusic = async (id: number, signal?: AbortSignal): Promise<void> => {
-    return apiDelete(`/music/delete/${id}`, {signal})
+    return apiDelete(`/music/admin/delete/${id}`, {signal})
 }
 
 export const apiDeleteMusicPreview = async (id: number, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/music/delete_preview/${id}`, undefined, {signal})
+    return apiPatch(`/music/admin/delete_preview/${id}`, undefined, {signal})
 }
 
 export const apiDeleteMusicVideo = async (id: number, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/music/delete_video/${id}`, undefined, {signal})
+    return apiPatch(`/music/admin/delete_video/${id}`, undefined, {signal})
+}
+
+export const apiGetMusicPosters = async (signal?: AbortSignal): Promise<PostersResponse> => {
+    return apiGet('/music/admin/get_posters', {signal})
 }

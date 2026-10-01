@@ -4,36 +4,36 @@ import {UrlType} from "@/types/url.ts";
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
 
 export const apiGetAllUsers = async (name: string = '', page: number = 1, limit: number = 30, signal?: AbortSignal): Promise<AppUsersResponseType> => {
-    return apiGet(`/user/list?name=${name}&page=${page}&limit=${limit}`, {signal})
+    return apiGet(`/user/admin/list?name=${name}&page=${page}&limit=${limit}`, {signal})
 }
 
 export const apiGetUser = async (id: number, signal?: AbortSignal): Promise<AppUserType> => {
-    return apiGet(`/user/${id}`,{signal})
+    return apiGet(`/user/admin/${id}`,{signal})
 }
 
 export const apiRedactUserName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/redact_name/${id}`,{name}, {signal})
+    return apiPatch(`/user/admin/redact_name/${id}`,{name}, {signal})
 }
 
 export const apiRedactUserLogin = async (id: number, login: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/redact_login/${id}`,{login}, {signal})
+    return apiPatch(`/user/admin/redact_login/${id}`,{login}, {signal})
 }
 
 export const apiRedactUserPassword = async (id: number, password: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/redact_password/${id}`,{password}, {signal})
+    return apiPatch(`/user/admin/redact_password/${id}`,{password}, {signal})
 }
 
 export const apiDeleteUser = async (id: number, signal?: AbortSignal): Promise<void> => {
-    return apiDelete(`/user/delete/${id}`,{signal})
+    return apiDelete(`/user/admin/delete/${id}`,{signal})
 }
 
 export const apiUploadUserAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
     const formData = new FormData()
     formData.append('avatar', file)
 
-    return apiPost(`/user/upload_avatar/${id}`, formData, {signal})
+    return apiPost(`/user/admin/upload_avatar/${id}`, formData, {signal})
 }
 
 export const apiDeleteUserAvatar = async (id: number, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/delete_avatar/${id}`,undefined, {signal})
+    return apiPatch(`/user/admin/delete_avatar/${id}`,undefined, {signal})
 }

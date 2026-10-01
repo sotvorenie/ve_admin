@@ -7,5 +7,5 @@ export const apiGetUserHistoryMusic = async (userId: number, page: number = 1, l
 }
 
 export const apiDeleteMusicFromUserHistory = async (musicId: number, userId: number, signal?: AbortSignal): Promise<void> => {
-    return apiDelete(`/history/delete/${musicId}?user_id=${userId}`, {signal})
+    return apiDelete(`/history/admin/delete/${musicId}?user_id=${userId}`, {signal})
 }

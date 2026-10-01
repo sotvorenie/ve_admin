@@ -35,6 +35,7 @@ export interface MusicListType extends BasePaginationType {
 export interface MusicFilesType {
     audio: File | null
     preview: File | null
+    previewPath: string | null
     video: File | null
 }
 

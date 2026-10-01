@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {MusicFilesType} from "@/types/music.ts";
 
+import VeMusicPosters from "@components/veMusic/VeMusicPosters.vue";
+
 import AudioUpload from "@ui/AudioUpload.vue";
 import ImgUpload from "@ui/ImgUpload.vue";
 import VideoUpload from "@ui/VideoUpload.vue";
@@ -24,17 +26,26 @@ const URL = window.URL
         :show-confirm="false"
         @select="(file: File) => form.audio = file"
         @delete="form.audio = null"
-        class="aspect-square min-w-0"
     />
 
-    <ImgUpload
-        :img-url="form.preview ? URL.createObjectURL(form.preview) : ''"
-        :disabled="isLoading"
-        :show-confirm="false"
-        @select="(file: File) => form.preview = file"
-        @delete="form.preview = null"
-        class="aspect-square min-w-0"
-    />
+    <div class="flex flex-col gap-2">
+      <ImgUpload
+          :img-url="form.previewPath ? form.previewPath : form.preview ? URL.createObjectURL(form.preview) : form.preview"
+          :disabled="isLoading"
+          :show-confirm="false"
+          @select="(file: File) => {
+            form.preview = file
+            form.previewPath = null
+          }"
+          @delete="() => {
+            form.preview = null
+            form.previewPath = null
+          }"
+          class="aspect-square min-h-0"
+      />
+
+      <VeMusicPosters v-model:form="form"/>
+    </div>
 
     <VideoUpload
         :video-url="form.video ? URL.createObjectURL(form.video) : ''"
@@ -43,7 +54,6 @@ const URL = window.URL
         :show-confirm="false"
         @select="(file: File) => form.video = file"
         @delete="form.video = null"
-        class="aspect-square min-w-0"
     />
   </div>
 
