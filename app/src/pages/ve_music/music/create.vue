@@ -88,7 +88,7 @@ const isSaveBtnDisabled = computed(() => {
 
         <ButtonUi :disabled="isLoading || isSaveBtnDisabled"
                   @click="handleCreateMusic"
-                  class="not-disabled:cursor-pointer disabled:pointer-events-none transition-colors"
+                  class="cursor-pointer transition-colors"
         >
           Добавить
         </ButtonUi>

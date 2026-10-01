@@ -57,7 +57,7 @@ const handleItem = (row: ListItemType) => {
 
 <template>
 
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col flex-1 min-h-0">
     <ul class="border-b border-t"
         :class="colsClass"
         :style="colsStyles"
@@ -70,7 +70,7 @@ const handleItem = (row: ListItemType) => {
       </li>
     </ul>
 
-    <ul v-if="items?.length" class="flex flex-col overflow-x-hidden overflow-y-auto">
+    <ul v-if="items?.length" class="h-full overflow-x-hidden overflow-y-auto scrollbar-thin">
       <li v-for="row in items"
           :key="row.info.id"
           class="cursor-pointer"

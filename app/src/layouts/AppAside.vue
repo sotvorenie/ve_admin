@@ -29,7 +29,7 @@ const userStore = useUserStore();
           >
             <Component v-if="item.icon"
                        :is="item.icon"
-                       class="w-10 2xl:w-13 h-auto aspect-square"
+                       class="w-10 3xl:w-13 h-auto aspect-square"
             />
             <span class="font-semibold truncate text-xl">{{item.label}}</span>
           </RouterLink>

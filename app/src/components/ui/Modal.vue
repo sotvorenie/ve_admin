@@ -44,7 +44,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleEsc))
     <Teleport to="body">
       <div class="z-10000 flex items-center justify-center absolute bg-black/50 backdrop-blur-xs inset-0" v-if="isVisible" @click="close">
         <div class="bg-text-alt p-5 rounded-xl relative" :style="{width: `${size / 16}rem`}" @click.stop>
-          <div class="w-full h-full max-h-[70vh] overflow-y-auto">
+          <div class="w-full h-full max-h-[70vh] overflow-y-auto overflow-x-hidden">
             <slot name="default" :close="close"/>
           </div>
 

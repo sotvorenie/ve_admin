@@ -18,7 +18,7 @@ const isLoading = ref(false)
 <template>
 
   <div class="h-full flex items-center justify-center">
-    <div class="grid grid-cols-2 gap-[1.2rem] w-3/4 2xl:w-1/2">
+    <div class="grid grid-cols-2 gap-[1.2rem] w-3/4 3xl:w-1/2">
       <UserAvatar v-model:is-loading="isLoading"
                   :confirm-title="confirmTitle"
                   :error-title="errorTitle"

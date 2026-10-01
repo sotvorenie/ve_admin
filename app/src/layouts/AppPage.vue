@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {onBeforeRouteLeave, onBeforeRouteUpdate} from "vue-router";
+import {onBeforeRouteUpdate} from "vue-router";
 
 import {TabType} from "@/types/tab.ts";
 
@@ -31,27 +31,17 @@ const activeTab = ref<TabType | null>(null)
 
 const unSearchablePages = ['/ve_music', '/ve_music/genres']
 
-const handleEnter = (e: KeyboardEvent) => {
-  if (e.key === "Enter") searchStore.searchFunc()
-}
-
 onBeforeRouteUpdate(() => {
   pageStore.createBtnInfo = {
     label: '',
     to: '',
   }
-
-  window.addEventListener('keydown', handleEnter)
-})
-
-onBeforeRouteLeave(() => {
-  window.removeEventListener('keydown', handleEnter)
 })
 </script>
 
 <template>
 
-  <div class="h-full overflow-hidden">
+  <div class="h-full overflow-hidden flex flex-col">
     <div class="flex justify-between gap-4 pb-2">
       <Tabs :items="tabsList" v-model="activeTab"/>
 
@@ -61,6 +51,7 @@ onBeforeRouteLeave(() => {
             <InputUi v-model="searchStore.searchName"
                      :disabled="false"
                      placeholder="Поиск.."
+                     @keydown.enter="searchStore.searchFunc"
             />
           </LabelUi>
 

@@ -17,4 +17,9 @@ body {
   background: var(--color-text);
   color: var(--color-white);
   font-family: var(--font-base);
+  overflow: hidden;
+}
+
+button[disabled] {
+  pointer-events: none;
 }

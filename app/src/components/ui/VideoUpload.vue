@@ -54,7 +54,7 @@ const handleUpload = async (file: File) => {
       <div v-if="videoUrl" class="flex items-center justify-center flex-col gap-5 px-3 w-full">
         <Icon :name="VideoIcon" :size="80"/>
 
-        <span class="text-xs truncate text-center">{{videoTitle}}</span>
+        <span class="text-xs truncate text-center w-full">{{videoTitle}}</span>
       </div>
 
       <div v-else class="flex flex-col items-center gap-5 w-full">

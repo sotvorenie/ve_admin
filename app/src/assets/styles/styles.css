@@ -14,3 +14,7 @@
     --color-text: var(--color-text);
     --color-text-alt: var(--color-text-alt);
 }
+
+@theme media {
+    --breakpoint-3xl: 120rem;
+}

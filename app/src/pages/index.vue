@@ -5,7 +5,7 @@ import {productsData} from "@data/products.ts";
 <template>
 
   <div class="flex items-center justify-center h-full">
-    <ul class="grid grid-cols-3 items-center gap-[1.2rem] px-[2rem] 2xl:w-3/4">
+    <ul class="grid grid-cols-3 items-center gap-[1.2rem] px-[2rem] w-full 3xl:w-3/4">
       <li v-for="item in productsData"
           :key="item.label"
       >

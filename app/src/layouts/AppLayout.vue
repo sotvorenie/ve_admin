@@ -8,7 +8,7 @@ import AppHeader from "@layouts/AppHeader.vue";
   <div class="grid grid-cols-12 h-screen overflow-hidden">
     <AppAside class="col-span-2"/>
 
-    <div class="flex flex-col gap-8 py-4 px-10 w-full col-span-10 overflow-x-hidden">
+    <div class="flex flex-col gap-8 py-4 px-10 w-full col-span-10 overflow-hidden">
       <AppHeader/>
 
       <main class="overflow-x-hidden h-full overflow-y-auto relative">

@@ -58,7 +58,7 @@ const handleUpload = async (file: File) => {
       <div v-else class="flex flex-col items-center gap-5 w-full flex-1">
         <Icon :name="NotImageIcon" :size="80"/>
 
-        <span class="truncate text-center">Загрузите фото</span>
+        <span class="truncate text-center w-full">Загрузите фото</span>
       </div>
 
       <EditIcon class="img-upload__icon absolute -translate-1/2 top-1/2 left-1/2 transition-opacity z-1"/>

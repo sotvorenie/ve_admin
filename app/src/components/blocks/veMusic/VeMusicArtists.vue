@@ -111,7 +111,7 @@ onBeforeMount(() => getArtists())
               :class="isSelected(artist.id) && 'border-accent'"
               @click="handleArtist(artist.id)"
           >
-            <div class="flex items-center gap-5">
+            <div class="flex items-center gap-5 flex-1 min-w-0">
               <div class="img-container w-10 aspect-square rounded-full">
                 <img v-if="artist?.avatarUrl"
                      :src="`${apiUrlStore.activeUrl}${artist.avatarUrl}`"
@@ -126,7 +126,7 @@ onBeforeMount(() => getArtists())
               <p class="truncate font-semibold">{{artist.name}}</p>
             </div>
 
-            <div class="w-5 aspect-square rounded-full border border-white flex items-center justify-center">
+            <div class="w-5 aspect-square rounded-full border border-white flex shrink-0 items-center justify-center">
               <div class="w-1/2 aspect-square rounded-full transition-colors"
                     :class="isSelected(artist.id) && 'bg-accent'"
               />

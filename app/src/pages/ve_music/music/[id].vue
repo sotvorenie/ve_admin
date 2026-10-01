@@ -85,7 +85,7 @@ watchEffect(() => {
 <template>
 
   <div class="h-full flex items-center justify-center">
-    <div class="w-3/4 2xl:w-1/2 flex flex-col gap-5">
+    <div class="w-3/4 3xl:w-1/2 flex flex-col gap-5">
       <div class="flex w-full gap-2.5">
         <ButtonUi v-for="tab in tabs"
                   :key="tab.key"

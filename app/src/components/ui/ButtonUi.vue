@@ -22,7 +22,7 @@ withDefaults(
   <button
       :type="type"
       :disabled="disabled || isLoading"
-      class="recolor-svg 2xl:text-lg flex items-center justify-center relative gap-2.5 text-center truncate rounded-xl border border-white hover:border-accent transition-all hover:text-accent p-2.5 2xl:p-3 font-medium cursor-pointer"
+      class="recolor-svg 3xl:text-lg flex items-center justify-center relative gap-2.5 text-center truncate rounded-xl border border-white hover:border-accent transition-all hover:text-accent p-2.5 3xl:p-3 font-medium cursor-pointer"
   >
     <Icon v-show="isLoading"
           :name="LoadingIcon"

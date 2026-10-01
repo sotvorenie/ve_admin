@@ -69,7 +69,7 @@ watchEffect(() => {
 <template>
 
   <div class="h-full flex items-center justify-center">
-    <div class="grid grid-cols-2 w-3/4 2xl:w-1/2 gap-5">
+    <div class="grid grid-cols-2 w-3/4 3xl:w-1/2 gap-5">
       <VeMusicArtistAvatar v-model:is-loading="isLoading"
                            :artist-id="+artistId"
                            :signal="signal"
