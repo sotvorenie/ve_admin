@@ -75,9 +75,9 @@ onUnmounted(() => globalThis.removeEventListener('click', closeDropdown))
 
     <div
         v-if="isOpen"
-        class="bg-text-alt p-3 pt-0 flex flex-col rounded-b-xl absolute left-0 top-full w-full z-10 max-h-25 overflow-y-auto"
+        class="bg-text-alt p-3 pt-0 flex flex-col rounded-b-xl absolute left-0 top-full w-full z-10 max-h-40"
     >
-      <div class="flex flex-col gap-1 overflow-y-auto">
+      <div class="flex flex-col gap-1 overflow-y-auto scrollbar-thin">
         <button
             v-for="opt in options"
             :key="opt.id"
