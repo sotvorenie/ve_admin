@@ -13,6 +13,7 @@ import LabelUi from "@ui/LabelUi.vue";
 
 import SearchIcon from "@icons/SearchIcon.vue";
 import CrossIcon from "@icons/CrossIcon.vue";
+import EditIcon from "@icons/EditIcon.vue";
 
 import usePageStore from "@store/usePageStore.ts";
 const pageStore = usePageStore();
@@ -22,14 +23,17 @@ const searchStore = useSearchStore();
 withDefaults(
     defineProps<{
       tabsList: TabType[]
+      isMainPage?: boolean
     }>(), {
       tabsList: () => [],
+      isMainPage: false,
     }
 )
 
 const activeTab = ref<TabType | null>(null)
 
 const unSearchablePages = ['/ve_music', '/ve_music/genres']
+const mainPages = ['/ve_music']
 
 onBeforeRouteUpdate(() => {
   pageStore.createBtnInfo = {
@@ -89,7 +93,15 @@ onBeforeRouteUpdate(() => {
       </div>
     </div>
 
-    <router-view/>
+    <div v-if="mainPages.includes($route.path)"
+         class="recolor-svg h-2/3 flex flex-col items-center justify-center gap-2 "
+    >
+      <Icon :name="EditIcon" :size="80"/>
+
+      <p class="text-xl font-medium select-none">Выбери раздел и начни работу</p>
+    </div>
+
+    <router-view v-else/>
   </div>
 
 </template>
