@@ -63,7 +63,7 @@ const getCurrentMusic = async () => {
   try {
     const response: MusicType = await apiGetMusic(+musicId.value, signal)
 
-    if (response) veMusicStore.currentMusic = response
+    if (response) veMusicStore.currentMusic = {...response, genreId: response.genre?.id ?? -1}
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',

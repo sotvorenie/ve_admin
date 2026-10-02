@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import {VeMusicUserForm} from "@pages/ve_music/users/[id].vue";
 
 import {apiRedactUserLogin, apiRedactUserName, apiRedactUserPassword} from "@api/veMusic/user.ts";
+
+import {VeMusicUserForm} from "@components/veMusic/user/VeMusicUserData.vue";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -14,7 +15,6 @@ import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
 const props = defineProps<{
-  userId: number
   signal: AbortSignal
 }>()
 
@@ -35,7 +35,7 @@ const redactName = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserName(props.userId, form.value.name, props.signal)
+    await apiRedactUserName(veMusicStore.currentUser!.id, form.value.name, props.signal)
     veMusicStore.currentUser!.name = form.value.name
   } catch (err: any) {
     await showError(
@@ -61,7 +61,7 @@ const redactLogin = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserLogin(props.userId, form.value.login, props.signal)
+    await apiRedactUserLogin(veMusicStore.currentUser!.id, form.value.login, props.signal)
     veMusicStore.currentUser!.login = form.value.login
   } catch (err: any) {
     await showError(
@@ -85,7 +85,7 @@ const redactPassword = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserPassword(props.userId, form.value.password, props.signal)
+    await apiRedactUserPassword(veMusicStore.currentUser!.id, form.value.password, props.signal)
     form.value.password = ''
   } catch (err: any) {
     await showError(

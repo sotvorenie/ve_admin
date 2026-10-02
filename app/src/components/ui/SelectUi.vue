@@ -60,9 +60,7 @@ onUnmounted(() => globalThis.removeEventListener('click', closeDropdown))
         ]"
         type="button"
     >
-      <span class="truncate"
-            :class="isSelected() ? 'text-accent' : 'text-white'"
-      >
+      <span class="truncate text-white">
         {{ selectedLabel }}
       </span>
       <Icon
@@ -77,13 +75,13 @@ onUnmounted(() => globalThis.removeEventListener('click', closeDropdown))
         v-if="isOpen"
         class="bg-text-alt p-3 pt-0 flex flex-col rounded-b-xl absolute left-0 top-full w-full z-10 max-h-40"
     >
-      <div class="flex flex-col gap-1 overflow-y-auto scrollbar-thin">
+      <div class="flex flex-col gap-1 overflow-y-auto overflow-x-hidden scrollbar-thin">
         <button
             v-for="opt in options"
             :key="opt.id"
             @click="selectOption(opt.id)"
-            class="flex items-center w-full not-last:mb-1 text-white text-sm text-left hover:text-accent cursor-pointer transition-colors"
-            :class="modelValue === opt?.id && 'pointer-events-none text-accent'"
+            class="flex items-center w-full not-last:mb-1 text-sm text-left hover:text-accent transition-colors"
+            :class="modelValue === opt?.id ? 'pointer-events-none text-accent' : 'cursor-pointer text-white'"
             type="button"
         >
           <span class="truncate">{{ opt.label }}</span>

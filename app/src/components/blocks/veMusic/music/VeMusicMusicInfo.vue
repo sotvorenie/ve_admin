@@ -14,9 +14,8 @@ import VeMusicArtists from "@components/veMusic/VeMusicArtists.vue";
 import InputUi from "@ui/InputUi.vue";
 import LabelUi from "@ui/LabelUi.vue";
 import SelectUi, {Option} from "@ui/SelectUi.vue";
-import ButtonUi from "@ui/ButtonUi.vue";
 
-import CrossIcon from "@icons/CrossIcon.vue";
+import EditIcon from "@icons/EditIcon.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
@@ -34,11 +33,11 @@ const form = ref<MusicInfoType>({
   artistsIds: [],
 })
 
-const visibleRedactBtn = computed(() => {
-  return form.value.title?.length > 0 && form.value.genre >= 0 && form.value.artistsIds?.length > 0
-})
-
 const genres = ref<Option[]>([])
+
+const visibleNameBtn = computed(() => {
+  return !!form.value.title?.length && veMusicStore.currentMusic?.name !== form.value.title
+})
 
 const getGenres = async () => {
   try {
@@ -52,10 +51,26 @@ const getGenres = async () => {
   } catch {}
 }
 
-const handleRedact = async () => {
+const handleRedactName = async () => {
   const confirm = await showConfirm(
-      'Редактирование музыки',
-      'Вы действительно хотите редактировать информацию о музыке?'
+      'Редактирование названия трека',
+      'Вы действительно хотите редактировать название трека?'
+  )
+  if (confirm) await redactMusic()
+}
+
+const handleRedactGenre = async () => {
+  const confirm = await showConfirm(
+      'Редактирование жанра трека',
+      'Вы действительно хотите редактировать жанр трека?'
+  )
+  if (confirm) await redactMusic()
+}
+
+const handleRedactArtists = async () => {
+  const confirm = await showConfirm(
+      'Редактирование исполнителей трека',
+      'Вы действительно хотите редактировать исполнителей трека?'
   )
   if (confirm) await redactMusic()
 }
@@ -71,6 +86,8 @@ const redactMusic = async () => {
         form.value.artistsIds,
         props.signal
     )
+    veMusicStore.currentMusic!.name = form.value.title
+    veMusicStore.currentMusic!.genreId = form.value.genre
   } catch (err: any) {
     await showError(
         'Ошибка редактирования музыки',
@@ -100,29 +117,30 @@ watchEffect(() => {
                :disabled="isLoading"
                maxlength="255"
                :action-btn="{
-                      icon: CrossIcon,
-                      func: () => form.title = '',
-                      visible: !!form.title?.length
+                      icon: EditIcon,
+                      func: () => handleRedactName(),
+                      visible: visibleNameBtn
                    }"
       />
     </LabelUi>
 
     <LabelUi text="Жанр трека:">
-      <SelectUi v-model="form.genre"
+      <SelectUi :model-value="form.genre"
+                @update:model-value="(val) => {
+                  form.genre = +val
+                  handleRedactGenre()
+                }"
                 :options="genres"
                 placeholder="Выберите жанр"
       />
     </LabelUi>
 
-    <div class="gap-2.5"
-         :class="visibleRedactBtn && 'grid grid-cols-2'"
-    >
-      <VeMusicArtists v-model:artists="form.artistsIds"/>
-
-      <ButtonUi v-if="visibleRedactBtn" @click="handleRedact">
-        Редактировать
-      </ButtonUi>
-    </div>
+    <VeMusicArtists :artists="form.artistsIds"
+                    @ok-func="(val: any) => {
+                      form.artistsIds = val
+                      handleRedactArtists()
+                    }"
+    />
   </form>
 
 </template>

@@ -3,7 +3,7 @@ import {computed, ref, watchEffect} from "vue";
 
 import {UrlType} from "@/types/url.ts";
 
-import {apiRedactAudioUrlForMusic, apiRedactPreviewUrlForMusic, apiRedactVideoUrlForMusic} from "@api/veMusic/music.ts";
+import {apiRedactPreviewUrlForMusic, apiRedactVideoUrlForMusic} from "@api/veMusic/music.ts";
 
 import {formatPath} from "@composables/useFormatPath.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -24,20 +24,13 @@ const props = defineProps<{
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
 interface Form {
-  audioUrl: string
   previewUrl: string
   videoUrl: string
 }
 
 const form = ref<Form>({
-  audioUrl: '',
   previewUrl: '',
   videoUrl: '',
-})
-
-const editAudioVisible = computed(() => {
-  return form.value.audioUrl !== formatPath(veMusicStore.currentMusic?.url ?? '', 'veMusic')
-      && form.value.audioUrl?.length > 0
 })
 
 const editPreviewVisible = computed(() => {
@@ -55,27 +48,6 @@ const showDeleteError = async (err: any, label: string) => {
       'Ошибка редактирования url',
       `Не удалось редактировать url для ${label}.. Ошибка: ${err?.detail}`
   )
-}
-
-const handleRedactAudio = async () => {
-  const confirm = await showConfirm(
-      'Редактирование аудио',
-      'Вы действительно хотите редактировать url аудио-файла?'
-  )
-  if (confirm) await redactAudio()
-}
-
-const redactAudio = async () => {
-  try {
-    isLoading.value = true
-
-    const response: UrlType = await apiRedactAudioUrlForMusic(props.musicId, form.value.audioUrl, props.signal)
-    if (response) veMusicStore.currentMusic!.url = response.url
-  } catch (err: any) {
-    await showDeleteError(err, 'аудио')
-  } finally {
-    isLoading.value = false
-  }
 }
 
 const handleRedactPreview = async () => {
@@ -122,7 +94,6 @@ const redactVideo = async () => {
 
 watchEffect(() => {
   if (veMusicStore.currentMusic) {
-    form.value.audioUrl = formatPath(veMusicStore.currentMusic.url, 'veMusic')
     form.value.previewUrl = formatPath(veMusicStore.currentMusic.previewUrl ?? '', 'veMusic')
     form.value.videoUrl = formatPath(veMusicStore.currentMusic.videoClipUrl ?? '', 'veMusic')
   }
@@ -132,17 +103,6 @@ watchEffect(() => {
 <template>
 
   <form novalidate class="flex flex-col gap-5 w-full">
-    <LabelUi text="Url аудио:">
-      <InputUi v-model="form.audioUrl"
-               :disabled="isLoading"
-               :action-btn="{
-                      icon: EditIcon,
-                      func: () => handleRedactAudio(),
-                      visible: editAudioVisible
-                   }"
-      />
-    </LabelUi>
-
     <LabelUi text="Url обложки:">
       <InputUi v-model="form.previewUrl"
                :disabled="isLoading"

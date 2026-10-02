@@ -33,7 +33,7 @@ const isLoading = defineModel<boolean>('isLoading', {required: true})
 const files = ref<MusicFilesType>({
   audio: null,
   preview: null,
-  previewPath: null,
+  previewPath: '',
   video: null,
 })
 
@@ -108,6 +108,15 @@ const uploadPreviewPath = async (path: string) => {
   }
 }
 
+const handleDeletePreview = async () => {
+  const confirm = await showConfirm(
+      'Удаление постера трека',
+      'Вы действительно хотите удалить постер трека?'
+  )
+
+  if (confirm) await deletePreview()
+}
+
 const deletePreview = async () => {
   try {
     isLoading.value = true
@@ -168,12 +177,13 @@ const deleteVideo = async () => {
           :img-url="veMusicStore.currentMusic?.previewUrl"
           :disabled="isLoading"
           @select="(file: File) => uploadPreview(file)"
-          @delete="deletePreview"
-          class="aspect-square min-w-0"
+          @delete="handleDeletePreview"
+          class="aspect-square min-h-0"
       />
 
       <VeMusicPosters v-model:form="files"
                       @update-poster="handleUploadPreviewPath($event)"
+                      class="shrink-0"
       />
     </div>
 

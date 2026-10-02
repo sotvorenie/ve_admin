@@ -93,7 +93,6 @@ watchEffect(() => {
       <KeepAlive>
         <Component :is="components[activeTab]"
                    v-model:is-loading="isLoading"
-                   :user-id="+userId"
                    :signal="signal"
                    class="w-full"
         />

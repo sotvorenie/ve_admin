@@ -14,10 +14,12 @@ import Icon from "@ui/Icon.vue";
 import DeleteIcon from "@icons/DeleteIcon.vue";
 import LoadingIcon from "@icons/LoadingIcon.vue";
 
+import useVeMusicStore from "@store/useVeMusicStore.ts";
+const veMusicStore = useVeMusicStore();
+
 const props = defineProps<{
   getFunc: Function
   deleteFunc: Function
-  userId: number
 }>()
 
 const musicList = defineModel<MusicForListType[]>('musicList', {default: () => []})
@@ -34,7 +36,7 @@ const getMusic = async () => {
   try {
     isLoading.value = true
 
-    const response: MusicListType = await props.getFunc(props.userId, page.value, 30, signal)
+    const response: MusicListType = await props.getFunc(veMusicStore.currentUser!.id, page.value, 30, signal)
     if (response) {
       total.value = response.total
       page.value = response.page
@@ -62,7 +64,7 @@ const deleteMusic = async (id: number) => {
   try {
     isLoading.value = true
 
-    await props.deleteFunc(id, props.userId, signal)
+    await props.deleteFunc(id, veMusicStore.currentUser!.id, signal)
     musicList.value = musicList.value.filter(m => m.id !== id)
   } catch (err: any) {
     await showError(

@@ -24,7 +24,7 @@ export interface MusicType {
     videoClipUrl: string | null
     isLiked: boolean
 
-    genre: GenreType
+    genre: GenreType | null
     artists: ArtistType[]
 }
 
@@ -35,7 +35,7 @@ export interface MusicListType extends BasePaginationType {
 export interface MusicFilesType {
     audio: File | null
     preview: File | null
-    previewPath: string | null
+    previewPath: string
     video: File | null
 }
 

@@ -41,7 +41,7 @@ const getPosters = async () => {
 
 const handlePoster = (url: string) => {
   if (form.value.previewPath === url) {
-    form.value.previewPath = null
+    form.value.previewPath = ''
   } else {
     form.value.preview = null
     form.value.previewPath = url

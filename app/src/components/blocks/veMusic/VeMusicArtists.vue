@@ -22,6 +22,10 @@ const apiUrlStore = useApiUrlStore();
 
 const artists = defineModel<number[]>('artists', {required: true})
 
+const emits = defineEmits<{
+  okFunc: [number[]]
+}>()
+
 const signal = useSignal()
 
 const isLoading = ref<boolean>(true)
@@ -139,7 +143,10 @@ onBeforeMount(() => getArtists())
             Отмена
           </ButtonUi>
 
-          <ButtonUi @click="close">
+          <ButtonUi @click="() => {
+            emits('okFunc', artists)
+            close
+          }">
             Подтвердить
           </ButtonUi>
         </div>

@@ -2,7 +2,7 @@ import {MusicListType, MusicType} from "@/types/music.ts";
 import {UrlType} from "@/types/url.ts";
 import {PostersResponse} from "@/types/posters.ts";
 
-import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
+import {apiDelete, apiGet, apiPatch} from "@/api";
 
 export const apiGetAllMusic = async (
     name: string = '',
@@ -25,10 +25,6 @@ export const apiRedactMusic = async (id: number, title: string, genreId: number,
         genre_id: String(genreId),
         artists: artists.join(','),
     }, {signal})
-}
-
-export const apiRedactAudioUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPost(`/music/admin/redact_audio_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactPreviewUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {

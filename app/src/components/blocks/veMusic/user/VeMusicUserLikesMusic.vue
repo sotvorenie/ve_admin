@@ -66,7 +66,7 @@ onBeforeMount(() => getMusic())
 
   <div class="flex flex-col gap-4">
     <InputUi v-model="searchName"
-             placeholder="Поиск по пользователям.."
+             placeholder="Поиск по трекам.."
              :disabled="isLoading"
              :action-btn="{
                       icon: SearchIcon,

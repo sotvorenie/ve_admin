@@ -35,11 +35,11 @@ const URL = window.URL
           :show-confirm="false"
           @select="(file: File) => {
             form.preview = file
-            form.previewPath = null
+            form.previewPath = ''
           }"
           @delete="() => {
             form.preview = null
-            form.previewPath = null
+            form.previewPath = ''
           }"
           class="aspect-square min-h-0"
       />

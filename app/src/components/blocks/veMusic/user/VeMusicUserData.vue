@@ -9,7 +9,6 @@ import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
 defineProps<{
-  userId: number
   signal: AbortSignal
 }>()
 
@@ -39,19 +38,16 @@ watchEffect(() => {
 
   <div class="grid grid-cols-2 gap-5 w-full">
     <VeMusicUserAvatar v-model:is-loading="isLoading"
-                       :user-id="userId"
                        :signal="signal"
     />
 
     <div class="flex flex-col justify-between w-full">
       <VeMusicUserInfo v-model:is-loading="isLoading"
                        v-model:form="form"
-                       :user-id="userId"
                        :signal="signal"
       />
 
       <VeMusicUserActions v-model:is-loading="isLoading"
-                          :user-id="userId"
                           :signal="signal"
       />
     </div>

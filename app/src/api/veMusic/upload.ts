@@ -9,8 +9,9 @@ export const apiUploadMusic = async (form: CreateMusicForm, signal?: AbortSignal
 
     if (form.files.audio) formData.append('music', form.files.audio)
     if (form.files.preview) formData.append('preview', form.files.preview)
-    if (form.files.previewPath) formData.append('path', form.files.previewPath)
     if (form.files.video) formData.append('video', form.files.video)
+
+    formData.append('path', form.files.previewPath)
 
     formData.append('title', form.info.title)
     formData.append('genre_id', String(form.info.genre))

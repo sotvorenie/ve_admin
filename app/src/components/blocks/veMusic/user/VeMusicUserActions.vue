@@ -11,7 +11,6 @@ import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
 const props = defineProps<{
-  userId: number
   signal: AbortSignal
 }>()
 
@@ -32,7 +31,7 @@ const deleteUser = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteUser(props.userId, props.signal)
+    await apiDeleteUser(veMusicStore.currentUser!.id, props.signal)
     await router.replace('/ve_music/users')
   } catch (err: any) {
     await showError(

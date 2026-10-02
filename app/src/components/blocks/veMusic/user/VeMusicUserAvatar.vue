@@ -11,7 +11,6 @@ import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
 
 const props = defineProps<{
-  userId: number
   signal: AbortSignal
 }>()
 
@@ -21,7 +20,7 @@ const uploadAvatar = async (file: File) => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiUploadUserAvatar(props.userId, file, props.signal)
+    const response: UrlType = await apiUploadUserAvatar(veMusicStore.currentUser!.id, file, props.signal)
     if (response) veMusicStore.currentUser!.avatarUrl = response.url
   } catch (err: any) {
     await showError(
@@ -46,7 +45,7 @@ const deleteAvatar = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteUserAvatar(props.userId, props.signal)
+    await apiDeleteUserAvatar(veMusicStore.currentUser!.id, props.signal)
     veMusicStore.currentUser!.avatarUrl = ''
   } catch (err: any) {
     await showError(
