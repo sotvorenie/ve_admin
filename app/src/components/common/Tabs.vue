@@ -26,7 +26,7 @@ const handleTab = (tab: TabType) => {
         v-for="tab in items"
         :key="tab.key"
     >
-      <button class="py-1.5 px-2.5 font-medium hover:text-accent cursor-pointer transition-colors"
+      <button class="py-1.5 px-2.5 font-medium hover:text-accent cursor-pointer transition-colors h-full"
               :class="[
                 $route.path.includes(tab.url) && 'text-accent pointer-events-none'
               ]"
