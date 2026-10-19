@@ -13,7 +13,6 @@ export const useObserve = (element: MaybeRef<HTMLElement | null>, func: Function
 
             observer = new IntersectionObserver(entries => {
                 entries.forEach(async (entry) => {
-                    console.log(entry.isIntersecting)
                     if (!entry.isIntersecting) return
                     if (isProcessing) return
                     isProcessing = true
