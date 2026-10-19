@@ -30,6 +30,8 @@ const props = defineProps<{
 
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
+const isVisiblePostersModal = ref<boolean>(false)
+
 const files = ref<MusicFilesType>({
   audio: null,
   preview: null,
@@ -93,6 +95,8 @@ const handleUploadPreviewPath = async (path: string) => {
     files.value.preview = null
     await uploadPreviewPath(path)
   }
+
+  isVisiblePostersModal.value = false
 }
 
 const uploadPreviewPath = async (path: string) => {
@@ -182,6 +186,7 @@ const deleteVideo = async () => {
       />
 
       <VeMusicPosters v-model:form="files"
+                      v-model:is-visible="isVisiblePostersModal"
                       @update-poster="handleUploadPreviewPath($event)"
                       class="shrink-0"
       />
