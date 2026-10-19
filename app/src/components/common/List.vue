@@ -70,7 +70,7 @@ const handleItem = (row: ListItemType) => {
       </li>
     </ul>
 
-    <ul v-if="items?.length" class="h-full overflow-x-hidden overflow-y-auto scrollbar-thin">
+    <ul v-if="items?.length" class="h-full overflow-x-hidden overflow-y-auto scrollbar-thin -mr-[10px]">
       <li v-for="row in items"
           :key="row.info.id"
           class="cursor-pointer"
