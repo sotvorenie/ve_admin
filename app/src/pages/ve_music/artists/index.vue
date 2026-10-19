@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, ref, watch} from "vue";
 
 import {ListHeadType, ListItemType} from "@/types/list.ts";
 import {ArtistsListType} from "@/types/artist.ts";
@@ -66,7 +66,6 @@ const getArtists = async () => {
     const response: ArtistsListType = await apiGetArtists(searchStore.searchName, page.value, 30, signal)
 
     if (response) {
-      page.value = response.page
       total.value = response.total
       artists.value = response.artists.map(artist => ({
         url: `/ve_music/artists/${artist.id}`,
@@ -91,9 +90,13 @@ onBeforeMount(() => {
     to: '/ve_music/artists/create',
   }
   searchStore.searchFunc = () => getArtists()
-
-  getArtists()
 })
+
+watch(
+    () => page.value,
+    () => getArtists(),
+    { immediate: true }
+)
 </script>
 
 <template>

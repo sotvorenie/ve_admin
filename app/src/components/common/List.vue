@@ -70,7 +70,7 @@ const handleItem = (row: ListItemType) => {
       </li>
     </ul>
 
-    <ul v-if="items?.length" class="h-full overflow-x-hidden overflow-y-auto scrollbar-none">
+    <ul v-if="items?.length && !isLoading" class="h-full overflow-x-hidden overflow-y-auto scrollbar-none">
       <li v-for="row in items"
           :key="row.info.id"
           class="cursor-pointer"
@@ -135,13 +135,14 @@ const handleItem = (row: ListItemType) => {
       Данных нет..
     </div>
 
-    <div v-else class="recolor-svg w-full p-7.5 flex items-center justify-center">
+    <div v-else class="recolor-svg w-full p-7.5 flex items-center justify-center h-full">
       <Icon :name="LoadingIcon" :size="32"/>
     </div>
 
     <Pagination v-if="items?.length"
                 v-model="page"
                 :total="total"
+                :is-loading="isLoading"
     />
   </div>
 
