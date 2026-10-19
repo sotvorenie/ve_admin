@@ -14,6 +14,7 @@ const props = defineProps<{
   modelValue: string | number
   options: Option[]
   placeholder?: string
+  disabled?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -54,10 +55,9 @@ onUnmounted(() => globalThis.removeEventListener('click', closeDropdown))
         @click.stop="isOpen = !isOpen"
         class="recolor-svg flex items-center justify-between w-full h-full bg-text-alt font-semibold gap-3 p-3 text-sm cursor-pointer text-nowrap transition-colors text-left text-white"
         :class="[
-          isOpen
-            ? 'rounded-t-xl rounded-b-none border-b-0'
-            : 'rounded-xl'
+          isOpen? 'rounded-t-xl rounded-b-none border-b-0': 'rounded-xl'
         ]"
+        :disabled="disabled"
         type="button"
     >
       <span class="truncate text-white">
@@ -82,6 +82,7 @@ onUnmounted(() => globalThis.removeEventListener('click', closeDropdown))
             @click="selectOption(opt.id)"
             class="flex items-center w-full not-last:mb-1 text-sm text-left hover:text-accent transition-colors"
             :class="modelValue === opt?.id ? 'pointer-events-none text-accent' : 'cursor-pointer text-white'"
+            :disabled="disabled"
             type="button"
         >
           <span class="truncate">{{ opt.label }}</span>

@@ -20,6 +20,8 @@ import veMusicGenres from "@pages/ve_music/genres/index.vue";
 import veMusicGenre from "@pages/ve_music/genres/[id].vue";
 import veMusicGenreCreate from "@pages/ve_music/genres/create.vue";
 
+import veFox from "@pages/ve_fox/index.vue";
+
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 import useSearchStore from "@store/useSearchStore.ts";
 
@@ -55,6 +57,7 @@ const routes: Array<RouteRecordRaw> = [
                     apiTarget: 'admin',
                 },
             },
+
             {
                 path: '/ve_music',
                 name: 've_music',
@@ -174,6 +177,17 @@ const routes: Array<RouteRecordRaw> = [
                     apiTarget: 'veMusic',
                 },
             },
+
+            {
+                path: '/ve_fox',
+                name: 've_fox',
+                component: veFox,
+                meta: {
+                    title: 'veFox',
+                    apiTarget: 'veFox',
+                },
+                children: [],
+            }
         ]
     },
 ]

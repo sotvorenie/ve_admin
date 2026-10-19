@@ -71,6 +71,7 @@ const createGenre = async () => {
         </ButtonUi>
 
         <ButtonUi :disabled="isLoading"
+                  :is-loading="isLoading"
                   @click="handleCreateGenre"
         >
           Добавить

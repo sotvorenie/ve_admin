@@ -20,6 +20,10 @@ import SearchIcon from "@icons/SearchIcon.vue";
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 const apiUrlStore = useApiUrlStore();
 
+defineProps<{
+  disabled?: boolean
+}>()
+
 const artists = defineModel<number[]>('artists', {required: true})
 
 const emits = defineEmits<{
@@ -86,7 +90,7 @@ onBeforeMount(() => getArtists())
 
   <Modal v-model="isVisible" :size="600">
     <template #activator="{open}">
-      <ButtonUi @click="open" class="w-full">
+      <ButtonUi @click="open" class="w-full" :disabled="disabled">
         Выбрать исполнителей
       </ButtonUi>
     </template>

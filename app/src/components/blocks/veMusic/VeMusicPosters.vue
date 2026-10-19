@@ -13,6 +13,10 @@ import ButtonUi from "@ui/ButtonUi.vue";
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 const apiUrlStore = useApiUrlStore();
 
+defineProps<{
+  disabled?: boolean
+}>()
+
 const form = defineModel<MusicFilesType>('form', {required: true})
 
 const emits = defineEmits<{
@@ -56,7 +60,7 @@ onBeforeMount(() => getPosters())
 
   <Modal :size="700">
     <template #activator="{open}">
-      <ButtonUi @click="open">
+      <ButtonUi @click="open" :disabled="disabled">
         Выбрать постер
       </ButtonUi>
     </template>

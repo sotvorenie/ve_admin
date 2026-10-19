@@ -3,6 +3,6 @@ import 'vue-router'
 declare module 'vue-router' {
     interface RouteMeta {
         title?: string
-        apiTarget?: 'admin' | 'veMusic'
+        apiTarget?: 'admin' | 'veMusic' | 'veFox'
     }
 }

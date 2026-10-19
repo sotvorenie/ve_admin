@@ -45,7 +45,7 @@ const handleUpload = async (file: File) => {
           :disabled="disabled"
           @select="(files: File[]) => handleUpload(files[0])"
           class="h-full"
-          :class="disabled && 'pointer-none'"
+          :class="disabled && 'pointer-events-none'"
   >
     <div class="img-upload recolor-svg img-container relative rounded-xl h-full bg-text-alt"
          :class="!audioUrl && 'border'"

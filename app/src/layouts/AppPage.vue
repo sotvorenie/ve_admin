@@ -32,8 +32,8 @@ withDefaults(
 
 const activeTab = ref<TabType | null>(null)
 
-const unSearchablePages = ['/ve_music', '/ve_music/genres']
-const mainPages = ['/ve_music']
+const unSearchablePages = ['/ve_music', '/ve_music/genres', '/ve_fox']
+const mainPages = ['/ve_music', '/ve_fox']
 
 onBeforeRouteUpdate(() => {
   pageStore.createBtnInfo = {

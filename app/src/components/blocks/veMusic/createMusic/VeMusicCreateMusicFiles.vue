@@ -44,7 +44,7 @@ const URL = window.URL
           class="aspect-square min-h-0"
       />
 
-      <VeMusicPosters v-model:form="form"/>
+      <VeMusicPosters v-model:form="form" :disabled="isLoading"/>
     </div>
 
     <VideoUpload
