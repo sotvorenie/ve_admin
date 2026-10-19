@@ -187,6 +187,7 @@ const deleteVideo = async () => {
 
       <VeMusicPosters v-model:form="files"
                       v-model:is-visible="isVisiblePostersModal"
+                      :disabled="isLoading"
                       @update-poster="handleUploadPreviewPath($event)"
                       class="shrink-0"
       />
