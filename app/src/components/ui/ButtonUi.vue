@@ -29,7 +29,7 @@ withDefaults(
           :size="25"
           class="absolute -translate-1/2 top-1/2 left-1/2"
     />
-    <span class="flex flex-col"
+    <span class="flex flex-col leading-5.5"
           :style="{
             opacity: isLoading ? 0 : 1,
           }"
