@@ -69,7 +69,7 @@ onBeforeMount(() => getPosters())
     <template #default>
       <p class="text-lg font-medium mb-2">Список постеров</p>
 
-      <ul class="grid grid-cols-4 gap-2">
+      <ul class="grid grid-cols-4 gap-2 max-h-[70vh] overflow-y-auto scrollbar-thin">
         <li v-for="(poster, index) in posters"
             :key="poster"
             class="img-container aspect-square rounded-xl cursor-pointer group relative"

@@ -112,7 +112,7 @@ onBeforeMount(() => getArtists())
                  @keydown.enter="getArtists"
         />
 
-        <ul class="flex flex-col gap-2.5">
+        <ul class="flex flex-col gap-2.5 max-h-[70vh] overflow-y-auto scrollbar-thin">
           <li v-for="artist in artistsList"
               :key="artist.id"
               class="flex items-center justify-between gap-5 px-4 py-2.5 border border-white rounded-xl cursor-pointer hover:border-accent transition-colors"
