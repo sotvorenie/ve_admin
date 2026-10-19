@@ -149,7 +149,7 @@ onBeforeMount(() => getArtists())
 
           <ButtonUi @click="() => {
             emits('okFunc', artists)
-            close
+            close()
           }">
             Подтвердить
           </ButtonUi>
