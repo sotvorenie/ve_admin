@@ -4,9 +4,7 @@ import {logout} from "@utils/auth.ts";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 
-export const client = axios.create({
-    timeout: 10000,
-})
+export const client = axios.create()
 
 client.interceptors.request.use((config) => {
     const apiUrlStore = useApiUrlStore()
