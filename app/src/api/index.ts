@@ -33,7 +33,7 @@ client.interceptors.response.use(
             return Promise.reject(errorData)
         }
 
-        const errorData = error.response?.data || { detail: error.message || "Ошибка сети" }
+        const errorData = error.response?.data || { detail: error?.message || "Ошибка сети" }
         return Promise.reject(errorData)
     },
 )

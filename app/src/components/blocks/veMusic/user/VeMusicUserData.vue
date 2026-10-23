@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {ref, watchEffect} from "vue";
 
+import {UserRole} from "@/types/user.ts";
+
 import VeMusicUserAvatar from "@components/veMusic/user/VeMusicUserAvatar.vue";
 import VeMusicUserInfo from "@components/veMusic/user/VeMusicUserInfo.vue";
 import VeMusicUserActions from "@components/veMusic/user/VeMusicUserActions.vue";
@@ -18,18 +20,21 @@ export interface VeMusicUserForm {
   name: string
   login: string
   password: string
+  role: UserRole
 }
 
 const form = ref<VeMusicUserForm>({
   name: '',
   login: '',
   password: '',
+  role: UserRole.USER,
 })
 
 watchEffect(() => {
   if (veMusicStore.currentUser) {
     form.value.name = veMusicStore.currentUser.name
     form.value.login = veMusicStore.currentUser.login
+    form.value.role = veMusicStore.currentUser.role
   }
 })
 </script>

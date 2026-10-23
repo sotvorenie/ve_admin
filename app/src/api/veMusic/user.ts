@@ -1,4 +1,4 @@
-import {AppUsersResponseType, AppUserType} from "@/types/user.ts";
+import {AppUsersResponseType, AppUserType, UserRole} from "@/types/user.ts";
 import {UrlType} from "@/types/url.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
@@ -36,4 +36,8 @@ export const apiUploadUserAvatar = async (id: number, file: File, signal?: Abort
 
 export const apiDeleteUserAvatar = async (id: number, signal?: AbortSignal): Promise<void> => {
     return apiPatch(`/user/admin/delete_avatar/${id}`,undefined, {signal})
+}
+
+export const apiUpdateUserRole = (id: number, role: UserRole, signal?: AbortSignal): Promise<void> => {
+    return apiPatch(`/user/admin/update_role/${id}`, {role}, {signal})
 }

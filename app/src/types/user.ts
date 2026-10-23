@@ -1,5 +1,10 @@
 import {BasePaginationType} from "@/types/basePagination.ts";
 
+export enum UserRole {
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+}
+
 export interface UserType {
     id: number
     name: string
@@ -13,6 +18,7 @@ export interface UserWithTokenType {
 
 export interface AppUserType extends UserType {
     login: string
+    role: UserRole
     createdAt: string
     updatedAt: string
 }
