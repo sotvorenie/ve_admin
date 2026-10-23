@@ -92,11 +92,7 @@ onBeforeMount(() => {
   searchStore.searchFunc = () => getArtists()
 })
 
-watch(
-    () => page.value,
-    () => getArtists(),
-    { immediate: true }
-)
+watch(page, getArtists, { immediate: true })
 </script>
 
 <template>

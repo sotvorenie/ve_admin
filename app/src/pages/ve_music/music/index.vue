@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, ref, watch} from "vue";
 
 import {ListItemType} from "@/types/list.ts";
 import {MusicListType} from "@/types/music.ts";
@@ -69,6 +69,8 @@ onBeforeMount(() => {
 
   getMusic()
 })
+
+watch(page, getMusic, {immediate: true})
 </script>
 
 <template>
