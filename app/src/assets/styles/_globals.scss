@@ -16,10 +16,18 @@
 body {
   background: var(--color-text);
   color: var(--color-white);
-  font-family: var(--font-base);
+  font-family: var(--font-base), sans-serif;
   overflow: hidden;
 }
 
-button[disabled] {
-  pointer-events: none;
+button {
+  cursor: pointer;
+  transition:
+          color var(--default-transition-duration),
+          border-color var(--default-transition-duration);
+
+  &[disabled] {
+    pointer-events: none;
+    opacity: 0.6;
+  }
 }

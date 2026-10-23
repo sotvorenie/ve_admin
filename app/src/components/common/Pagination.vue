@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {computed} from "vue";
 
+import Icon from "@ui/Icon.vue";
+
 import SelectArrowIcon from "@icons/SelectArrowIcon.vue";
 
 const props = withDefaults(
@@ -18,7 +20,7 @@ const activePage = defineModel<number>({
   default: 1
 })
 
-const btnClass = 'w-10 aspect-square flex items-center justify-center text-center rounded-xl border border-black/50 hover:border-accent hover:text-accent'
+const btnClass = 'recolor-svg w-10 aspect-square flex items-center justify-center text-center rounded-xl border border-light hover:border-accent hover:text-accent pt-0.5'
 
 const maxPage = computed(() => Math.ceil(props.total / props.limit))
 
@@ -57,14 +59,14 @@ const handlePage = (page: number) => {
 
   <div v-if="maxPage > 1" class="flex items-center justify-center gap-5 mt-6 select-none">
     <button :class="['rotate-90', btnClass]"
-            :disabled="activePage === 1"
+            :disabled="activePage === 1 || isLoading"
             type="button"
             @click="activePage = Math.max(1, activePage - 1)"
     >
-      <SelectArrowIcon/>
+      <Icon :name="SelectArrowIcon" :size="20"/>
     </button>
 
-    <div class="flex items-end gap-1">
+    <div class="flex items-end gap-2">
       <template v-for="page in pages"
                 :key="page"
       >
@@ -74,6 +76,7 @@ const handlePage = (page: number) => {
                     btnClass,
                     page === activePage && 'border-accent pointer-events-none text-accent'
                 ]"
+                :disabled="isLoading"
                 @click="handlePage(page)"
         >
           {{page}}
@@ -86,7 +89,7 @@ const handlePage = (page: number) => {
             :disabled="activePage === maxPage || isLoading"
             @click="activePage = Math.min(maxPage, activePage + 1)"
     >
-      <SelectArrowIcon/>
+      <Icon :name="SelectArrowIcon" :size="20"/>
     </button>
   </div>
 

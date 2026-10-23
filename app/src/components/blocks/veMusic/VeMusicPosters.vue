@@ -13,7 +13,12 @@ import ButtonUi from "@ui/ButtonUi.vue";
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 const apiUrlStore = useApiUrlStore();
 
+defineProps<{
+  disabled?: boolean
+}>()
+
 const form = defineModel<MusicFilesType>('form', {required: true})
+const isVisible = defineModel<boolean>('isVisible')
 
 const emits = defineEmits<{
   updatePoster: [string]
@@ -54,9 +59,9 @@ onBeforeMount(() => getPosters())
 
 <template>
 
-  <Modal :size="700">
+  <Modal :size="700" v-model="isVisible">
     <template #activator="{open}">
-      <ButtonUi @click="open">
+      <ButtonUi @click="open" :disabled="disabled">
         Выбрать постер
       </ButtonUi>
     </template>
@@ -64,7 +69,7 @@ onBeforeMount(() => getPosters())
     <template #default>
       <p class="text-lg font-medium mb-2">Список постеров</p>
 
-      <ul class="grid grid-cols-4 gap-2">
+      <ul class="grid grid-cols-4 gap-2 max-h-[70vh] overflow-y-auto scrollbar-thin">
         <li v-for="(poster, index) in posters"
             :key="poster"
             class="img-container aspect-square rounded-xl cursor-pointer group relative"

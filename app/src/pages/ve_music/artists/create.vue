@@ -77,6 +77,7 @@ const URL = window.URL
         </ButtonUi>
 
         <ButtonUi :disabled="isLoading || !isCreateBtnVisible"
+                  :is-loading="isLoading"
                   @click="handleCreateArtist"
         >
           Добавить

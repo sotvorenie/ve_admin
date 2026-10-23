@@ -56,10 +56,11 @@ onBeforeMount(() => getGenres())
       <SelectUi v-model="form.genre"
                 :options="genres"
                 placeholder="Выберите жанр"
+                :disabled="isLoading"
       />
     </LabelUi>
 
-    <VeMusicArtists v-model:artists="form.artistsIds"/>
+    <VeMusicArtists v-model:artists="form.artistsIds" :disabled="isLoading"/>
   </form>
 
 </template>

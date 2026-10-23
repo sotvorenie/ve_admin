@@ -68,7 +68,6 @@ onBeforeMount(() => {
   searchStore.searchFunc = () => getMusic()
 
   getMusic()
-
 })
 </script>
 

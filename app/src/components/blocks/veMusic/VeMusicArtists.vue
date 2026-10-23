@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
+import {ref} from "vue";
 
 import {ArtistsListType, ArtistType} from "@/types/artist.ts";
 
@@ -7,6 +7,7 @@ import {apiGetArtists} from "@api/veMusic/artist.ts";
 
 import {pluralize} from "@composables/usePluralize.ts";
 import {useSignal} from "@composables/useSignal.ts";
+import {useObserve} from "@composables/useObserve.ts";
 import {showError} from "@utils/modals.ts";
 
 import Modal from "@ui/Modal.vue";
@@ -18,7 +19,12 @@ import NotImageIcon from "@icons/NotImageIcon.vue";
 import SearchIcon from "@icons/SearchIcon.vue";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
+import LoadingIcon from "@icons/LoadingIcon.vue";
 const apiUrlStore = useApiUrlStore();
+
+defineProps<{
+  disabled?: boolean
+}>()
 
 const artists = defineModel<number[]>('artists', {required: true})
 
@@ -28,7 +34,7 @@ const emits = defineEmits<{
 
 const signal = useSignal()
 
-const isLoading = ref<boolean>(true)
+const isLoading = ref<boolean>(false)
 
 const isVisible = ref<boolean>(false)
 
@@ -37,8 +43,13 @@ const artistsList = ref<ArtistType[]>([])
 const searchName = ref<string>('')
 
 const page = ref<number>(1)
+const hasMore = ref(true)
+
+const lastLiRef = ref<HTMLLIElement | null>(null)
 
 const getArtists = async () => {
+  if (isLoading.value || !hasMore.value) return
+
   try {
     isLoading.value = true
 
@@ -49,8 +60,9 @@ const getArtists = async () => {
         signal
     )
     if (response) {
-      page.value = response.page
-      artistsList.value = response.artists
+      page.value = response.page + 1
+      artistsList.value = [...artistsList.value, ...response.artists]
+      hasMore.value = response.hasMore
     }
   } catch (err: any) {
     await showError(
@@ -60,6 +72,13 @@ const getArtists = async () => {
   } finally {
     isLoading.value = false
   }
+}
+
+const searchArtist = () => {
+  hasMore.value = true
+  page.value = 1
+  artistsList.value = []
+  getArtists()
 }
 
 const handleArtist = (id: number) => {
@@ -79,20 +98,20 @@ const handleCancel = () => {
   isVisible.value = false
 }
 
-onBeforeMount(() => getArtists())
+useObserve(lastLiRef, () => getArtists())
 </script>
 
 <template>
 
   <Modal v-model="isVisible" :size="600">
     <template #activator="{open}">
-      <ButtonUi @click="open" class="w-full">
+      <ButtonUi @click="open" class="w-full" :disabled="disabled">
         Выбрать исполнителей
       </ButtonUi>
     </template>
 
     <template #default="{close}">
-      <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-5 overflow-hidden">
         <p class="text-sm font-semibold">
           {{pluralize(artists?.length ?? 0, ['Выбран', 'Выбраны', 'Выбрано'])}} {{artists?.length}} {{pluralize(artists?.length ?? 0, ['исполнитель', 'исполнителя', 'исполнителей'])}}
         </p>
@@ -102,13 +121,19 @@ onBeforeMount(() => getArtists())
                  :disabled="isLoading"
                  :action-btn="{
                       icon: SearchIcon,
-                      func: () => getArtists(),
+                      func: () => searchArtist(),
                       visible: !!searchName?.length
                    }"
-                 @keydown.enter="getArtists"
+                 @keydown.enter="searchArtist"
         />
 
-        <ul class="flex flex-col gap-2.5">
+        <div v-if="isLoading && !artistsList?.length"
+             class="recolor-svg flex items-center justify-center min-h-20"
+        >
+          <Icon :name="LoadingIcon" :size="30"/>
+        </div>
+
+        <ul class="flex flex-col gap-2.5 max-h-[70vh] overflow-y-auto scrollbar-thin">
           <li v-for="artist in artistsList"
               :key="artist.id"
               class="flex items-center justify-between gap-5 px-4 py-2.5 border border-white rounded-xl cursor-pointer hover:border-accent transition-colors"
@@ -136,6 +161,8 @@ onBeforeMount(() => getArtists())
               />
             </div>
           </li>
+
+          <li class="h-px" ref="lastLiRef"/>
         </ul>
 
         <div v-if="artists?.length" class="grid grid-cols-2 gap-2.5">
@@ -145,7 +172,7 @@ onBeforeMount(() => getArtists())
 
           <ButtonUi @click="() => {
             emits('okFunc', artists)
-            close
+            close()
           }">
             Подтвердить
           </ButtonUi>

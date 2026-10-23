@@ -105,6 +105,7 @@ const createUser = async () => {
         </ButtonUi>
 
         <ButtonUi :disabled="isLoading"
+                  :is-loading="isLoading"
                   @click="handleCreateUser"
         >
           Добавить

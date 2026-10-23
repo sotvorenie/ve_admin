@@ -7,7 +7,7 @@
 }
 
 @theme inline {
-    --font-base: 'Montserrat', sans-serif;
+    --font-base: 'Montserrat';
     --tracking-wide: -0.03em;
 
     --color-accent: var(--color-accent);

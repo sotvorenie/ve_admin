@@ -76,7 +76,7 @@ onBeforeMount(() => getMusic())
              @keydown.enter="getMusic"
     />
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 max-h-[70vh] overflow-y-auto scrollbar-thin">
       <div v-for="music in music"
            :key="music.id"
            class="flex items-center justify-between gap-2 px-4 py-2.5 border rounded-xl cursor-pointer hover:border-accent transition-colors"
