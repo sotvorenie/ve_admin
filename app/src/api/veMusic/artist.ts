@@ -29,7 +29,7 @@ export const apiDeleteArtist = async (id: number, signal?: AbortSignal): Promise
 }
 
 export const apiRedactArtistName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/artist/admin/redact_name/${id}`, {name}, {signal})
+    return apiPatch(`/artist/admin/update_name/${id}`, {name}, {signal})
 }
 
 export const apiUploadArtistAvatar = async (id: number, file: File, signal?: AbortSignal): Promise<UrlType> => {
@@ -40,7 +40,7 @@ export const apiUploadArtistAvatar = async (id: number, file: File, signal?: Abo
 }
 
 export const apiRedactAvatarUrlForArtist = async (id: number, avatarPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPatch(`/artist/admin/redact_avatar_url/${id}`, {path: avatarPath}, {signal})
+    return apiPatch(`/artist/admin/update_avatar_url/${id}`, {path: avatarPath}, {signal})
 }
 
 export const apiDeleteArtistAvatar = async (id: number, signal?: AbortSignal): Promise<void> => {

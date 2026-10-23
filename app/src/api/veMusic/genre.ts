@@ -24,5 +24,5 @@ export const apiDeleteGenre = async (id: number, signal?: AbortSignal): Promise<
 }
 
 export const apiRedactGenreName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/genre/admin/redact_name/${id}`, {name}, {signal})
+    return apiPatch(`/genre/admin/update_name/${id}`, {name}, {signal})
 }

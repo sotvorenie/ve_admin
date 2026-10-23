@@ -20,7 +20,7 @@ export const apiGetMusic = async (id: number, signal?: AbortSignal): Promise<Mus
 }
 
 export const apiRedactMusic = async (id: number, title: string, genreId: number, artists: number[], signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/music/admin/redact/${id}`, {
+    return apiPatch(`/music/admin/update/${id}`, {
         title,
         genre_id: String(genreId),
         artists: artists.join(','),
@@ -28,15 +28,15 @@ export const apiRedactMusic = async (id: number, title: string, genreId: number,
 }
 
 export const apiRedactPreviewUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPatch(`/music/admin/redact_preview_url/${id}`, {path: audioPath}, {signal})
+    return apiPatch(`/music/admin/update_preview_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactVideoUrlForMusic = async (id: number, audioPath: string, signal?: AbortSignal): Promise<UrlType> => {
-    return apiPatch(`/music/admin/redact_video_url/${id}`, {path: audioPath}, {signal})
+    return apiPatch(`/music/admin/update_video_url/${id}`, {path: audioPath}, {signal})
 }
 
 export const apiRedactAuditionsForMusic = async (id: number, auditionsCount: number, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/music/admin/redact_auditions/${id}`, {auditions_count: auditionsCount}, {signal})
+    return apiPatch(`/music/admin/update_auditions/${id}`, {auditions_count: auditionsCount}, {signal})
 }
 
 export const apiDeleteMusic = async (id: number, signal?: AbortSignal): Promise<void> => {

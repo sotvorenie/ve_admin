@@ -3,11 +3,11 @@ import {UrlType} from "@/types/url.ts";
 import {apiPatch, apiPost} from "@/api";
 
 export const apiRedactName = (name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/redact_name`, {name}, {signal})
+    return apiPatch(`/user/update_name`, {name}, {signal})
 }
 
 export const apiRedactPassword = (password: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/redact_password`, {password}, {signal})
+    return apiPatch(`/user/update_password`, {password}, {signal})
 }
 
 export const apiUploadAvatar = (avatar: File, signal?: AbortSignal): Promise<UrlType> => {

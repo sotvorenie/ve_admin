@@ -12,15 +12,15 @@ export const apiGetUser = async (id: number, signal?: AbortSignal): Promise<AppU
 }
 
 export const apiRedactUserName = async (id: number, name: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/admin/redact_name/${id}`,{name}, {signal})
+    return apiPatch(`/user/admin/update_name/${id}`,{name}, {signal})
 }
 
 export const apiRedactUserLogin = async (id: number, login: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/admin/redact_login/${id}`,{login}, {signal})
+    return apiPatch(`/user/admin/update_login/${id}`,{login}, {signal})
 }
 
 export const apiRedactUserPassword = async (id: number, password: string, signal?: AbortSignal): Promise<void> => {
-    return apiPatch(`/user/admin/redact_password/${id}`,{password}, {signal})
+    return apiPatch(`/user/admin/update_password/${id}`,{password}, {signal})
 }
 
 export const apiDeleteUser = async (id: number, signal?: AbortSignal): Promise<void> => {
