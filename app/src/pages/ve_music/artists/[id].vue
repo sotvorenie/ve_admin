@@ -40,7 +40,7 @@ const getCurrentArtist = async () => {
   try {
     const response = await VeMusicArtistService.getArtist(+artistId.value, signal)
 
-    if (response) veMusicStore.currentArtist = response
+    veMusicStore.currentArtist = response
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',

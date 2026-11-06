@@ -61,7 +61,8 @@ const redactPreview = async () => {
     isLoading.value = true
 
     const response = await VeMusicMusicService.updatePreviewPath(props.musicId, form.value.previewUrl, props.signal)
-    if (response) veMusicStore.currentMusic!.previewUrl = response.url
+
+    veMusicStore.currentMusic!.previewUrl = response.url
   } catch (err: any) {
     await showDeleteError(err, 'обложки')
   } finally {
@@ -82,7 +83,8 @@ const redactVideo = async () => {
     isLoading.value = true
 
     const response = await VeMusicMusicService.updateVideoPath(props.musicId, form.value.videoUrl, props.signal)
-    if (response) veMusicStore.currentMusic!.videoClipUrl = response.url
+
+    veMusicStore.currentMusic!.videoClipUrl = response.url
   } catch (err: any) {
     await showDeleteError(err, 'клипа')
   } finally {

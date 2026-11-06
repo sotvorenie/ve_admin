@@ -54,7 +54,7 @@ const getCurrentUser = async () => {
   try {
     const response = await VeMusicUserService.getUser(+userId.value, signal)
 
-    if (response) veMusicStore.currentUser = response
+    veMusicStore.currentUser = response
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',

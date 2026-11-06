@@ -34,16 +34,15 @@ const getTracks = async () => {
     isLoading.value = true
 
     const response = await VeMusicGenreService.getGenreMusic(veMusicStore.currentGenre.id, page.value, 30, signal)
-    if (response) {
-      page.value += 1
-      total.value = response.meta.total
-      music.value = response.data.map(m => ({
-        url: `/ve_music/music/${m.id}`,
-        info: {
-          ...m
-        }
-      }))
-    }
+
+    page.value += 1
+    total.value = response.meta.total
+    music.value = response.data.map(m => ({
+      url: `/ve_music/music/${m.id}`,
+      info: {
+        ...m
+      }
+    }))
   } catch (err: any) {
     await showError(
         'Ошибка получения музыки в данном жанре',

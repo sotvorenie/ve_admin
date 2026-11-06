@@ -51,7 +51,8 @@ const logInInApp = async () => {
         form.value.password,
         signal
     )
-    if (response) auth(response)
+
+    auth(response)
     messageStore.show(`Добро пожаловать, ${response?.user?.name}!!`)
   } catch (err: any) {
     await showError('Ошибка авторизация', err.detail)
@@ -70,7 +71,8 @@ const register = async () => {
         form.value.name,
         signal
     )
-    if (response) auth(response)
+
+    auth(response)
     messageStore.show(`Добро пожаловать, ${form.value.name.trim()}!!`)
   } catch (err: any) {
     await showError('Ошибка регистрации', err.detail)

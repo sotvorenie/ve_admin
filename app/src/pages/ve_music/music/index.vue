@@ -38,17 +38,15 @@ const getMusic = async () => {
   try {
     const response = await VeMusicMusicService.getTracks(searchStore.searchName, -1, -1, page.value, 30, signal)
 
-    if (response) {
-      page.value += 1
-      total.value = response.meta.total
-      music.value = response.data.map(m => ({
-        url: `/ve_music/music/${m.id}`,
-        info: {
-          ...m,
-          artistId: m.artists.map(a => a.id)
-        }
-      }))
-    }
+    page.value += 1
+    total.value = response.meta.total
+    music.value = response.data.map(m => ({
+      url: `/ve_music/music/${m.id}`,
+      info: {
+        ...m,
+        artistId: m.artists.map(a => a.id)
+      }
+    }))
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',

@@ -37,11 +37,10 @@ const getMusic = async () => {
     isLoading.value = true
 
     const response = await props.getFunc(veMusicStore.currentUser!.id, page.value, 30, signal)
-    if (response) {
-      total.value = response.total
-      page.value = response.page
-      musicList.value = response.music
-    }
+
+    total.value = response.total
+    page.value += 1
+    musicList.value = response.music
   } catch (err: any) {
     await showError(
         'Ошибка получения музыки',

@@ -75,7 +75,8 @@ const redactUrl = async () => {
     isLoading.value = true
 
     const response = await VeMusicArtistService.updateAvatarPath(props.artistId, form.value.avatarUrl, props.signal)
-    if (response) veMusicStore.currentArtist!.avatarUrl = response.url
+
+    veMusicStore.currentArtist!.avatarUrl = response.url
   } catch (err: any) {
     await showErr(err, 'аватар')
   } finally {

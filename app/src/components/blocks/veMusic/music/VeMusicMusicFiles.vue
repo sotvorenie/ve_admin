@@ -52,10 +52,9 @@ const uploadAudio = async (file: File) => {
     isLoading.value = true
 
     const response = await VeMusicUploadService.uploadAudio(props.musicId, file, props.signal)
-    if (response) {
-      files.value.audio = file
-      veMusicStore.currentMusic!.url = response.url
-    }
+
+    files.value.audio = file
+    veMusicStore.currentMusic!.url = response.url
   } catch (err: any) {
     await showUploadError(err, 'аудио')
   } finally {
@@ -68,10 +67,9 @@ const uploadPreview = async (file: File) => {
     isLoading.value = true
 
     const response = await VeMusicUploadService.uploadPreview(props.musicId, file, props.signal)
-    if (response) {
-      files.value.preview = file
-      veMusicStore.currentMusic!.previewUrl = response.url
-    }
+
+    files.value.preview = file
+    veMusicStore.currentMusic!.previewUrl = response.url
   } catch (err: any) {
     await showUploadError(err, 'обложку')
   } finally {
@@ -134,10 +132,9 @@ const uploadVideo = async (file: File) => {
     isLoading.value = true
 
     const response = await VeMusicUploadService.uploadVideo(props.musicId, file, props.signal)
-    if (response) {
-      files.value.video = file
-      veMusicStore.currentMusic!.videoClipUrl = response.url
-    }
+
+    files.value.video = file
+    veMusicStore.currentMusic!.videoClipUrl = response.url
   } catch (err: any) {
     await showUploadError(err, 'видео')
   } finally {

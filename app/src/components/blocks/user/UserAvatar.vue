@@ -21,7 +21,8 @@ const uploadAvatar = async (avatarFile: File) => {
     isLoading.value = true
 
     const response = await UserService.uploadAvatar(avatarFile, props.signal)
-    if (response) userStore.user.avatarUrl = response.url
+
+    userStore.user.avatarUrl = response.url
   } catch {
     await showError(
         props.errorTitle,

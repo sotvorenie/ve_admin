@@ -20,7 +20,8 @@ const uploadAvatar = async (file: File) => {
     isLoading.value = true
 
     const response = await VeMusicArtistService.uploadAvatar(props.artistId, file, props.signal)
-    if (response) veMusicStore.currentArtist!.avatarUrl = response.url
+
+    veMusicStore.currentArtist!.avatarUrl = response.url
   } catch (err){
     await showError(
         'Ошибка загрузки аватарки',

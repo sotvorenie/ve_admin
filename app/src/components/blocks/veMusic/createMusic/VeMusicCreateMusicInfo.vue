@@ -24,12 +24,11 @@ const genres = ref<Option[]>([])
 const getGenres = async () => {
   try {
     const response = await VeMusicGenreService.getAllGenres()
-    if (response) {
-      genres.value = response.data.map(genre => ({
-        id: genre.id,
-        label: genre.name,
-      }))
-    }
+
+    genres.value = response.data.map(genre => ({
+      id: genre.id,
+      label: genre.name,
+    }))
   } catch {}
 }
 
