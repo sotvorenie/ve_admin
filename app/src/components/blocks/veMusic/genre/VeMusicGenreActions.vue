@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 
-import {apiDeleteGenre} from "@api/veMusic/genre.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -29,7 +29,7 @@ const deleteGenre = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteGenre(props.genreId, props.signal)
+    await VeMusicGenreService.delete(props.genreId, props.signal)
     await router.replace('/ve_music/genres')
   } catch (err: any) {
     await showError('Ошибка создания жанра', err.detail)

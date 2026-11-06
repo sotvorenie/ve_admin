@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, watchEffect} from "vue";
 
-import {apiRedactGenreName} from "@api/veMusic/genre.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -21,19 +21,19 @@ const isLoading = defineModel<boolean>('isLoading', {required: true})
 
 const name = ref<string>('')
 
-const handleRedactGenre = async () => {
+const handleUpdateGenre = async () => {
   const confirm = await showConfirm(
       'Редактирование жанра музыки',
       'Вы действительно хотите редактировать название жанра?'
   )
-  if (confirm) await redactGenre()
+  if (confirm) await updateGenre()
 }
 
-const redactGenre = async () => {
+const updateGenre = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactGenreName(props.genreId, name.value, props.signal)
+    await VeMusicGenreService.updateName(props.genreId, name.value, props.signal)
     veMusicStore.currentGenre!.name = name.value
   } catch (err: any) {
     await showError(
@@ -58,7 +58,7 @@ watchEffect(() => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactGenre(),
+                      func: () => handleUpdateGenre(),
                       visible: name?.length > 0 && name !== veMusicStore.currentGenre?.name
                    }"
       />
