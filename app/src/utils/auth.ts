@@ -1,8 +1,10 @@
-import useUserStore from "@store/useUserStore.ts";
-import {apiCheckMe} from "@api/auth/auth.ts";
-import {UserWithTokenType} from "@/types/user.ts";
+import {UserWithToken} from "@/types/user.ts";
 
-export const login = (data: UserWithTokenType): void => {
+import {AuthService} from "@api/auth/AuthService.ts";
+
+import useUserStore from "@store/useUserStore.ts";
+
+export const logIn = (data: UserWithToken): void => {
     const userStore = useUserStore();
 
     localStorage.setItem("token", data.token)
@@ -11,14 +13,14 @@ export const login = (data: UserWithTokenType): void => {
     userStore.isLogged = true
 }
 
-export const logout = (): void => {
+export const logOut = (): void => {
     const userStore = useUserStore();
 
     localStorage.removeItem('token')
     userStore.clear()
 }
 
-export const checkMe = async (): Promise<void> => {
+export const getMe = async (): Promise<void> => {
     const userStore = useUserStore();
 
     const token: string = localStorage.getItem("token") || ''
@@ -28,10 +30,9 @@ export const checkMe = async (): Promise<void> => {
     }
 
     try {
-        const data: UserWithTokenType = await apiCheckMe()
-        if (data.token) login(data)
-    } catch (err) {
-        console.error(err)
+        const data = await AuthService.getMe()
+        if (data.token) logIn(data)
+    } catch {
         userStore.isLogged = false
     }
 }
