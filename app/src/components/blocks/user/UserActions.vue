@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {showConfirm} from "@utils/modals.ts";
-import {logout} from "@utils/auth.ts";
+import {logOut} from "@utils/auth.ts";
 
 import ButtonUi from "@ui/ButtonUi.vue";
 
@@ -8,12 +8,12 @@ defineProps<{
   isLoading: boolean
 }>()
 
-const handleLogout = async () => {
+const handleLogOut = async () => {
   const confirm = await showConfirm(
       'Выход из профиля',
       'Вы действительно хотите выйти?'
   )
-  if (confirm) logout()
+  if (confirm) logOut()
 }
 </script>
 
@@ -21,7 +21,7 @@ const handleLogout = async () => {
 
   <div class="flex flex-col gap-2.5 mt-auto">
     <ButtonUi :disabled="isLoading"
-              @click="handleLogout"
+              @click="handleLogOut"
     >
       Выйти
     </ButtonUi>

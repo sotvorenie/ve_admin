@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {UrlType} from "@/types/url.ts";
-
-import {apiDeleteAvatar, apiUploadAvatar} from "@api/user/user.ts";
+import {UserService} from "@api/user/UserService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -22,7 +20,7 @@ const uploadAvatar = async (avatarFile: File) => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiUploadAvatar(avatarFile, props.signal)
+    const response = await UserService.uploadAvatar(avatarFile, props.signal)
     if (response) userStore.user.avatarUrl = response.url
   } catch {
     await showError(
@@ -46,7 +44,7 @@ const deleteAvatar = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteAvatar(props.signal)
+    await UserService.deleteAvatar(props.signal)
     userStore.user.avatarUrl = ''
   } catch {
     await showError(

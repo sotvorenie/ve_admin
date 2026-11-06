@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, ref, watchEffect} from "vue";
 
-import {apiRedactName, apiRedactPassword} from "@api/user/user.ts";
+import {UserService} from "@api/user/UserService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -25,11 +25,23 @@ const form = ref<{name: string, password: string}>({
   password: '',
 })
 
-const redactName = async () => {
+const visibleNameEditBtn = computed(() => {
+  return form.value.name?.length >= 4 && form.value.name?.trim() !== userStore.user.name
+})
+
+const handleUpdateName = async () => {
+  const confirm = await showConfirm(
+      props.confirmTitle,
+      'Вы действительно хотите изменить имя пользователя?'
+  )
+  if (confirm) await updateName()
+}
+
+const updateName = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactName(form.value.name, props.signal)
+    await UserService.updateName(form.value.name, props.signal)
     userStore.user.name = form.value.name
   } catch {
     await showError(
@@ -41,11 +53,19 @@ const redactName = async () => {
   }
 }
 
-const redactPassword = async () => {
+const handleUpdatePassword = async () => {
+  const confirm = await showConfirm(
+      props.confirmTitle,
+      'Вы действительно хотите изменить пароль пользователя?'
+  )
+  if (confirm) await updatePassword()
+}
+
+const updatePassword = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactPassword(form.value.password, props.signal)
+    await UserService.updatePassword(form.value.password, props.signal)
     form.value.password = ''
   } catch (err: any) {
     await showError(
@@ -55,26 +75,6 @@ const redactPassword = async () => {
   } finally {
     isLoading.value = false
   }
-}
-
-const visibleNameEditBtn = computed(() => {
-  return form.value.name?.length >= 4 && form.value.name?.trim() !== userStore.user.name
-})
-
-const handleRedactName = async () => {
-  const confirm = await showConfirm(
-      props.confirmTitle,
-      'Вы действительно хотите изменить имя пользователя?'
-  )
-  if (confirm) await redactName()
-}
-
-const handleRedactPassword = async () => {
-  const confirm = await showConfirm(
-      props.confirmTitle,
-      'Вы действительно хотите изменить пароль пользователя?'
-  )
-  if (confirm) await redactPassword()
 }
 
 watchEffect(() => {
@@ -92,7 +92,7 @@ watchEffect(() => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactName(),
+                      func: () => handleUpdateName(),
                       visible: visibleNameEditBtn
                    }"
                minlength="4"
@@ -105,7 +105,7 @@ watchEffect(() => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactPassword(),
+                      func: () => handleUpdatePassword(),
                       visible: form.password?.length >= 4
                    }"
                minlength="4"
