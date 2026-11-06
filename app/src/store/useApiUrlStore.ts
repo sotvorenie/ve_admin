@@ -5,6 +5,7 @@ export const useApiUrlStore = defineStore('apiUrlStore', () => {
     const allUrls = {
         admin: import.meta.env.VITE_API_ADMIN_URL,
         veMusic: import.meta.env.VITE_API_VE_MUSIC_URL,
+        veFox: import.meta.env.VITE_API_VE_MUSIC_URL,
     }
 
     const activeUrl = ref(allUrls.admin)
