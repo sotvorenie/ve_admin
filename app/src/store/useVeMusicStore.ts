@@ -1,22 +1,19 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import {AppUserType} from "@/types/user.ts";
-import {MusicType} from "@/types/music.ts";
-import {GenreType} from "@/types/genre.ts";
-import {ArtistType} from "@/types/artist.ts";
+
+import {Track} from "@/types/music.ts";
+import {AppUser} from "@/types/user.ts";
+import {Genre} from "@/types/genre.ts";
+import {Artist} from "@/types/artist.ts";
 
 const useVeMusicStore = defineStore('veMusicStore', () => {
-    // выбранный пользователь
-    const currentUser = ref<AppUserType | null>(null)
+    const currentUser = ref<AppUser | null>(null)
 
-    // выбранная музыка
-    const currentMusic = ref<MusicType| null>(null)
+    const currentMusic = ref<Track | null>(null)
 
-    // выбранный жанр
-    const currentGenre = ref<GenreType | null>(null)
+    const currentGenre = ref<Genre | null>(null)
 
-    // выбранный исполнитель
-    const currentArtist = ref<ArtistType | null>(null)
+    const currentArtist = ref<Artist | null>(null)
 
     return {
         currentUser,
