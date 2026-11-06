@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {UserRole} from "@/types/user.ts";
 
-import {apiRedactUserLogin, apiRedactUserName, apiRedactUserPassword, apiUpdateUserRole} from "@api/veMusic/user.ts";
+import {VeMusicUserService} from "@api/veMusic/VeMusicUserService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -38,21 +38,21 @@ const rolesOptions: Option[] = [
 const confirmTitle = 'Редактирование данных пользователя'
 const errorTitle = 'Ошибка редактирования пользователя'
 
-const handleRedactName = async () => {
+const handleUpdateName = async () => {
   if (form.value.name === veMusicStore.currentUser?.name) return
 
   const confirm = await showConfirm(
       confirmTitle,
       'Вы действительно хотите редактировать имя пользователя?'
   )
-  if (confirm) await redactName()
+  if (confirm) await updateName()
 }
 
-const redactName = async () => {
+const updateName = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserName(veMusicStore.currentUser!.id, form.value.name, props.signal)
+    await VeMusicUserService.updateName(veMusicStore.currentUser!.id, form.value.name, props.signal)
     veMusicStore.currentUser!.name = form.value.name
   } catch (err: any) {
     await showError(
@@ -64,21 +64,21 @@ const redactName = async () => {
   }
 }
 
-const handleRedactLogin = async () => {
+const handleUpdateLogin = async () => {
   if (form.value.login === veMusicStore.currentUser?.login) return
 
   const confirm = await showConfirm(
       confirmTitle,
       'Вы действительно хотите редактировать логин пользователя?'
   )
-  if (confirm) await redactLogin()
+  if (confirm) await updateLogin()
 }
 
-const redactLogin = async () => {
+const updateLogin = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserLogin(veMusicStore.currentUser!.id, form.value.login, props.signal)
+    await VeMusicUserService.updateLogin(veMusicStore.currentUser!.id, form.value.login, props.signal)
     veMusicStore.currentUser!.login = form.value.login
   } catch (err: any) {
     await showError(
@@ -90,19 +90,19 @@ const redactLogin = async () => {
   }
 }
 
-const handleRedactPassword = async () => {
+const handleUpdatePassword = async () => {
   const confirm = await showConfirm(
       confirmTitle,
       'Вы действительно хотите редактировать пароль пользователя?'
   )
-  if (confirm) await redactPassword()
+  if (confirm) await updatePassword()
 }
 
-const redactPassword = async () => {
+const updatePassword = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactUserPassword(veMusicStore.currentUser!.id, form.value.password, props.signal)
+    await VeMusicUserService.updatePassword(veMusicStore.currentUser!.id, form.value.password, props.signal)
     form.value.password = ''
   } catch (err: any) {
     await showError(
@@ -126,7 +126,7 @@ const updateRole = async (newRole: UserRole) => {
   try {
     isLoading.value = true
 
-    await apiUpdateUserRole(veMusicStore.currentUser!.id, newRole, props.signal)
+    await VeMusicUserService.updateRole(veMusicStore.currentUser!.id, newRole, props.signal)
     form.value.role = newRole
   } catch (err: any) {
     await showError(
@@ -149,7 +149,7 @@ const updateRole = async (newRole: UserRole) => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactName(),
+                      func: () => handleUpdateName(),
                       visible: veMusicStore.currentUser?.name !== form.name
                    }"
       />
@@ -162,7 +162,7 @@ const updateRole = async (newRole: UserRole) => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactLogin(),
+                      func: () => handleUpdateLogin(),
                       visible: veMusicStore.currentUser?.login !== form.login
                    }"
       />
@@ -175,7 +175,7 @@ const updateRole = async (newRole: UserRole) => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactPassword(),
+                      func: () => handleUpdatePassword(),
                       visible: form.password?.length >= 4
                    }"
       />

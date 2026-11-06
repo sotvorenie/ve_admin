@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 
-import {apiDeleteUser} from "@api/veMusic/user.ts";
+import {VeMusicUserService} from "@api/veMusic/VeMusicUserService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -31,7 +31,7 @@ const deleteUser = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteUser(veMusicStore.currentUser!.id, props.signal)
+    await VeMusicUserService.delete(veMusicStore.currentUser!.id, props.signal)
     await router.replace('/ve_music/users')
   } catch (err: any) {
     await showError(

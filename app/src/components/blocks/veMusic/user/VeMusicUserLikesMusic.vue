@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {MusicForListType, MusicListType} from "@/types/music.ts";
+import {TrackPreview} from "@/types/music.ts";
 
-import {apiGetAllMusic} from "@api/veMusic/music.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -18,11 +18,11 @@ import useApiUrlStore from "@store/useApiUrlStore.ts";
 const apiUrlStore = useApiUrlStore();
 
 const isLoading = defineModel<boolean>('isLoading')
-const activeMusic = defineModel<MusicForListType | null>('activeMusic', {default: null})
+const activeMusic = defineModel<TrackPreview | null>('activeMusic', {default: null})
 
 const signal = useSignal()
 
-const music = ref<MusicForListType[]>([])
+const music = ref<TrackPreview[]>([])
 
 const searchName = ref<string>('')
 
@@ -32,7 +32,7 @@ const getMusic = async () => {
   isLoading.value = true
 
   try {
-    const response: MusicListType = await apiGetAllMusic(
+    const response = await VeMusicMusicService.getTracks(
         searchName.value,
         -1,
         -1,
@@ -41,10 +41,8 @@ const getMusic = async () => {
         signal
     )
 
-    if (response) {
-      page.value = response.page
-      music.value = response.music
-    }
+    page.value += 1
+    music.value = response.data
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
@@ -55,7 +53,7 @@ const getMusic = async () => {
   }
 }
 
-const handleMusic = (music: MusicForListType) => {
+const handleMusic = (music: TrackPreview) => {
   activeMusic.value = activeMusic.value?.id === music.id ? null : music
 }
 

@@ -2,7 +2,7 @@
 import {onBeforeMount, ref} from "vue";
 import {useRouter} from "vue-router";
 
-import {MusicForListType, MusicListType} from "@/types/music.ts";
+import {TrackPreview} from "@/types/music.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -22,7 +22,7 @@ const props = defineProps<{
   deleteFunc: Function
 }>()
 
-const musicList = defineModel<MusicForListType[]>('musicList', {default: () => []})
+const musicList = defineModel<TrackPreview[]>('musicList', {default: () => []})
 
 const signal = useSignal()
 const router = useRouter()
@@ -36,7 +36,7 @@ const getMusic = async () => {
   try {
     isLoading.value = true
 
-    const response: MusicListType = await props.getFunc(veMusicStore.currentUser!.id, page.value, 30, signal)
+    const response = await props.getFunc(veMusicStore.currentUser!.id, page.value, 30, signal)
     if (response) {
       total.value = response.total
       page.value = response.page
@@ -76,7 +76,7 @@ const deleteMusic = async (id: number) => {
   }
 }
 
-const getArtists = (music: MusicForListType) => {
+const getArtists = (music: TrackPreview) => {
   return music?.artists?.flatMap(artist => artist.name)?.join(', ')
 }
 

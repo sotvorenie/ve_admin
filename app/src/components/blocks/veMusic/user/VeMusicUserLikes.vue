@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-import {MusicForListType} from "@/types/music.ts";
+import {TrackPreview} from "@/types/music.ts";
 
-import {apiAddMusicToUserLike, apiDeleteMusicFromUserLike, apiGetUserLikeMusic} from "@api/veMusic/like.ts";
+import {VeMusicLikeService} from "@api/veMusic/VeMusicLikeService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -21,9 +21,9 @@ const signal = useSignal()
 
 const isLoading = ref(true)
 
-const activeMusic = ref<MusicForListType | null>(null)
+const activeMusic = ref<TrackPreview | null>(null)
 
-const musicList = ref<MusicForListType[]>([])
+const musicList = ref<TrackPreview[]>([])
 
 const handleLike = async (funcClose: Function) => {
   const confirm = await showConfirm(
@@ -40,7 +40,7 @@ const like = async (funcClose: Function) => {
 
     isLoading.value = true
 
-    await apiAddMusicToUserLike(activeMusic.value.id, veMusicStore.currentUser!.id, signal)
+    await VeMusicLikeService.like(activeMusic.value.id, veMusicStore.currentUser!.id, signal)
     musicList.value = musicList.value.filter(music => music.id !== activeMusic.value!.id)
     musicList.value = [activeMusic.value, ...musicList.value]
     activeMusic.value = null
@@ -91,8 +91,8 @@ const like = async (funcClose: Function) => {
     </Modal>
 
     <VeMusicList v-model:music-list="musicList"
-                 :get-func="apiGetUserLikeMusic"
-                 :delete-func="apiDeleteMusicFromUserLike"
+                 :get-func="VeMusicLikeService.getLikedTracks"
+                 :delete-func="VeMusicLikeService.delete"
     />
   </div>
 

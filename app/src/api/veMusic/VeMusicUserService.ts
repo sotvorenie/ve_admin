@@ -1,5 +1,5 @@
 import {PaginatedResponse} from "@/types/response.ts";
-import {AppUser} from "@/types/user.ts";
+import {AppUser, UserRole} from "@/types/user.ts";
 import {Url} from "@/types/url.ts";
 
 import {apiDelete, apiGet, apiPatch, apiPost} from "@/api";
@@ -62,6 +62,18 @@ export const VeMusicUserService = {
         }
 
         return apiPatch(`/user/admin/redact_password/${id}`,payload, {signal})
+    },
+
+    updateRole(
+        id: number,
+        role: UserRole,
+        signal?: AbortSignal,
+    ) {
+        const payload = {
+            role,
+        }
+
+        return apiPatch(`/user/admin/update_role/${id}`, payload, {signal})
     },
 
     delete(

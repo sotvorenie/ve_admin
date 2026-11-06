@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {apiDeleteMusicFromUserHistory, apiGetUserHistoryMusic} from "@api/veMusic/history.ts";
+import {VeMusicHistoryService} from "@api/veMusic/VeMusicHistoryService.ts";
 
 import VeMusicList from "@components/veMusic/user/VeMusicList.vue";
 </script>
 
 <template>
 
-  <VeMusicList :get-func="apiGetUserHistoryMusic"
-               :delete-func="apiDeleteMusicFromUserHistory"
+  <VeMusicList :get-func="VeMusicHistoryService.getHistoryMusic"
+               :delete-func="VeMusicHistoryService.delete"
   />
 
 </template>
