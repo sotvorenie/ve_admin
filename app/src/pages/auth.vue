@@ -2,14 +2,14 @@
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 
-import {UserWithTokenType} from "@/types/user.ts";
+import {UserWithToken} from "@/types/user.ts";
 
-import {apiAuth, apiRegister} from "@api/auth/auth.ts";
+import {AuthService} from "@api/auth/AuthService.ts";
 
 import {onBlur, onInput, onSubmit} from "@composables/useFormValidation.ts";
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
-import {login} from "@utils/auth.ts";
+import {logIn} from "@utils/auth.ts";
 
 import LabelUi from "@ui/LabelUi.vue";
 import InputUi from "@ui/InputUi.vue";
@@ -31,22 +31,22 @@ const form = ref<{login: string, password: string, name: string}>({
   name: '',
 })
 
-const auth = (response: UserWithTokenType) => {
-  login(response)
+const auth = (response: UserWithToken) => {
+  logIn(response)
   router.replace('/')
 }
 
 const handleSubmit = (event: Event) => {
   const check: boolean = onSubmit(event)
 
-  if (check) isAuth.value ? logIn() : register()
+  if (check) isAuth.value ? logInInApp() : register()
 }
 
-const logIn = async () => {
+const logInInApp = async () => {
   try {
     isLoading.value = true
 
-    const response: UserWithTokenType = await apiAuth(
+    const response = await AuthService.auth(
         form.value.login,
         form.value.password,
         signal
@@ -64,7 +64,7 @@ const register = async () => {
   try {
     isLoading.value = true
 
-    const response: UserWithTokenType = await apiRegister(
+    const response = await AuthService.registration(
         form.value.login,
         form.value.password,
         form.value.name,
