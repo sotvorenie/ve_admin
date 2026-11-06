@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 
-import {apiRegister} from "@api/veMusic/auth.ts";
+import {VeMusicAuthService} from "@api/veMusic/VeMusicAuthService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -37,7 +37,7 @@ const createUser = async () => {
   try {
     isLoading.value = true
 
-    await apiRegister(
+    await VeMusicAuthService.registration(
         form.value.login,
         form.value.password,
         form.value.name,

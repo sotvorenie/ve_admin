@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {ListHeadType, ListItemType} from "@/types/list.ts";
-import {AppUsersResponseType} from "@/types/user.ts";
+import {ListHead, ListItem} from "@/types/list.ts";
 
-import {apiGetAllUsers} from "@api/veMusic/user.ts";
+import {VeMusicUserService} from "@api/veMusic/VeMusicUserService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -20,7 +19,7 @@ const searchStore = useSearchStore();
 
 const signal = useSignal()
 
-const headItems: ListHeadType[] = [
+const headItems: ListHead[] = [
   {
     label: 'id',
     key: 'id',
@@ -53,7 +52,7 @@ const headItems: ListHeadType[] = [
   },
 ]
 
-const users = ref<ListItemType[]>([])
+const users = ref<ListItem[]>([])
 
 const page = ref(1)
 const total = ref(0)
@@ -68,18 +67,16 @@ const getUsers = async () => {
   isLoading.value = true
 
   try {
-    const response: AppUsersResponseType = await apiGetAllUsers(searchStore.searchName, page.value, 30, signal)
+    const response = await VeMusicUserService.getUsers(searchStore.searchName, page.value, 30, signal)
 
-    if (response) {
-      page.value = response.page
-      total.value = response.total
-      users.value = response.users.map(user => ({
-        url: `/ve_music/users/${user.id}`,
-        info: {
-          ...user
-        }
-      }))
-    }
+    page.value += 1
+    total.value = response.meta.total
+    users.value = response.data.map(user => ({
+      url: `/ve_music/users/${user.id}`,
+      info: {
+        ...user
+      }
+    }))
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',
