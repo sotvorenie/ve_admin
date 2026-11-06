@@ -1,3 +1,8 @@
+export enum UserRole {
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+}
+
 export interface User {
     id: number
     name: string
@@ -10,6 +15,7 @@ export interface UserWithToken {
 }
 
 export interface AppUser extends User {
+    role: UserRole
     login: string
     createdAt: string
     updatedAt: string
