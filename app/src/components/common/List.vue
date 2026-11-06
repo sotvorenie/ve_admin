@@ -3,7 +3,7 @@ import {computed} from "vue";
 import {useRouter} from "vue-router";
 import { Fancybox } from "@fancyapps/ui"
 
-import {ListHeadType, ListItemType} from "@/types/list.ts";
+import {ListHead, ListItem} from "@/types/list.ts";
 
 import {formatDate} from "@composables/useFormatDate.ts";
 
@@ -19,8 +19,8 @@ const apiUrlStore = useApiUrlStore();
 
 const props = withDefaults(
     defineProps<{
-      headItems: ListHeadType[]
-      items: ListItemType[]
+      headItems: ListHead[]
+      items: ListItem[]
       isLoading: boolean
       total: number
       limit?: number
@@ -48,7 +48,7 @@ const openFancybox = (src: string) => {
 const colsClass = computed(() => props.colsStyle ? 'grid' : `grid grid-cols-[${props.headItems.length}]`)
 const colsStyles = computed(() => props.colsStyle && `grid-template-columns: ${props.colsStyle}`)
 
-const handleItem = (row: ListItemType) => {
+const handleItem = (row: ListItem) => {
   if (props.storeFunc) props.storeFunc(row.info)
 
   router.push(row.url)

@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 
-import {TabType} from "@/types/tab.ts";
+import {Tab} from "@/types/tab.ts";
 
 defineProps<{
-  items: TabType[]
+  items: Tab[]
 }>()
 
-const activeTab = defineModel<TabType | null>({
+const activeTab = defineModel<Tab | null>({
   required: true,
 })
 
 const router = useRouter()
 
-const handleTab = (tab: TabType) => {
+const handleTab = (tab: Tab) => {
   activeTab.value = tab
   router.push(tab.url)
 }
