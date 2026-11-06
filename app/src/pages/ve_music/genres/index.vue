@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {GenresListType} from "@/types/genre.ts";
-import {ListHeadType, ListItemType} from "@/types/list.ts";
+import {ListHead, ListItem} from "@/types/list.ts";
 
-import {apiGetAllGenres} from "@api/veMusic/genre.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -18,7 +17,7 @@ const pageStore = usePageStore();
 
 const signal = useSignal()
 
-const headItems: ListHeadType[] = [
+const headItems: ListHead[] = [
   {
     label: 'id',
     key: 'id',
@@ -41,7 +40,7 @@ const headItems: ListHeadType[] = [
   },
 ]
 
-const genres = ref<ListItemType[]>([])
+const genres = ref<ListItem[]>([])
 
 const isLoading = ref(true)
 
@@ -53,16 +52,14 @@ const getGenres = async () => {
   isLoading.value = true
 
   try {
-    const response: GenresListType = await apiGetAllGenres(signal)
+    const response = await VeMusicGenreService.getAllGenres(signal)
 
-    if (response) {
-      genres.value = response.genres.map(genre => ({
-        url: `/ve_music/genres/${genre.id}`,
-        info: {
-          ...genre
-        }
-      }))
-    }
+    genres.value = response.data.map(genre => ({
+      url: `/ve_music/genres/${genre.id}`,
+      info: {
+        ...genre
+      }
+    }))
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',

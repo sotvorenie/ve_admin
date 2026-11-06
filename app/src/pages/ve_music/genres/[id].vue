@@ -2,9 +2,7 @@
 import {computed, onBeforeMount, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 
-import {GenreType} from "@/types/genre.ts";
-
-import {apiGetGenre} from "@api/veMusic/genre.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -14,8 +12,9 @@ import VeMusicGenreActions from "@components/veMusic/genre/VeMusicGenreActions.v
 import VeMusicGenreMusic from "@components/veMusic/genre/VeMusicGenreMusic.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
-const veMusicStore = useVeMusicStore();
 import usePageStore from "@store/usePageStore.ts";
+
+const veMusicStore = useVeMusicStore();
 const pageStore = usePageStore();
 
 const route = useRoute()
@@ -29,9 +28,7 @@ const getCurrentGenre = async () => {
   isLoading.value = true
 
   try {
-    const response: GenreType = await apiGetGenre(+genreId.value, signal)
-
-    if (response) veMusicStore.currentGenre = response
+    veMusicStore.currentGenre = await VeMusicGenreService.getGenre(+genreId.value, signal)
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',

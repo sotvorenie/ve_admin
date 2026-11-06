@@ -2,9 +2,7 @@
 import {ref} from "vue";
 import {useRouter} from "vue-router";
 
-import {CreatedGenreType} from "@/types/genre.ts";
-
-import {apiCreateGenre} from "@api/veMusic/genre.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -35,8 +33,8 @@ const createGenre = async () => {
   try {
     isLoading.value = true
 
-    const response: CreatedGenreType = await apiCreateGenre(name.value, signal)
-    if (response) await router.replace('/ve_music/genres')
+    await VeMusicGenreService.create(name.value, signal)
+    await router.replace('/ve_music/genres')
   } catch (err: any) {
     await showError('Ошибка создания жанра', err.detail)
   } finally {
