@@ -1,8 +1,8 @@
-import {ListHeadType} from "@/types/list.ts";
+import {ListHead} from "@/types/list.ts";
 
 import {formatDuration} from "@composables/useFormstDuration.ts";
 
-export const musicHeadItems: ListHeadType[] = [
+export const musicHeadItems: ListHead[] = [
     {
         label: 'id',
         key: 'id',
