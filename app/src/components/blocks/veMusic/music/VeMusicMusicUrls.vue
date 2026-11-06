@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import {computed, ref, watchEffect} from "vue";
 
-import {UrlType} from "@/types/url.ts";
-
-import {apiRedactPreviewUrlForMusic, apiRedactVideoUrlForMusic} from "@api/veMusic/music.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {formatPath} from "@composables/useFormatPath.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -62,7 +60,7 @@ const redactPreview = async () => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiRedactPreviewUrlForMusic(props.musicId, form.value.previewUrl, props.signal)
+    const response = await VeMusicMusicService.updatePreviewPath(props.musicId, form.value.previewUrl, props.signal)
     if (response) veMusicStore.currentMusic!.previewUrl = response.url
   } catch (err: any) {
     await showDeleteError(err, 'обложки')
@@ -83,7 +81,7 @@ const redactVideo = async () => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiRedactVideoUrlForMusic(props.musicId, form.value.videoUrl, props.signal)
+    const response = await VeMusicMusicService.updateVideoPath(props.musicId, form.value.videoUrl, props.signal)
     if (response) veMusicStore.currentMusic!.videoClipUrl = response.url
   } catch (err: any) {
     await showDeleteError(err, 'клипа')
@@ -103,7 +101,7 @@ watchEffect(() => {
 <template>
 
   <form novalidate class="flex flex-col gap-5 w-full">
-    <LabelUi text="Url обложки:">
+    <LabelUi text="Path обложки:">
       <InputUi v-model="form.previewUrl"
                :disabled="isLoading"
                :action-btn="{
@@ -114,7 +112,7 @@ watchEffect(() => {
       />
     </LabelUi>
 
-    <LabelUi text="Url клипа:">
+    <LabelUi text="Path клипа:">
       <InputUi v-model="form.videoUrl"
                :disabled="isLoading"
                :action-btn="{

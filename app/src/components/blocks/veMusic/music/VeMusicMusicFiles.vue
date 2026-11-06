@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-import {
-  apiUploadMusicAudio,
-  apiUploadMusicPreview,
-  apiUploadMusicPreviewPath,
-  apiUploadMusicVideo
-} from "@api/veMusic/upload.ts";
-import {apiDeleteMusicPreview, apiDeleteMusicVideo} from "@api/veMusic/music.ts";
+import {TrackFiles} from "@/types/music.ts";
+
+import {VeMusicUploadService} from "@api/veMusic/VeMusicUploadService.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
-
-import {MusicFilesType} from "@/types/music.ts";
-import {UrlType} from "@/types/url.ts";
 
 import VeMusicPosters from "@components/veMusic/VeMusicPosters.vue";
 
@@ -32,7 +26,7 @@ const isLoading = defineModel<boolean>('isLoading', {required: true})
 
 const isVisiblePostersModal = ref<boolean>(false)
 
-const files = ref<MusicFilesType>({
+const files = ref<TrackFiles>({
   audio: null,
   preview: null,
   previewPath: '',
@@ -57,7 +51,7 @@ const uploadAudio = async (file: File) => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiUploadMusicAudio(props.musicId, file, props.signal)
+    const response = await VeMusicUploadService.uploadAudio(props.musicId, file, props.signal)
     if (response) {
       files.value.audio = file
       veMusicStore.currentMusic!.url = response.url
@@ -73,7 +67,7 @@ const uploadPreview = async (file: File) => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiUploadMusicPreview(props.musicId, file, props.signal)
+    const response = await VeMusicUploadService.uploadPreview(props.musicId, file, props.signal)
     if (response) {
       files.value.preview = file
       veMusicStore.currentMusic!.previewUrl = response.url
@@ -85,7 +79,7 @@ const uploadPreview = async (file: File) => {
   }
 }
 
-const handleUploadPreviewPath = async (path: string) => {
+const handleUpdatePreviewUrl = async (url: string) => {
   const confirm = await showConfirm(
       'Редактирование постера музыки',
       'Вы действитиельно хотите загрузить новый постер для трека?'
@@ -93,17 +87,17 @@ const handleUploadPreviewPath = async (path: string) => {
 
   if (confirm) {
     files.value.preview = null
-    await uploadPreviewPath(path)
+    await updatePreviewUrl(url)
   }
 
   isVisiblePostersModal.value = false
 }
 
-const uploadPreviewPath = async (path: string) => {
+const updatePreviewUrl = async (path: string) => {
   try {
     isLoading.value = true
 
-    await apiUploadMusicPreviewPath(props.musicId, path, props.signal)
+    await VeMusicMusicService.updatePreviewUrl(props.musicId, path, props.signal)
     veMusicStore.currentMusic!.previewUrl = path
   } catch (err: any) {
     await showUploadError(err, 'обложку')
@@ -125,7 +119,7 @@ const deletePreview = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteMusicPreview(props.musicId, props.signal)
+    await VeMusicMusicService.deletePreview(props.musicId, props.signal)
     files.value.preview = null
     veMusicStore.currentMusic!.previewUrl = ''
   } catch (err) {
@@ -139,7 +133,7 @@ const uploadVideo = async (file: File) => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiUploadMusicVideo(props.musicId, file, props.signal)
+    const response = await VeMusicUploadService.uploadVideo(props.musicId, file, props.signal)
     if (response) {
       files.value.video = file
       veMusicStore.currentMusic!.videoClipUrl = response.url
@@ -155,7 +149,7 @@ const deleteVideo = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteMusicVideo(props.musicId, props.signal)
+    await VeMusicMusicService.deleteVideo(props.musicId, props.signal)
     files.value.video = null
     veMusicStore.currentMusic!.videoClipUrl = ''
   } catch (err) {
@@ -188,7 +182,7 @@ const deleteVideo = async () => {
       <VeMusicPosters v-model:form="files"
                       v-model:is-visible="isVisiblePostersModal"
                       :disabled="isLoading"
-                      @update-poster="handleUploadPreviewPath($event)"
+                      @update-poster="handleUpdatePreviewUrl($event)"
                       class="shrink-0"
       />
     </div>

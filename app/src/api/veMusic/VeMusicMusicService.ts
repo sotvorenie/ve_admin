@@ -37,7 +37,7 @@ export const VeMusicMusicService = {
         return apiGet(`/music/${id}?${params}`, {signal})
     },
 
-    updateMusic(
+    update(
         id: number,
         title: string,
         genreId: number,

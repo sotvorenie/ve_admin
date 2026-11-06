@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {computed, onBeforeMount, ref, watchEffect} from "vue";
+import {computed, onBeforeMount, ref} from "vue";
 
-import {GenresListType} from "@/types/genre.ts";
-import {MusicInfoType} from "@/types/music.ts";
+import {TrackInfo} from "@/types/music.ts";
+import {Artist} from "@/types/artist.ts";
 
-import {apiGetAllGenres} from "@api/veMusic/genre.ts";
-import {apiRedactMusic} from "@api/veMusic/music.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -27,10 +27,10 @@ const props = defineProps<{
 
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
-const form = ref<MusicInfoType>({
-  title: '',
-  genre: -1,
-  artistsIds: [],
+const form = ref<TrackInfo>({
+  title: veMusicStore.currentMusic?.name ?? '',
+  genre: veMusicStore.currentMusic?.genreId ?? -1,
+  artistsIds: veMusicStore.currentMusic?.artists?.map((a: Artist) => a.id) ?? [],
 })
 
 const genres = ref<Option[]>([])
@@ -41,9 +41,9 @@ const visibleNameBtn = computed(() => {
 
 const getGenres = async () => {
   try {
-    const response: GenresListType = await apiGetAllGenres()
+    const response = await VeMusicGenreService.getAllGenres()
     if (response) {
-      genres.value = response.genres.map(genre => ({
+      genres.value = response.data.map(genre => ({
         id: genre.id,
         label: genre.name,
       }))
@@ -79,7 +79,7 @@ const redactMusic = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactMusic(
+    await VeMusicMusicService.update(
         props.musicId,
         form.value.title,
         form.value.genre,
@@ -99,14 +99,6 @@ const redactMusic = async () => {
 }
 
 onBeforeMount(() => getGenres())
-
-watchEffect(() => {
-  if (veMusicStore.currentMusic) {
-    form.value.title = veMusicStore.currentMusic.name
-    form.value.genre = veMusicStore.currentMusic.genreId
-    form.value.artistsIds = veMusicStore.currentMusic.artists.map(a => a.id)
-  }
-})
 </script>
 
 <template>

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
+
 import {showConfirm, showError} from "@utils/modals.ts";
 
 import ButtonUi from "@ui/ButtonUi.vue";
-import {apiDeleteMusic} from "@api/veMusic/music.ts";
 
 const router = useRouter()
 
@@ -27,7 +28,7 @@ const deleteMusic = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteMusic(props.musicId, props.signal)
+    await VeMusicMusicService.delete(props.musicId, props.signal)
     await router.replace('/ve_music/music')
   } catch (err: any) {
     await showError(

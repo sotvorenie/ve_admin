@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {computed, ref, watchEffect} from "vue";
 
-import {apiRedactAuditionsForMusic} from "@api/veMusic/music.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -25,19 +25,19 @@ const visibleRedactAuditionsBtn = computed(() => {
   return auditionsCount.value !== veMusicStore.currentMusic?.auditionsCount && auditionsCount.value >= 0
 })
 
-const handleRedactAuditions = async () => {
+const handleUpdateAuditions = async () => {
   const confirm = await showConfirm(
       'Редактирование прослушиваний',
       'Вы действительно хотите редактировать кол-во прослушиваний?'
   )
-  if (confirm) await redactAuditions()
+  if (confirm) await updateAuditions()
 }
 
-const redactAuditions = async () => {
+const updateAuditions = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactAuditionsForMusic(props.musicId, auditionsCount.value, props.signal)
+    await VeMusicMusicService.updateAuditions(props.musicId, auditionsCount.value, props.signal)
     veMusicStore.currentMusic!.auditionsCount = auditionsCount.value
   } catch (err: any) {
     await showError(
@@ -63,7 +63,7 @@ watchEffect(() => {
              :disabled="isLoading"
              :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactAuditions(),
+                      func: () => handleUpdateAuditions(),
                       visible: visibleRedactAuditionsBtn
                    }"
     />

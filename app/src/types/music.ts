@@ -31,23 +31,20 @@ export interface Track {
     bitrates: number[]
 }
 
-export interface MusicFiles {
+export interface TrackInfo {
+    title: string
+    genre: number
+    artistsIds: number[]
+}
+
+export interface TrackFiles {
     audio: File | null
     preview: File | null
     previewPath: string
     video: File | null
 }
 
-export interface MusicForm {
-    info: {
-        title: string
-        genre: number
-        artistsIds: number[]
-    }
-    files: {
-        audio: File | null
-        preview: File | null
-        previewPath: string
-        video: File | null
-    }
+export interface TrackForm {
+    info: TrackInfo
+    files: TrackFiles
 }
