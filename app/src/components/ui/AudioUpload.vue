@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {ref, watch} from "vue";
+
 import {showConfirm} from "@utils/modals.ts";
 
 import Upload from "@ui/Upload.vue";
@@ -23,27 +25,40 @@ const props = withDefaults(
     }
 )
 
-const emits = defineEmits<{
+const emit = defineEmits<{
   select: [file: File],
-  delete: any,
+  delete: [],
 }>()
+
+const file = ref<File | null>(null)
 
 const handleUpload = async (file: File) => {
   const confirm = props.showConfirm ? await showConfirm(
       'Загрузка аудио',
-      'Вы действительно хотите загрузить/изменить аудио?'
+      'Вы действительно хотите загрузить аудио?'
   ) : true
   if (confirm) {
-    emits('select', file)
+    emit('select', file)
   }
 }
+
+const handleDelete = () => {
+  emit('delete')
+  file.value = null
+}
+
+watch(file, (uploadedFile) => {
+  if (!uploadedFile) return
+
+  handleUpload(uploadedFile)
+})
 </script>
 
 <template>
 
-  <Upload accept=".mp3,.wav"
+  <Upload v-model="file"
+          accept=".mp3,.wav"
           :disabled="disabled"
-          @select="(files: File[]) => handleUpload(files[0])"
           class="h-full"
           :class="disabled && 'pointer-events-none'"
   >
@@ -70,7 +85,7 @@ const handleUpload = async (file: File) => {
               :disabled="disabled"
               type="button"
               title="Удалить"
-              @click.stop="emits('delete')"
+              @click.stop="handleDelete"
       >
         <Icon :name="CrossIcon" :size="18"/>
       </button>

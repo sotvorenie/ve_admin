@@ -20,7 +20,7 @@ defineProps<{
 const form = defineModel<MusicFilesType>('form', {required: true})
 const isVisible = defineModel<boolean>('isVisible')
 
-const emits = defineEmits<{
+const emit = defineEmits<{
   updatePoster: [string]
 }>()
 

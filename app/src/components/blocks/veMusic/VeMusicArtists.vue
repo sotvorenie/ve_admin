@@ -28,7 +28,7 @@ defineProps<{
 
 const artists = defineModel<number[]>('artists', {required: true})
 
-const emits = defineEmits<{
+const emit = defineEmits<{
   okFunc: [number[]]
 }>()
 
