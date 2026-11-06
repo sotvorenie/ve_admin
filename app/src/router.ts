@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
+import {AuthService} from "@api/auth/AuthService.ts";
+
 import AppLayout from "@layouts/AppLayout.vue";
 
 import auth from "@pages/auth.vue";
@@ -24,6 +26,7 @@ import veFox from "@pages/ve_fox/index.vue";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 import useSearchStore from "@store/useSearchStore.ts";
+import useUserStore from "@store/useUserStore.ts";
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -200,10 +203,29 @@ const router = createRouter({
 router.afterEach((to) => {
     const apiUrlStore = useApiUrlStore()
     const searchStore = useSearchStore()
+
     const target = to.meta.apiTarget
     if (target) apiUrlStore.setUrl(apiUrlStore.allUrls[target])
     searchStore.searchActive = false
     searchStore.searchName = ''
+})
+
+router.beforeEach(async () => {
+    const userStore = useUserStore();
+
+    if (!userStore.isLogged) {
+        try {
+            const response = await AuthService.getMe()
+            userStore.user = response.user
+            userStore.isLogged = true
+        } catch {
+            userStore.clear()
+        }
+    }
+
+    if (userStore.user.id < 0) return { path: '/auth' }
+
+    return true
 })
 
 

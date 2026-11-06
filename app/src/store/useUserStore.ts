@@ -1,19 +1,17 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
-import {UserType} from "@/types/user.ts";
+
+import {User} from "@/types/user.ts";
 
 const useUserStore = defineStore('userStore', () => {
-    // данные о пользователе
-    const user = ref<UserType>({
+    const user = ref<User>({
         id: -1,
         name: '',
         avatarUrl: '',
     })
 
-    // пользователь вошел или нет
     const isLogged = ref<boolean>(false)
 
-    // jwt-токен
     const token = ref<string>('')
 
     const clear = () => {
