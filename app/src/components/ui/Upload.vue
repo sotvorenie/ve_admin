@@ -82,7 +82,7 @@ const onChange = (e: Event) => {
         @dragleave.prevent="!isDisabled && (isDragging = false)"
         @dragover.prevent
         @drop.prevent="!isDisabled && onDrop($event)"
-        class="flex flex-col"
+        class="flex flex-col h-full"
         :class="[
             isDisabled ? 'cursor-default pointer-events-none' : 'cursor-pointer',
             { 'bg-accent-soft/50 border-accent': isDragging }

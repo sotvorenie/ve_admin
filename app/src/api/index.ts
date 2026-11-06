@@ -1,6 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios'
 
-import {logout} from "@utils/auth.ts";
+import {logOut} from "@utils/auth.ts";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 
@@ -22,7 +22,7 @@ client.interceptors.response.use(
         if (axios.isCancel(error) || error.code === 'ERR_CANCELED') return { data: null, detail: 'canceled' as const }
 
         if (error.response?.status === 401 && error.response?.data?.code === 'JWT_INVALID') {
-            logout()
+            logOut()
             return { data: null, detail: 'canceled' as const }
         }
 

@@ -36,6 +36,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: 'Авторизация',
             apiTarget: 'admin',
+            public: true,
         }
     },
     {
@@ -210,8 +211,10 @@ router.afterEach((to) => {
     searchStore.searchName = ''
 })
 
-router.beforeEach(async () => {
+router.beforeEach(async (to) => {
     const userStore = useUserStore();
+
+    if (to.meta.public) return true
 
     if (!userStore.isLogged) {
         try {
@@ -223,7 +226,7 @@ router.beforeEach(async () => {
         }
     }
 
-    if (userStore.user.id < 0) return { path: '/auth' }
+    if (userStore.user.id < 0) return { path: '/auth', query: { redirect: to.fullPath } }
 
     return true
 })
