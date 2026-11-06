@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {TabType} from "@/types/tab.ts";
+import {Tab} from "@/types/tab.ts";
 
 import AppPage from "@layouts/AppPage.vue";
 
-const tabsList: TabType[] = [
+const tabsList: Tab[] = [
   {
     key: 'users',
     label: 'Пользователи',
