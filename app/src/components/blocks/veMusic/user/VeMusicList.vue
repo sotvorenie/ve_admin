@@ -40,7 +40,7 @@ const getMusic = async () => {
 
     total.value = response.total
     page.value += 1
-    musicList.value = response.music
+    musicList.value = response.data
   } catch (err: any) {
     await showError(
         'Ошибка получения музыки',
@@ -99,23 +99,26 @@ onBeforeMount(() => getMusic())
       <ul class="flex flex-col gap-2.5 pr-2">
         <li v-for="music in musicList"
             :key="music.id"
-            class="flex justify-between items-center gap-5 border rounded-xl p-2 cursor-pointer transition-colors hover:text-accent"
-            @click="handleMusic(music.id)"
+            class="border rounded-xl transition-colors hover:text-accent"
         >
-          <div class="flex items-center gap-1 truncate">
-            <span>{{getArtists(music)}}</span>
-            <span>-</span>
-            <span>{{music?.name}}</span>
-          </div>
-
-          <button class="recolor-svg text-white w-10 aspect-square rounded-full border shrink-0 flex items-center justify-center cursor-pointer transition-colors hover:text-accent"
-                  type="button"
-                  @click.stop="handleDelete(music.id)"
-                  aria-label="Удалить"
-                  title="Удалить"
+          <RouterLink :to="`/ve_music/music/${music.id}`"
+                      class="flex justify-between items-center gap-5 p-2"
           >
-            <Icon :name="DeleteIcon" :size="20"/>
-          </button>
+            <div class="flex items-center gap-1 truncate">
+              <span>{{getArtists(music)}}</span>
+              <span>-</span>
+              <span>{{music?.name}}</span>
+            </div>
+
+            <button class="recolor-svg text-white w-10 aspect-square rounded-full border shrink-0 flex items-center justify-center cursor-pointer transition-colors hover:text-accent"
+                    type="button"
+                    @click.stop="handleDelete(music.id)"
+                    aria-label="Удалить"
+                    title="Удалить"
+            >
+              <Icon :name="DeleteIcon" :size="20"/>
+            </button>
+          </RouterLink>
         </li>
       </ul>
 

@@ -10,6 +10,7 @@ import {showError} from "@utils/modals.ts";
 import VeMusicUserData from "@components/veMusic/user/VeMusicUserData.vue";
 import VeMusicUserHistory from "@components/veMusic/user/VeMusicUserHistory.vue";
 import VeMusicUserLikes from "@components/veMusic/user/VeMusicUserLikes.vue";
+import VeMusicUserSearchHistory from "@components/veMusic/user/VeMusicUserSearchHistory.vue";
 
 import ButtonUi from "@ui/ButtonUi.vue";
 
@@ -40,21 +41,24 @@ const tabs = [
     key: 'likes',
     label: 'Лайки',
   },
+  {
+    key: 'searchHistory',
+    label: 'История поиска',
+  },
 ]
 
 const components: Record<string, Component> = {
   data: VeMusicUserData,
   history: VeMusicUserHistory,
   likes: VeMusicUserLikes,
+  searchHistory: VeMusicUserSearchHistory,
 }
 
 const getCurrentUser = async () => {
   isLoading.value = true
 
   try {
-    const response = await VeMusicUserService.getUser(+userId.value, signal)
-
-    veMusicStore.currentUser = response
+    veMusicStore.currentUser = await VeMusicUserService.getUser(+userId.value, signal)
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',

@@ -59,41 +59,39 @@ const like = async (funcClose: Function) => {
 
 <template>
 
-  <div class="flex flex-col gap-4">
-    <Modal :size="600">
-      <template #activator="{open}">
-        <ButtonUi @click="open">
+  <Modal :size="600">
+    <template #activator="{open}">
+      <ButtonUi @click="open">
           <span class="leading-15">
             Добавить в избранное
           </span>
-        </ButtonUi>
-      </template>
+      </ButtonUi>
+    </template>
 
-      <template #default="{close}">
-        <div class="flex flex-col gap-3">
-          <VeMusicUserLikesMusic v-model:is-loading="isLoading"
-                                 v-model:active-music="activeMusic"
-          />
+    <template #default="{close}">
+      <div class="flex flex-col gap-3">
+        <VeMusicUserLikesMusic v-model:is-loading="isLoading"
+                               v-model:active-music="activeMusic"
+        />
 
-          <div class="grid grid-cols-2 gap-2.5">
-            <ButtonUi @click="close">
-              Отмена
-            </ButtonUi>
+        <div class="grid grid-cols-2 gap-2.5">
+          <ButtonUi @click="close">
+            Отмена
+          </ButtonUi>
 
-            <ButtonUi :is-loading="isLoading"
-                      :disabled="!veMusicStore.currentUser?.id || (activeMusic?.id ?? -1) < 0"
-                      @click="handleLike(close)">
-              Добавить
-            </ButtonUi>
-          </div>
+          <ButtonUi :is-loading="isLoading"
+                    :disabled="!veMusicStore.currentUser?.id || (activeMusic?.id ?? -1) < 0"
+                    @click="handleLike(close)">
+            Добавить
+          </ButtonUi>
         </div>
-      </template>
-    </Modal>
+      </div>
+    </template>
+  </Modal>
 
-    <VeMusicList v-model:music-list="musicList"
-                 :get-func="VeMusicLikeService.getLikedTracks"
-                 :delete-func="VeMusicLikeService.delete"
-    />
-  </div>
+  <VeMusicList v-model:music-list="musicList"
+               :get-func="VeMusicLikeService.getLikedTracks"
+               :delete-func="VeMusicLikeService.delete"
+  />
 
 </template>

@@ -7,7 +7,7 @@ const props = withDefaults(
       modelValue: string | number
       actionBtn?: {icon: any, func: Function, visible: boolean}
     }>(), {
-      disabled: true,
+      disabled: false,
     }
 )
 
