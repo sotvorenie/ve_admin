@@ -2,9 +2,7 @@
 import {computed, ref} from "vue";
 import {useRouter} from "vue-router";
 
-import {CreatedArtistType} from "@/types/artist.ts";
-
-import {apiCreateArtist} from "@api/veMusic/artist.ts";
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -41,8 +39,8 @@ const createArtist = async () => {
   try {
     isLoading.value = true
 
-    const response: CreatedArtistType = await apiCreateArtist(name.value, avatarFile.value, signal)
-    if (response) await router.replace('/ve_music/artists')
+    await VeMusicArtistService.create(name.value, avatarFile.value, signal)
+    await router.replace('/ve_music/artists')
   } catch (err: any) {
     await showError('Ошибка создания исполнителя', err.detail)
   } finally {

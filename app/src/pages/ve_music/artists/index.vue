@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {onBeforeMount, ref, watch} from "vue";
 
-import {ListHeadType, ListItemType} from "@/types/list.ts";
-import {ArtistsListType} from "@/types/artist.ts";
+import {ListHead, ListItem} from "@/types/list.ts";
 
-import {apiGetArtists} from "@api/veMusic/artist.ts";
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -20,7 +19,7 @@ const searchStore = useSearchStore();
 
 const signal = useSignal()
 
-const headItems: ListHeadType[] = [
+const headItems: ListHead[] = [
   {
     label: 'id',
     key: 'id',
@@ -48,7 +47,7 @@ const headItems: ListHeadType[] = [
   },
 ]
 
-const artists = ref<ListItemType[]>([])
+const artists = ref<ListItem[]>([])
 
 const page = ref(1)
 const total = ref(0)
@@ -63,17 +62,15 @@ const getArtists = async () => {
   isLoading.value = true
 
   try {
-    const response: ArtistsListType = await apiGetArtists(searchStore.searchName, page.value, 30, signal)
+    const response = await VeMusicArtistService.getArtists(searchStore.searchName, page.value, 30, signal)
 
-    if (response) {
-      total.value = response.total
-      artists.value = response.artists.map(artist => ({
-        url: `/ve_music/artists/${artist.id}`,
-        info: {
-          ...artist
-        }
-      }))
-    }
+    total.value = response.meta.total
+    artists.value = response.data.map(artist => ({
+      url: `/ve_music/artists/${artist.id}`,
+      info: {
+        ...artist
+      }
+    }))
   } catch (err: any) {
     await showError(
         'Ошибка загрузки данных',

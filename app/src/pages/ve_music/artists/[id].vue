@@ -2,9 +2,7 @@
 import {computed, onBeforeMount, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 
-import {ArtistType} from "@/types/artist.ts";
-
-import {apiGetArtist} from "@api/veMusic/artist.ts";
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {formatPath} from "@composables/useFormatPath.ts";
@@ -40,7 +38,7 @@ const getCurrentArtist = async () => {
   isLoading.value = true
 
   try {
-    const response: ArtistType = await apiGetArtist(+artistId.value, signal)
+    const response = await VeMusicArtistService.getArtist(+artistId.value, signal)
 
     if (response) veMusicStore.currentArtist = response
   } catch (err: any) {
