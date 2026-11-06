@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-import {ListItemType} from "@/types/list.ts";
-import {MusicListType} from "@/types/music.ts";
+import {ListItem} from "@/types/list.ts";
+
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {musicColsStyle, musicHeadItems} from "@data/music.ts";
-
-import {apiGetAllArtistMusic} from "@api/veMusic/artist.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -23,7 +22,7 @@ const signal = useSignal()
 
 const isLoading = ref<boolean>(true)
 
-const music = ref<ListItemType[]>([])
+const music = ref<ListItem[]>([])
 
 const page = ref(1)
 const total = ref(0)
@@ -34,11 +33,11 @@ const getTracks = async () => {
   try {
     isLoading.value = true
 
-    const response: MusicListType = await apiGetAllArtistMusic(veMusicStore.currentArtist.id, page.value, 30, signal)
+    const response = await VeMusicArtistService.getArtistMusic(veMusicStore.currentArtist.id, page.value, 30, signal)
     if (response) {
-      page.value = response.page
-      total.value = response.total
-      music.value = response.music.map(m => ({
+      page.value = response.meta.page
+      total.value = response.meta.total
+      music.value = response.data.map(m => ({
         url: `/ve_music/music/${m.id}`,
         info: {
           ...m

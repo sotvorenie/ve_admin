@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {UrlType} from "@/types/url.ts";
-
-import {apiDeleteArtistAvatar, apiUploadArtistAvatar} from "@api/veMusic/artist.ts";
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -21,7 +19,7 @@ const uploadAvatar = async (file: File) => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiUploadArtistAvatar(props.artistId, file, props.signal)
+    const response = await VeMusicArtistService.uploadAvatar(props.artistId, file, props.signal)
     if (response) veMusicStore.currentArtist!.avatarUrl = response.url
   } catch (err){
     await showError(
@@ -46,7 +44,7 @@ const deleteAvatar = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteArtistAvatar(props.artistId, props.signal)
+    await VeMusicArtistService.deleteAvatar(props.artistId, props.signal)
     veMusicStore.currentArtist!.avatarUrl = ''
   } catch (err: any) {
     await showError(

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {computed} from "vue";
 
-import {ArtistForm} from "@pages/ve_music/artists/[id].vue";
-import {UrlType} from "@/types/url.ts";
+import {ArtistForm} from "@/types/artist.ts";
+
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {formatPath} from "@composables/useFormatPath.ts";
-import {apiRedactArtistName, apiRedactAvatarUrlForArtist} from "@api/veMusic/artist.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -37,21 +37,21 @@ const showErr = async (err: any, label: string) => {
   )
 }
 
-const handleRedactName = async () => {
+const handleUpdateName = async () => {
   if (form.value.name === veMusicStore.currentUser?.name) return
 
   const confirm = await showConfirm(
       'Редактирование данных исполнителя',
       'Вы действительно хотите редактировать имя исполнителя?'
   )
-  if (confirm) await redactName()
+  if (confirm) await updateName()
 }
 
-const redactName = async () => {
+const updateName = async () => {
   try {
     isLoading.value = true
 
-    await apiRedactArtistName(props.artistId, form.value.name, props.signal)
+    await VeMusicArtistService.updateName(props.artistId, form.value.name, props.signal)
     veMusicStore.currentArtist!.name = form.value.name
   } catch (err: any) {
     await showErr(err, 'имя')
@@ -74,7 +74,7 @@ const redactUrl = async () => {
   try {
     isLoading.value = true
 
-    const response: UrlType = await apiRedactAvatarUrlForArtist(props.artistId, form.value.avatarUrl, props.signal)
+    const response = await VeMusicArtistService.updateAvatarPath(props.artistId, form.value.avatarUrl, props.signal)
     if (response) veMusicStore.currentArtist!.avatarUrl = response.url
   } catch (err: any) {
     await showErr(err, 'аватар')
@@ -94,7 +94,7 @@ const redactUrl = async () => {
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
-                      func: () => handleRedactName(),
+                      func: () => handleUpdateName(),
                       visible: veMusicStore.currentArtist?.name !== form.name
                    }"
       />

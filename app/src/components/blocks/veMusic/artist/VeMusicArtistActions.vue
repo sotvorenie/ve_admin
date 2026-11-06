@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
 
-import {apiDeleteArtist} from "@api/veMusic/artist.ts";
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -21,20 +21,20 @@ const router = useRouter()
 
 const isLoading = defineModel<boolean>('isLoading', {default: true})
 
-const handleDelete = async () => {
+const handleDeleteArtist = async () => {
   const confirm = await showConfirm(
       'Удаление исполнителя',
       'Вы действительно хотите удалить исполнителя?'
   )
 
-  if (confirm) await deleteUser()
+  if (confirm) await deleteArtist()
 }
 
-const deleteUser = async () => {
+const deleteArtist = async () => {
   try {
     isLoading.value = true
 
-    await apiDeleteArtist(props.artistId, props.signal)
+    await VeMusicArtistService.delete(props.artistId, props.signal)
     await router.replace('/ve_music/artists')
   } catch (err: any) {
     await showError(
@@ -58,7 +58,7 @@ const handleCancel = () => {
     <VeMusicArtistMusic/>
 
     <ButtonUi :disabled="isLoading"
-              @click="handleDelete"
+              @click="handleDeleteArtist"
     >
       Удалить исполнителя
     </ButtonUi>

@@ -86,7 +86,7 @@ export const VeMusicArtistService = {
         return apiPost(`/artist/admin/upload_avatar/${id}`, formData, {signal})
     },
 
-    updateAvatarUrl(
+    updateAvatarPath(
         id: number,
         path: string,
         signal?: AbortSignal,
@@ -95,7 +95,7 @@ export const VeMusicArtistService = {
             path,
         }
 
-        return apiPatch(`/artist/admin/update_avatar_url/${id}`, payload, {signal})
+        return apiPatch(`/artist/admin/update_avatar_path/${id}`, payload, {signal})
     },
 
     deleteAvatar(
