@@ -2,9 +2,9 @@
 import {computed, ref} from "vue";
 import {useRouter} from "vue-router";
 
-import {MusicFilesType, MusicInfoType} from "@/types/music.ts";
+import {TrackForm} from "@/types/music.ts";
 
-import {apiUploadMusic} from "@api/veMusic/upload.ts";
+import {VeMusicUploadService} from "@api/veMusic/VeMusicUploadService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showConfirm, showError} from "@utils/modals.ts";
@@ -14,15 +14,10 @@ import VeMusicCreateMusicInfo from "@components/veMusic/createMusic/VeMusicCreat
 
 import ButtonUi from "@ui/ButtonUi.vue";
 
-export interface CreateMusicForm {
-  files: MusicFilesType
-  info: MusicInfoType
-}
-
 const router = useRouter()
 const signal = useSignal()
 
-const form = ref<CreateMusicForm>({
+const form = ref<TrackForm>({
   files: {
     audio: null,
     preview: null,
@@ -50,7 +45,7 @@ const createMusic = async () => {
   try {
     isLoading.value = true
 
-    await apiUploadMusic(form.value, signal)
+    await VeMusicUploadService.uploadMusic(form.value, signal)
     await router.replace('/ve_music/music')
   } catch (err: any) {
     await showError(

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import {onBeforeMount, ref, watch} from "vue";
 
-import {ListItemType} from "@/types/list.ts";
-import {MusicListType} from "@/types/music.ts";
+import {ListItem} from "@/types/list.ts";
+
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {musicColsStyle, musicHeadItems} from "@data/music.ts";
-
-import {apiGetAllMusic} from "@api/veMusic/music.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -22,7 +21,7 @@ const searchStore = useSearchStore();
 
 const signal = useSignal()
 
-const music = ref<ListItemType[]>([])
+const music = ref<ListItem[]>([])
 
 const page = ref(1)
 const total = ref(0)
@@ -37,12 +36,12 @@ const getMusic = async () => {
   isLoading.value = true
 
   try {
-    const response: MusicListType = await apiGetAllMusic(searchStore.searchName, -1, -1, page.value, 30, signal)
+    const response = await VeMusicMusicService.getTracks(searchStore.searchName, -1, -1, page.value, 30, signal)
 
     if (response) {
-      page.value = response.page
-      total.value = response.total
-      music.value = response.music.map(m => ({
+      page.value += 1
+      total.value = response.meta.total
+      music.value = response.data.map(m => ({
         url: `/ve_music/music/${m.id}`,
         info: {
           ...m,

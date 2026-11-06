@@ -2,9 +2,7 @@
 import {type Component, computed, onBeforeMount, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 
-import {MusicType} from "@/types/music.ts";
-
-import {apiGetMusic} from "@api/veMusic/music.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {useSignal} from "@composables/useSignal.ts";
 import {showError} from "@utils/modals.ts";
@@ -61,9 +59,9 @@ const getCurrentMusic = async () => {
   isLoading.value = true
 
   try {
-    const response: MusicType = await apiGetMusic(+musicId.value, signal)
+    const response = await VeMusicMusicService.getTrack(+musicId.value, signal)
 
-    if (response) veMusicStore.currentMusic = {...response, genreId: response.genre?.id ?? -1}
+    veMusicStore.currentMusic = {...response, genreId: response.genre?.id ?? -1}
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',
