@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {GenresListType} from "@/types/genre.ts";
-import {MusicInfoType} from "@/types/music.ts";
+import {MusicForm} from "@/types/music.ts";
 
-import {apiGetAllGenres} from "@api/veMusic/genre.ts";
+import {VeMusicGenreService} from "@api/veMusic/VeMusicGenreService.ts";
 
 import VeMusicArtists from "@components/veMusic/VeMusicArtists.vue";
 
@@ -18,15 +17,15 @@ defineProps<{
   isLoading: boolean
 }>()
 
-const form = defineModel<MusicInfoType>('form', {required: true})
+const form = defineModel<MusicForm>('form', {required: true})
 
 const genres = ref<Option[]>([])
 
 const getGenres = async () => {
   try {
-    const response: GenresListType = await apiGetAllGenres()
+    const response = await VeMusicGenreService.getAllGenres()
     if (response) {
-      genres.value = response.genres.map(genre => ({
+      genres.value = response.data.map(genre => ({
         id: genre.id,
         label: genre.name,
       }))
@@ -41,26 +40,26 @@ onBeforeMount(() => getGenres())
 
   <form novalidate class="flex flex-col gap-5 w-full">
     <LabelUi text="Название трека:">
-      <InputUi v-model="form.title"
+      <InputUi v-model="form.info.title"
                :disabled="isLoading"
                maxlength="255"
                :action-btn="{
                       icon: CrossIcon,
-                      func: () => form.title = '',
-                      visible: !!form.title?.length
+                      func: () => form.info.title = '',
+                      visible: !!form.info.title?.length
                    }"
       />
     </LabelUi>
 
     <LabelUi text="Жанр трека:">
-      <SelectUi v-model="form.genre"
+      <SelectUi v-model="form.info.genre"
                 :options="genres"
                 placeholder="Выберите жанр"
                 :disabled="isLoading"
       />
     </LabelUi>
 
-    <VeMusicArtists v-model:artists="form.artistsIds" :disabled="isLoading"/>
+    <VeMusicArtists v-model:artists="form.info.artistsIds" :disabled="isLoading"/>
   </form>
 
 </template>

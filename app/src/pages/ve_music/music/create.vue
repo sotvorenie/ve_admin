@@ -72,11 +72,11 @@ const isSaveBtnDisabled = computed(() => {
 
   <div class="h-full flex items-center justify-center">
     <div class="w-1/2 flex flex-col gap-5">
-      <VeMusicCreateMusicFiles v-model:form="form.files"
+      <VeMusicCreateMusicFiles v-model:form="form"
                                :is-loading="isLoading"
       />
 
-      <VeMusicCreateMusicInfo v-model:form="form.info"
+      <VeMusicCreateMusicInfo v-model:form="form"
                               :is-loading="isLoading"
       />
 

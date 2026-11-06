@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {MusicFilesType} from "@/types/music.ts";
+import {MusicForm} from "@/types/music.ts";
 
 import VeMusicPosters from "@components/veMusic/VeMusicPosters.vue";
 
@@ -11,7 +11,7 @@ defineProps<{
   isLoading: boolean
 }>()
 
-const form = defineModel<MusicFilesType>('form', {required: true})
+const form = defineModel<MusicForm>('form', {required: true})
 
 const URL = window.URL
 </script>
@@ -20,26 +20,26 @@ const URL = window.URL
 
   <div class="grid grid-cols-3 gap-2.5">
     <AudioUpload
-        :audio-url="form.audio ? URL.createObjectURL(form.audio) : ''"
+        :audio-url="form.files.audio ? URL.createObjectURL(form.files.audio) : ''"
         :disabled="isLoading"
-        :audio-title="form.audio?.name"
+        :audio-title="form.files.audio?.name"
         :show-confirm="false"
-        @select="(file: File) => form.audio = file"
-        @delete="form.audio = null"
+        @select="(file: File) => form.files.audio = file"
+        @delete="form.files.audio = null"
     />
 
     <div class="flex flex-col gap-2">
       <ImgUpload
-          :img-url="form.previewPath ? form.previewPath : form.preview ? URL.createObjectURL(form.preview) : form.preview"
+          :img-url="form.files.previewPath ? form.files.previewPath : form.files.preview ? URL.createObjectURL(form.files.preview) : form.files.preview"
           :disabled="isLoading"
           :show-confirm="false"
           @select="(file: File) => {
-            form.preview = file
-            form.previewPath = ''
+            form.files.preview = file
+            form.files.previewPath = ''
           }"
           @delete="() => {
-            form.preview = null
-            form.previewPath = ''
+            form.files.preview = null
+            form.files.previewPath = ''
           }"
           class="aspect-square min-h-0"
       />
@@ -48,12 +48,12 @@ const URL = window.URL
     </div>
 
     <VideoUpload
-        :video-url="form.video ? URL.createObjectURL(form.video) : ''"
+        :video-url="form.files.video ? URL.createObjectURL(form.files.video) : ''"
         :disabled="isLoading"
-        :video-title="form.video?.name"
+        :video-title="form.files.video?.name"
         :show-confirm="false"
-        @select="(file: File) => form.video = file"
-        @delete="form.video = null"
+        @select="(file: File) => form.files.video = file"
+        @delete="form.files.video = null"
     />
   </div>
 
