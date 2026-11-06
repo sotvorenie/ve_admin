@@ -1,22 +1,16 @@
-import {BasePaginationType} from "@/types/basePagination.ts";
-
-export interface UserType {
+export interface User {
     id: number
     name: string
     avatarUrl: string
 }
 
-export interface UserWithTokenType {
-    user: UserType,
+export interface UserWithToken {
+    user: User,
     token: string
 }
 
-export interface AppUserType extends UserType {
+export interface AppUser extends User {
     login: string
     createdAt: string
     updatedAt: string
-}
-
-export interface AppUsersResponseType extends BasePaginationType {
-    users: AppUserType[]
 }

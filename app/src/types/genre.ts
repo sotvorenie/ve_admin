@@ -1,13 +1,9 @@
-export interface GenreType {
+export interface Genre {
     id: number
     name: string
 }
 
-export interface GenresListType {
-    genres: GenreType[]
-}
-
-export interface CreatedGenreType {
+export interface CreateGenreForm {
     id: number
     name: string
 }

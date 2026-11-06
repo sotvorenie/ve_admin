@@ -1,16 +1,10 @@
-import {BasePaginationType} from "@/types/basePagination.ts";
-
-export interface ArtistType {
+export interface Artist {
     id: number
     name: string
     avatarUrl: string | null
 }
 
-export interface ArtistsListType extends BasePaginationType {
-    artists: ArtistType[]
-}
-
-export interface CreatedArtistType {
+export interface CreateArtistForm {
     id: number
     name: string
 }

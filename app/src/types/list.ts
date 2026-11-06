@@ -1,4 +1,4 @@
-export interface ListHeadType {
+export interface ListHead {
     label: string
     key: string
     type: 'text' | 'avatar' | 'preview' | 'poster' | 'date'
@@ -10,7 +10,7 @@ export interface ListHeadType {
     isDate?: boolean
 }
 
-export interface ListItemType {
+export interface ListItem {
     url: string
     info: any
 }

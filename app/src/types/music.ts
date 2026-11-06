@@ -1,18 +1,18 @@
-import {GenreType} from "@/types/genre.ts";
-import {ArtistType} from "@/types/artist.ts";
-import {BasePaginationType} from "@/types/basePagination.ts";
+import {Genre} from "@/types/genre.ts";
+import {Artist} from "@/types/artist.ts";
 
-export interface MusicForListType {
+export interface TrackPreview {
     id: number
     name: string
     duration: number
+    url: string
     previewUrl: string | null
     genreId: number
 
-    artists: ArtistType[]
+    artists: Artist[]
 }
 
-export interface MusicType {
+export interface Track {
     id: number
     name: string
     duration: number
@@ -24,23 +24,30 @@ export interface MusicType {
     videoClipUrl: string | null
     isLiked: boolean
 
-    genre: GenreType | null
-    artists: ArtistType[]
+    genre: Genre | null
+    artists: Artist[]
+
+    segmentsCount: number
+    bitrates: number[]
 }
 
-export interface MusicListType extends BasePaginationType {
-    music: MusicForListType[]
-}
-
-export interface MusicFilesType {
+export interface MusicFiles {
     audio: File | null
     preview: File | null
     previewPath: string
     video: File | null
 }
 
-export interface MusicInfoType {
-    title: string
-    genre: number
-    artistsIds: number[]
+export interface MusicForm {
+    info: {
+        title: string
+        genre: number
+        artistsIds: number[]
+    }
+    files: {
+        audio: File | null
+        preview: File | null
+        previewPath: string
+        video: File | null
+    }
 }
