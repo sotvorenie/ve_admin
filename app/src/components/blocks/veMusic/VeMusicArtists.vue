@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-import {ArtistsListType, ArtistType} from "@/types/artist.ts";
+import {Artist} from "@/types/artist.ts";
 
-import {apiGetArtists} from "@api/veMusic/artist.ts";
+import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
 
 import {pluralize} from "@composables/usePluralize.ts";
 import {useSignal} from "@composables/useSignal.ts";
@@ -17,9 +17,9 @@ import InputUi from "@ui/InputUi.vue";
 
 import NotImageIcon from "@icons/NotImageIcon.vue";
 import SearchIcon from "@icons/SearchIcon.vue";
+import LoadingIcon from "@icons/LoadingIcon.vue";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
-import LoadingIcon from "@icons/LoadingIcon.vue";
 const apiUrlStore = useApiUrlStore();
 
 defineProps<{
@@ -38,7 +38,7 @@ const isLoading = ref<boolean>(false)
 
 const isVisible = ref<boolean>(false)
 
-const artistsList = ref<ArtistType[]>([])
+const artistsList = ref<Artist[]>([])
 
 const searchName = ref<string>('')
 
@@ -53,17 +53,16 @@ const getArtists = async () => {
   try {
     isLoading.value = true
 
-    const response: ArtistsListType = await apiGetArtists(
+    const response = await VeMusicArtistService.getArtists(
         searchName.value,
         page.value,
         30,
         signal
     )
-    if (response) {
-      page.value = response.page + 1
-      artistsList.value = [...artistsList.value, ...response.artists]
-      hasMore.value = response.hasMore
-    }
+
+    page.value += 1
+    artistsList.value.push(...response.data)
+    hasMore.value = response.meta.hasMore
   } catch (err: any) {
     await showError(
         'Ошибка загрузки исполнителей',
@@ -171,7 +170,7 @@ useObserve(lastLiRef, () => getArtists())
           </ButtonUi>
 
           <ButtonUi @click="() => {
-            emits('okFunc', artists)
+            emit('okFunc', artists)
             close()
           }">
             Подтвердить

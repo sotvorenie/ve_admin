@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
 
-import {MusicFilesType} from "@/types/music.ts";
+import {TrackFiles} from "@/types/music.ts";
 
-import {apiGetMusicPosters} from "@api/veMusic/music.ts";
+import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
 import {showError} from "@utils/modals.ts";
 
@@ -17,7 +17,7 @@ defineProps<{
   disabled?: boolean
 }>()
 
-const form = defineModel<MusicFilesType>('form', {required: true})
+const form = defineModel<TrackFiles>('form', {required: true})
 const isVisible = defineModel<boolean>('isVisible')
 
 const emit = defineEmits<{
@@ -32,8 +32,8 @@ const getPosters = async () => {
   try {
     isLoading.value = true
 
-    const response = await apiGetMusicPosters()
-    if (response) posters.value = response.posters
+    const response = await VeMusicMusicService.getPosters()
+    posters.value = response.data
   } catch (err: any) {
     await showError(
         'Ошибка загрузки постеров',
@@ -50,7 +50,7 @@ const handlePoster = (url: string) => {
   } else {
     form.value.preview = null
     form.value.previewPath = url
-    emits('updatePoster', form.value.previewPath)
+    emit('updatePoster', form.value.previewPath)
   }
 }
 
