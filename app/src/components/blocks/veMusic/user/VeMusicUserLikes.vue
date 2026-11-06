@@ -62,9 +62,7 @@ const like = async (funcClose: Function) => {
   <Modal :size="600">
     <template #activator="{open}">
       <ButtonUi @click="open">
-          <span class="leading-15">
-            Добавить в избранное
-          </span>
+        Добавить в избранное
       </ButtonUi>
     </template>
 

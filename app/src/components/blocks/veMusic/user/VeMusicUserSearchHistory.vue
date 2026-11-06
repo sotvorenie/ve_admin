@@ -94,6 +94,32 @@ const createSearch = async () => {
   }
 }
 
+const handleDeleteAll = async () => {
+  const confirm = await showConfirm(
+      'Очистка истории поиска',
+      'Вы действительно хотите очистить историю поиска?'
+  )
+
+  if (confirm) await deleteAll()
+}
+
+const deleteAll = async () => {
+  try {
+    isLoading.value = true
+
+    await Promise.all(searchList.value.map(s => VeMusicSearchService.delete(s.id, veMusicStore.currentUser!.id)))
+
+    searchList.value = []
+  } catch (err: any) {
+    await showError(
+        'Ошибка очистки истории поиска',
+        `Не удалось очистить историю поиска.. Ошибка: ${err?.detail}`
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
 onBeforeMount(() => getSearchHistory())
 </script>
 
@@ -107,37 +133,49 @@ onBeforeMount(() => getSearchHistory())
     />
 
     <template v-else>
-      <Modal v-model="newSearchModalVisible" :size="600">
-        <template #activator="{open}">
-          <ButtonUi @click="open">
-            <span class="leading-15">Добавить в историю поиска</span>
-          </ButtonUi>
-        </template>
+      <div :class="[
+              'grid gap-4',
+              searchList.length && 'grid-cols-2',
+           ]"
+      >
+        <Modal v-model="newSearchModalVisible" :size="600">
+          <template #activator="{open}">
+            <ButtonUi @click="open">
+              <span>Добавить в историю поиска</span>
+            </ButtonUi>
+          </template>
 
-        <template #default="{close}">
-          <div class="flex flex-col gap-3">
-            <LabelUi text="Элемент истории поиска">
-              <InputUi v-model="newSearch"
-                       @keydown.enter="handleCreateSearch"
-              />
-            </LabelUi>
+          <template #default="{close}">
+            <div class="flex flex-col gap-3">
+              <LabelUi text="Элемент истории поиска">
+                <InputUi v-model="newSearch"
+                         @keydown.enter="handleCreateSearch"
+                />
+              </LabelUi>
 
-            <div class="grid grid-cols-2 gap-2.5">
-              <ButtonUi @click="close">
-                Отмена
-              </ButtonUi>
+              <div class="grid grid-cols-2 gap-2.5">
+                <ButtonUi @click="close">
+                  Отмена
+                </ButtonUi>
 
-              <ButtonUi :is-loading="isLoading"
-                        :disabled="!veMusicStore.currentUser?.id"
-                        @click="handleCreateSearch">
-                Добавить
-              </ButtonUi>
+                <ButtonUi :is-loading="isLoading"
+                          :disabled="!veMusicStore.currentUser?.id"
+                          @click="handleCreateSearch">
+                  Добавить
+                </ButtonUi>
+              </div>
             </div>
-          </div>
-        </template>
-      </Modal>
+          </template>
+        </Modal>
 
-      <template v-if="!isLoading && searchList?.length">
+        <ButtonUi v-if="searchList.length"
+                  @click="handleDeleteAll"
+        >
+          Очистить историю поиска
+        </ButtonUi>
+      </div>
+
+      <template v-if="!isLoading && searchList.length">
         <ul class="flex flex-col gap-2.5 pr-2">
           <li v-for="search in searchList"
               :key="search.id"
