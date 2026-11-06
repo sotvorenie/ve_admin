@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import {onBeforeRouteUpdate} from "vue-router";
 
-import {TabType} from "@/types/tab.ts";
+import {Tab} from "@/types/tab.ts";
 
 import Tabs from "@/components/common/Tabs.vue";
 
@@ -22,7 +22,7 @@ const searchStore = useSearchStore();
 
 withDefaults(
     defineProps<{
-      tabsList: TabType[]
+      tabsList: Tab[]
       isMainPage?: boolean
     }>(), {
       tabsList: () => [],
@@ -30,7 +30,7 @@ withDefaults(
     }
 )
 
-const activeTab = ref<TabType | null>(null)
+const activeTab = ref<Tab | null>(null)
 
 const unSearchablePages = ['/ve_music', '/ve_music/genres', '/ve_fox']
 const mainPages = ['/ve_music', '/ve_fox']
