@@ -77,18 +77,6 @@ export const VeMusicMusicService = {
         return apiPatch(`/music/admin/update_preview_url/${id}`, payload, {signal})
     },
 
-    updateVideoPath(
-        id: number,
-        path: string,
-        signal?: AbortSignal,
-    ): Promise<Url> {
-        const payload = {
-            path,
-        }
-
-        return apiPatch(`/music/admin/update_video_path/${id}`, payload, {signal})
-    },
-
     updateAuditions(
         id: number,
         auditionsCount: number,
