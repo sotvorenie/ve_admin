@@ -39,13 +39,13 @@ export const VeMusicMusicService = {
 
     update(
         id: number,
-        title: string,
+        name: string,
         genreId: number,
         artists: number[],
         signal?: AbortSignal,
     ) {
         const payload = {
-            title,
+            name,
             genre_id: String(genreId),
             artists: artists.join(','),
         }

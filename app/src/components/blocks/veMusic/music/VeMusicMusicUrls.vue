@@ -21,32 +21,12 @@ const props = defineProps<{
 
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
-interface Form {
-  previewUrl: string
-  videoUrl: string
-}
-
-const form = ref<Form>({
-  previewUrl: '',
-  videoUrl: '',
-})
+const previewPath = ref<string>('')
 
 const editPreviewVisible = computed(() => {
-  return form.value.previewUrl !== formatPath(veMusicStore.currentMusic?.previewUrl ?? '', 'veMusic')
-      && form.value.previewUrl?.length > 0
+  return previewPath.value !== formatPath(veMusicStore.currentMusic?.previewUrl ?? '', 'veMusic')
+      && previewPath.value?.length > 0
 })
-
-const editVideoVisible = computed(() => {
-  return form.value.videoUrl !== formatPath(veMusicStore.currentMusic?.videoClipUrl ?? '', 'veMusic')
-      && form.value.videoUrl?.length > 0
-})
-
-const showDeleteError = async (err: any, label: string) => {
-  await showError(
-      'Ошибка редактирования url',
-      `Не удалось редактировать url для ${label}.. Ошибка: ${err?.detail}`
-  )
-}
 
 const handleRedactPreview = async () => {
   const confirm = await showConfirm(
@@ -60,33 +40,14 @@ const redactPreview = async () => {
   try {
     isLoading.value = true
 
-    const response = await VeMusicMusicService.updatePreviewPath(props.musicId, form.value.previewUrl, props.signal)
+    const response = await VeMusicMusicService.updatePreviewPath(props.musicId, previewPath.value, props.signal)
 
     veMusicStore.currentMusic!.previewUrl = response.url
   } catch (err: any) {
-    await showDeleteError(err, 'обложки')
-  } finally {
-    isLoading.value = false
-  }
-}
-
-const handleRedactVideo = async () => {
-  const confirm = await showConfirm(
-      'Редактирование клипа',
-      'Вы действительно хотите редактировать url видео-файла?'
-  )
-  if (confirm) await redactVideo()
-}
-
-const redactVideo = async () => {
-  try {
-    isLoading.value = true
-
-    const response = await VeMusicMusicService.updateVideoPath(props.musicId, form.value.videoUrl, props.signal)
-
-    veMusicStore.currentMusic!.videoClipUrl = response.url
-  } catch (err: any) {
-    await showDeleteError(err, 'клипа')
+    await showError(
+        'Ошибка редактирования url',
+        `Не удалось редактировать url для постера.. Ошибка: ${err?.detail}`
+    )
   } finally {
     isLoading.value = false
   }
@@ -94,8 +55,7 @@ const redactVideo = async () => {
 
 watchEffect(() => {
   if (veMusicStore.currentMusic) {
-    form.value.previewUrl = formatPath(veMusicStore.currentMusic.previewUrl ?? '', 'veMusic')
-    form.value.videoUrl = formatPath(veMusicStore.currentMusic.videoClipUrl ?? '', 'veMusic')
+    previewPath.value = formatPath(veMusicStore.currentMusic.previewUrl ?? '', 'veMusic')
   }
 })
 </script>
@@ -104,23 +64,12 @@ watchEffect(() => {
 
   <form novalidate class="flex flex-col gap-5 w-full">
     <LabelUi text="Path обложки:">
-      <InputUi v-model="form.previewUrl"
+      <InputUi v-model="previewPath"
                :disabled="isLoading"
                :action-btn="{
                       icon: EditIcon,
                       func: () => handleRedactPreview(),
                       visible: editPreviewVisible
-                   }"
-      />
-    </LabelUi>
-
-    <LabelUi text="Path клипа:">
-      <InputUi v-model="form.videoUrl"
-               :disabled="isLoading"
-               :action-btn="{
-                      icon: EditIcon,
-                      func: () => handleRedactVideo(),
-                      visible: editVideoVisible
                    }"
       />
     </LabelUi>
