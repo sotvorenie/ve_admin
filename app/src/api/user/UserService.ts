@@ -1,6 +1,6 @@
 import {Url} from "@/types/url.ts";
 
-import {apiPatch, apiPost} from "@/api";
+import {apiDelete, apiPatch, apiPost} from "@/api";
 
 export const UserService = {
     updateName(
@@ -11,7 +11,7 @@ export const UserService = {
             name,
         }
 
-        return apiPatch(`/user/update_name`, payload, {signal})
+        return apiPatch(`/user/name`, payload, {signal})
     },
 
     updatePassword(
@@ -22,7 +22,7 @@ export const UserService = {
             password,
         }
 
-        return apiPatch(`/user/update_password`, payload, {signal})
+        return apiPatch(`/user/password`, payload, {signal})
     },
 
     uploadAvatar(
@@ -32,12 +32,12 @@ export const UserService = {
         const form = new FormData()
         form.append('avatar', file)
 
-        return apiPost(`/user/upload_avatar`, form, {signal})
+        return apiPost(`/user/avatar`, form, {signal})
     },
 
     deleteAvatar(
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/user/delete_avatar`, undefined, {signal})
+        return apiDelete(`/user/avatar`, {signal})
     },
 }
