@@ -100,14 +100,14 @@ export const VeMusicMusicService = {
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/music/admin/${id}/preview`, undefined, {signal})
+        return apiDelete(`/music/admin/${id}/preview`, {signal})
     },
 
     deleteVideo(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/music/admin/${id}/video`, undefined, {signal})
+        return apiDelete(`/music/admin/${id}/video`, {signal})
     },
 
     getPosters(

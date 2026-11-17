@@ -90,6 +90,6 @@ export const VeMusicArtistService = {
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/artists/admin/${id}/avatar`,undefined, {signal})
+        return apiDelete(`/artists/admin/${id}/avatar`,{signal})
     },
 }
