@@ -23,7 +23,7 @@ export const VeMusicMusicService = {
         if (artistId >= 0) params.append('artist_id', String(artistId))
         if (genreId >= 0) params.append('genre_id', String(genreId))
 
-        return apiGet(`/music/list?${params}`, {signal})
+        return apiGet(`/music?${params}`, {signal})
     },
 
     getTrack(
@@ -50,7 +50,7 @@ export const VeMusicMusicService = {
             artists: artists.join(','),
         }
 
-        return apiPatch(`/music/admin/update/${id}`, payload, {signal})
+        return apiPatch(`/music/admin/${id}`, payload, {signal})
     },
 
     updatePreviewPath(
@@ -62,7 +62,7 @@ export const VeMusicMusicService = {
             path,
         }
 
-        return apiPatch(`/music/admin/update_preview_path/${id}`, payload, {signal})
+        return apiPatch(`/music/admin/${id}/preview/path`, payload, {signal})
     },
 
     updatePreviewUrl(
@@ -74,7 +74,7 @@ export const VeMusicMusicService = {
             url,
         }
 
-        return apiPatch(`/music/admin/update_preview_url/${id}`, payload, {signal})
+        return apiPatch(`/music/admin/${id}/preview/url`, payload, {signal})
     },
 
     updateAuditions(
@@ -86,33 +86,33 @@ export const VeMusicMusicService = {
             auditions_count: auditionsCount
         }
 
-        return apiPatch(`/music/admin/update_auditions/${id}`, payload, {signal})
+        return apiPatch(`/music/admin/${id}/auditions`, payload, {signal})
     },
 
     delete(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiDelete(`/music/admin/delete/${id}`, {signal})
+        return apiDelete(`/music/admin/${id}`, {signal})
     },
 
     deletePreview(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/music/admin/delete_preview/${id}`, undefined, {signal})
+        return apiPatch(`/music/admin/${id}/preview`, undefined, {signal})
     },
 
     deleteVideo(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/music/admin/delete_video/${id}`, undefined, {signal})
+        return apiPatch(`/music/admin/${id}/video`, undefined, {signal})
     },
 
     getPosters(
         signal?: AbortSignal,
     ): Promise<ListResponse<string>> {
-        return apiGet('/music/admin/get_posters', {signal})
+        return apiGet('/music/admin/posters', {signal})
     },
 }

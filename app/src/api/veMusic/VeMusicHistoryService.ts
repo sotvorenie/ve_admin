@@ -15,7 +15,7 @@ export const VeMusicHistoryService = {
             limit: String(limit),
         })
 
-        return apiGet(`/history/admin/all_from_user/${userId}?${params}`, {signal})
+        return apiGet(`/history/admin/${userId}?${params}`, {signal})
     },
 
     delete(
@@ -27,6 +27,6 @@ export const VeMusicHistoryService = {
             user_id: String(userId),
         })
 
-        return apiDelete(`/history/admin/delete/${musicId}?${params}`, {signal})
+        return apiDelete(`/history/admin/${musicId}?${params}`, {signal})
     },
 }

@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import {computed} from "vue";
-
 import {ArtistForm} from "@/types/artist.ts";
 
 import {VeMusicArtistService} from "@api/veMusic/VeMusicArtistService.ts";
-
-import {formatPath} from "@composables/useFormatPath.ts";
 
 import {showConfirm, showError} from "@utils/modals.ts";
 
@@ -24,11 +20,6 @@ const props = defineProps<{
 
 const form = defineModel<ArtistForm>('form', {required: true})
 const isLoading = defineModel<boolean>('isLoading', {default: true})
-
-const editUrlVisible = computed(() => {
-  return form.value.avatarUrl !== formatPath(veMusicStore.currentArtist?.avatarUrl ?? '', 'veMusic')
-      && form.value.avatarUrl?.length > 0
-})
 
 const showErr = async (err: any, label: string) => {
   await showError(
@@ -59,30 +50,6 @@ const updateName = async () => {
     isLoading.value = false
   }
 }
-
-const handleRedactUrl = async () => {
-  if (form.value.name === veMusicStore.currentUser?.name) return
-
-  const confirm = await showConfirm(
-      'Редактирование данных исполнителя',
-      'Вы действительно хотите редактировать url аватарки исполнителя?'
-  )
-  if (confirm) await redactUrl()
-}
-
-const redactUrl = async () => {
-  try {
-    isLoading.value = true
-
-    const response = await VeMusicArtistService.updateAvatarPath(props.artistId, form.value.avatarUrl, props.signal)
-
-    veMusicStore.currentArtist!.avatarUrl = response.url
-  } catch (err: any) {
-    await showErr(err, 'аватар')
-  } finally {
-    isLoading.value = false
-  }
-}
 </script>
 
 <template>
@@ -97,17 +64,6 @@ const redactUrl = async () => {
                       icon: EditIcon,
                       func: () => handleUpdateName(),
                       visible: veMusicStore.currentArtist?.name !== form.name
-                   }"
-      />
-    </LabelUi>
-
-    <LabelUi text="Url аватарки:">
-      <InputUi v-model="form.avatarUrl"
-               :disabled="isLoading"
-               :action-btn="{
-                      icon: EditIcon,
-                      func: () => handleRedactUrl(),
-                      visible: editUrlVisible
                    }"
       />
     </LabelUi>

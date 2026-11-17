@@ -18,7 +18,7 @@ export const VeMusicUserService = {
 
         if (name) params.append('name', name)
 
-        return apiGet(`/user/admin/list?${params}`, {signal})
+        return apiGet(`/user/admin?${params}`, {signal})
     },
 
     getUser(
@@ -37,7 +37,7 @@ export const VeMusicUserService = {
             name,
         }
 
-        return apiPatch(`/user/admin/update_name/${id}`,payload, {signal})
+        return apiPatch(`/user/admin/${id}/name`,payload, {signal})
     },
 
     updateLogin(
@@ -49,7 +49,7 @@ export const VeMusicUserService = {
             login,
         }
 
-        return apiPatch(`/user/admin/redact_login/${id}`,payload, {signal})
+        return apiPatch(`/user/admin/${id}/login`,payload, {signal})
     },
 
     updatePassword(
@@ -61,7 +61,7 @@ export const VeMusicUserService = {
             password,
         }
 
-        return apiPatch(`/user/admin/redact_password/${id}`,payload, {signal})
+        return apiPatch(`/user/admin/${id}/password`,payload, {signal})
     },
 
     updateRole(
@@ -73,14 +73,14 @@ export const VeMusicUserService = {
             role,
         }
 
-        return apiPatch(`/user/admin/update_role/${id}`, payload, {signal})
+        return apiPatch(`/user/admin/${id}/role`, payload, {signal})
     },
 
     delete(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiDelete(`/user/admin/delete/${id}`,{signal})
+        return apiDelete(`/user/admin/${id}`,{signal})
     },
 
     uploadAvatar(
@@ -91,13 +91,13 @@ export const VeMusicUserService = {
         const formData = new FormData()
         formData.append('avatar', file)
 
-        return apiPost(`/user/admin/upload_avatar/${id}`, formData, {signal})
+        return apiPost(`/user/admin/${id}/avatar`, formData, {signal})
     },
 
     deleteAvatar(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/user/admin/delete_avatar/${id}`,undefined, {signal})
+        return apiPatch(`/user/admin/${id}/avatar`,undefined, {signal})
     },
 }

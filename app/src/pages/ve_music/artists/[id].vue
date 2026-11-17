@@ -13,8 +13,9 @@ import VeMusicArtistInfo from "@components/veMusic/artist/VeMusicArtistInfo.vue"
 import VeMusicArtistActions from "@components/veMusic/artist/VeMusicArtistActions.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
-const veMusicStore = useVeMusicStore();
 import usePageStore from "@store/usePageStore.ts";
+
+const veMusicStore = useVeMusicStore();
 const pageStore = usePageStore();
 
 const signal = useSignal()
@@ -38,9 +39,7 @@ const getCurrentArtist = async () => {
   isLoading.value = true
 
   try {
-    const response = await VeMusicArtistService.getArtist(+artistId.value, signal)
-
-    veMusicStore.currentArtist = response
+    veMusicStore.currentArtist = await VeMusicArtistService.getArtist(+artistId.value, signal)
   } catch (err: any) {
     await showError(
         'Ошибка получения данных',

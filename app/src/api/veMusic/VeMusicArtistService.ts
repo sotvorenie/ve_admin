@@ -20,14 +20,14 @@ export const VeMusicArtistService = {
 
         if (name) params.append('name', name)
 
-        return apiGet(`/artist/list?${params}`, {signal})
+        return apiGet(`/artists?${params}`, {signal})
     },
 
     getArtist(
         id: number,
         signal?: AbortSignal,
     ): Promise<Artist> {
-        return apiGet(`/artist/admin/${id}`, {signal})
+        return apiGet(`/artists/admin/${id}`, {signal})
     },
 
     getArtistMusic(
@@ -41,7 +41,7 @@ export const VeMusicArtistService = {
             limit: String(limit),
         })
 
-        return apiGet(`/artist/admin/music/${id}?${params}`, {signal})
+        return apiGet(`/artists/admin/${id}/music?${params}`, {signal})
     },
 
     create(
@@ -53,14 +53,14 @@ export const VeMusicArtistService = {
         form.append('name', name)
         form.append('avatar', avatarFile)
 
-        return apiPost(`/artist/admin/create`, form, {signal})
+        return apiPost(`/artists/admin`, form, {signal})
     },
 
     delete(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiDelete(`/artist/admin/delete/${id}`, {signal})
+        return apiDelete(`/artists/admin/${id}`, {signal})
     },
 
     updateName(
@@ -72,7 +72,7 @@ export const VeMusicArtistService = {
             name,
         }
 
-        return apiPatch(`/artist/admin/update_name/${id}`, payload, {signal})
+        return apiPatch(`/artists/admin/${id}/name`, payload, {signal})
     },
 
     uploadAvatar(
@@ -83,25 +83,13 @@ export const VeMusicArtistService = {
         const formData = new FormData()
         formData.append('avatar', file)
 
-        return apiPost(`/artist/admin/upload_avatar/${id}`, formData, {signal})
-    },
-
-    updateAvatarPath(
-        id: number,
-        path: string,
-        signal?: AbortSignal,
-    ): Promise<Url> {
-        const payload = {
-            path,
-        }
-
-        return apiPatch(`/artist/admin/update_avatar_path/${id}`, payload, {signal})
+        return apiPost(`/artists/admin/${id}/avatar`, formData, {signal})
     },
 
     deleteAvatar(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiPatch(`/artist/admin/delete_avatar/${id}`,undefined, {signal})
+        return apiPatch(`/artists/admin/${id}/avatar`,undefined, {signal})
     },
 }

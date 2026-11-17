@@ -58,7 +58,9 @@ const handleRedactName = async () => {
   if (confirm) await redactMusic()
 }
 
-const handleRedactGenre = async () => {
+const handleRedactGenre = async (val: string | number) => {
+  form.value.genre = +val
+
   const confirm = await showConfirm(
       'Редактирование жанра трека',
       'Вы действительно хотите редактировать жанр трека?'
@@ -66,7 +68,9 @@ const handleRedactGenre = async () => {
   if (confirm) await redactMusic()
 }
 
-const handleRedactArtists = async () => {
+const handleRedactArtists = async (val: number[]) => {
+  form.value.artistsIds = val
+
   const confirm = await showConfirm(
       'Редактирование исполнителей трека',
       'Вы действительно хотите редактировать исполнителей трека?'
@@ -117,20 +121,14 @@ onBeforeMount(() => getGenres())
 
     <LabelUi text="Жанр трека:">
       <SelectUi :model-value="form.genre"
-                @update:model-value="(val) => {
-                  form.genre = +val
-                  handleRedactGenre()
-                }"
+                @update:model-value="handleRedactGenre"
                 :options="genres"
                 placeholder="Выберите жанр"
       />
     </LabelUi>
 
     <VeMusicArtists :artists="form.artistsIds"
-                    @ok-func="(val: any) => {
-                      form.artistsIds = val
-                      handleRedactArtists()
-                    }"
+                    @ok-func="handleRedactArtists"
     />
   </form>
 

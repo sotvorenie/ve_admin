@@ -8,14 +8,18 @@ export const VeMusicGenreService = {
     getAllGenres(
         signal?: AbortSignal,
     ): Promise<ListResponse<Genre>> {
-        return apiGet(`/genre/all?is_admin=true`, {signal})
+        const params = new URLSearchParams({
+            is_admin: String(true),
+        })
+
+        return apiGet(`/genres?${params}`, {signal})
     },
 
     getGenre(
         id: number,
         signal?: AbortSignal,
     ): Promise<Genre> {
-        return apiGet(`/genre/admin/${id}`, {signal})
+        return apiGet(`/genres/admin/${id}`, {signal})
     },
 
     getGenreMusic(
@@ -29,19 +33,7 @@ export const VeMusicGenreService = {
             limit: String(limit),
         })
 
-        return apiGet(`/genre/admin/music/${id}?${params}`, {signal})
-    },
-
-    updateName(
-        id: number, 
-        name: string,
-        signal?: AbortSignal,
-    ): Promise<void> {
-        const payload = {
-            name,
-        }
-
-        return apiPatch(`/genre/admin/update_name/${id}`, payload, {signal})
+        return apiGet(`/genres/admin/${id}/music?${params}`, {signal})
     },
 
     create(
@@ -52,13 +44,25 @@ export const VeMusicGenreService = {
             name,
         }
 
-        return apiPost(`/genre/admin/create`, payload, {signal})
+        return apiPost(`/genres/admin`, payload, {signal})
+    },
+
+    updateName(
+        id: number,
+        name: string,
+        signal?: AbortSignal,
+    ): Promise<void> {
+        const payload = {
+            name,
+        }
+
+        return apiPatch(`/genres/admin/${id}/name`, payload, {signal})
     },
 
     delete(
         id: number,
         signal?: AbortSignal,
     ): Promise<void> {
-        return apiDelete(`/genre/admin/delete/${id}`, {signal})
+        return apiDelete(`/genres/admin/${id}`, {signal})
     },
 }

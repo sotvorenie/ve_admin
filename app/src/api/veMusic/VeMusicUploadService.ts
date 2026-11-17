@@ -1,11 +1,11 @@
-import {MusicForm, Track} from "@/types/music.ts";
+import {Track, TrackForm} from "@/types/music.ts";
 import {Url} from "@/types/url.ts";
 
 import {apiPost} from "@/api";
 
 export const VeMusicUploadService = {
     uploadMusic(
-        form: MusicForm,
+        form: TrackForm,
         signal?: AbortSignal,
     ): Promise<Track> {
         const formData = new FormData()
@@ -14,7 +14,7 @@ export const VeMusicUploadService = {
         if (form.files.preview) formData.append('preview', form.files.preview)
         if (form.files.video) formData.append('video', form.files.video)
 
-        formData.append('path', form.files.previewPath)
+        formData.append('url', form.files.previewPath)
 
         formData.append('title', form.info.title)
         formData.append('genre_id', String(form.info.genre))
@@ -31,7 +31,7 @@ export const VeMusicUploadService = {
         const formData = new FormData()
         formData.append('music', file)
 
-        return apiPost(`/upload/admin/audio/${id}`, formData, {signal})
+        return apiPost(`/upload/admin/${id}/audio`, formData, {signal})
     },
 
     uploadPreview(
@@ -42,7 +42,7 @@ export const VeMusicUploadService = {
         const formData = new FormData()
         formData.append('preview', file)
 
-        return apiPost(`/upload/admin/preview/${id}`, formData, {signal})
+        return apiPost(`/upload/admin/${id}/preview`, formData, {signal})
     },
 
     uploadVideo(
@@ -53,6 +53,6 @@ export const VeMusicUploadService = {
         const formData = new FormData()
         formData.append('video', file)
 
-        return apiPost(`/upload/admin/video/${id}`, formData, {signal})
+        return apiPost(`/upload/admin/${id}/video`, formData, {signal})
     },
 }

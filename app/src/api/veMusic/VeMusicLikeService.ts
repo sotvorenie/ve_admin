@@ -1,6 +1,7 @@
 import {PaginatedResponse} from "@/types/response.ts";
 import {TrackPreview} from "@/types/music.ts";
-import {apiDelete, apiGet, apiPost} from "@/api";
+
+import {apiGet, apiPost} from "@/api";
 
 export const VeMusicLikeService = {
     getLikedTracks(
@@ -14,7 +15,7 @@ export const VeMusicLikeService = {
             limit: String(limit),
         })
 
-        return apiGet(`/like/admin/all_from_user/${userId}?${params}`, {signal})
+        return apiGet(`/likes/admin/${userId}?${params}`, {signal})
     },
 
     like(
@@ -26,18 +27,6 @@ export const VeMusicLikeService = {
             user_id: String(userId),
         })
 
-        return apiPost(`/like/admin/add/${musicId}?${params}`, undefined, {signal})
-    },
-
-    delete(
-        musicId: number,
-        userId: number,
-        signal?: AbortSignal,
-    ): Promise<void> {
-        const params = new URLSearchParams({
-            user_id: String(userId),
-        })
-
-        return apiDelete(`/like/admin/delete/${musicId}?${params}`, {signal})
+        return apiPost(`/likes/admin/${musicId}?${params}`, undefined, {signal})
     },
 }

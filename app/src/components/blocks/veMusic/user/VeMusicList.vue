@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {onBeforeMount, ref} from "vue";
-import {useRouter} from "vue-router";
 
 import {TrackPreview} from "@/types/music.ts";
 
@@ -25,7 +24,6 @@ const props = defineProps<{
 const musicList = defineModel<TrackPreview[]>('musicList', {default: () => []})
 
 const signal = useSignal()
-const router = useRouter()
 
 const isLoading = ref<boolean>(true)
 
@@ -77,10 +75,6 @@ const deleteMusic = async (id: number) => {
 
 const getArtists = (music: TrackPreview) => {
   return music?.artists?.flatMap(artist => artist.name)?.join(', ')
-}
-
-const handleMusic = (id: number) => {
-  router.push(`/ve_music/music/${id}`)
 }
 
 onBeforeMount(() => getMusic())

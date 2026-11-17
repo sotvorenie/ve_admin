@@ -89,7 +89,7 @@ const like = async (funcClose: Function) => {
 
   <VeMusicList v-model:music-list="musicList"
                :get-func="VeMusicLikeService.getLikedTracks"
-               :delete-func="VeMusicLikeService.delete"
+               :delete-func="VeMusicLikeService.like"
   />
 
 </template>

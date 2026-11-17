@@ -8,7 +8,7 @@ export const VeMusicSearchService = {
         userId: number,
         signal?: AbortSignal,
     ): Promise<ListResponse<Search>> {
-        return apiGet(`/search/admin/all_from_user/${userId}`, {signal})
+        return apiGet(`/search/admin/${userId}`, {signal})
     },
 
     create(
@@ -20,7 +20,7 @@ export const VeMusicSearchService = {
             search,
         }
 
-        return apiPost(`/search/admin/set_for_user/${userId}`, payload, {signal})
+        return apiPost(`/search/admin/${userId}`, payload, {signal})
     },
 
     delete(
@@ -32,6 +32,6 @@ export const VeMusicSearchService = {
             user_id: String(userId),
         })
 
-        return apiDelete(`/search/admin/delete_from_user/${id}?${params}`, {signal})
+        return apiDelete(`/search/admin/${id}?${params}`, {signal})
     },
 }
