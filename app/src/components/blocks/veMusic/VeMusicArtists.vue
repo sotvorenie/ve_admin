@@ -97,7 +97,12 @@ const handleCancel = () => {
   isVisible.value = false
 }
 
-useObserve(lastLiRef, () => getArtists())
+useObserve(
+    lastLiRef,
+    () => getArtists(),
+    hasMore,
+    isLoading,
+)
 </script>
 
 <template>
