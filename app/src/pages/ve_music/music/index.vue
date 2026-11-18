@@ -32,8 +32,12 @@ const setToStore = (music: any) => {
   veMusicStore.currentMusic = music
 }
 
-const getMusic = async () => {
+const getMusic = async (isClear: boolean = false) => {
   isLoading.value = true
+
+  if (isClear) {
+    page.value = 1
+  }
 
   try {
     const response = await VeMusicMusicService.getTracks(searchStore.searchName, -1, -1, page.value, 30, signal)
@@ -61,10 +65,10 @@ onBeforeMount(() => {
     label: 'Добавить музыку',
     to: '/ve_music/music/create',
   }
-  searchStore.searchFunc = () => getMusic()
+  searchStore.searchFunc = () => getMusic(true)
 })
 
-watch(page, getMusic, {immediate: true})
+watch(page, () => getMusic(), {immediate: true})
 </script>
 
 <template>

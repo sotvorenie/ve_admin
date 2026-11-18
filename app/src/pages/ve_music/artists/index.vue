@@ -58,8 +58,12 @@ const setToStore = (artist: any) => {
   veMusicStore.currentArtist = artist
 }
 
-const getArtists = async () => {
+const getArtists = async (isClear: boolean = false) => {
   isLoading.value = true
+
+  if (isClear) {
+    page.value = 1
+  }
 
   try {
     const response = await VeMusicArtistService.getArtists(searchStore.searchName, page.value, 30, signal)
@@ -86,10 +90,10 @@ onBeforeMount(() => {
     label: 'Добавить исполнителя',
     to: '/ve_music/artists/create',
   }
-  searchStore.searchFunc = () => getArtists()
+  searchStore.searchFunc = () => getArtists(true)
 })
 
-watch(page, getArtists, { immediate: true })
+watch(page, () => getArtists(), { immediate: true })
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, ref, watch} from "vue";
 
 import {ListHead, ListItem} from "@/types/list.ts";
 
@@ -63,8 +63,12 @@ const setToStore = (user: any) => {
   veMusicStore.currentUser = user
 }
 
-const getUsers = async () => {
+const getUsers = async (isClear: boolean = false) => {
   isLoading.value = true
+
+  if (isClear) {
+    page.value = 1
+  }
 
   try {
     const response = await VeMusicUserService.getUsers(searchStore.searchName, page.value, 30, signal)
@@ -91,10 +95,10 @@ onBeforeMount(() => {
     label: 'Добавить пользователя',
     to: '/ve_music/users/create',
   }
-  searchStore.searchFunc = () => getUsers()
-
-  getUsers()
+  searchStore.searchFunc = () => getUsers(true)
 })
+
+watch(page, () => getUsers(), {immediate: true})
 </script>
 
 <template>
