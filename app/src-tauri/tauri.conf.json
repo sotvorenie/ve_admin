@@ -14,7 +14,8 @@
       {
         "title": "veAdmin",
         "fullscreen": true,
-        "resizable": true
+        "resizable": true,
+        "dragDropEnabled": false
       }
     ],
     "security": {

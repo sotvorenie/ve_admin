@@ -5,6 +5,8 @@ import {TrackFiles} from "@/types/music.ts";
 
 import {VeMusicMusicService} from "@api/veMusic/VeMusicMusicService.ts";
 
+import {useObserve} from "@composables/useObserve.ts";
+
 import {showError} from "@utils/modals.ts";
 
 import Modal from "@ui/Modal.vue";
@@ -27,14 +29,20 @@ const emit = defineEmits<{
 
 const posters = ref<string[]>([])
 
+const page = ref<number>(1)
+const hasMore = ref<boolean>(false)
 const isLoading = ref<boolean>(true)
+
+const lastElementRef = ref<HTMLElement | null>(null)
 
 const getPosters = async () => {
   try {
     isLoading.value = true
 
-    const response = await VeMusicMusicService.getPosters()
-    posters.value = response.data
+    const response = await VeMusicMusicService.getPosters(page.value)
+    page.value += 1
+    hasMore.value = response.meta.hasMore
+    posters.value = [...posters.value, ...response.data]
   } catch (err: any) {
     await showError(
         'Ошибка загрузки постеров',
@@ -59,6 +67,13 @@ watch(isVisible, () => {
   if (posters.value.length) return
   getPosters()
 })
+
+useObserve(
+  lastElementRef,
+  () => getPosters(),
+  hasMore,
+  isLoading,
+)
 </script>
 
 <template>
@@ -92,6 +107,8 @@ watch(isVisible, () => {
             </div>
           </li>
         </ul>
+
+        <div class="h-[1px]" ref="lastElementRef"/>
       </template>
 
       <Loading v-else/>

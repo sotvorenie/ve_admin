@@ -1,4 +1,4 @@
-import {ListResponse, PaginatedResponse} from "@/types/response.ts";
+import {PaginatedResponse} from "@/types/response.ts";
 import {Track, TrackPreview} from "@/types/music.ts";
 import {Url} from "@/types/url.ts";
 
@@ -114,7 +114,7 @@ export const VeMusicMusicService = {
         page: number = 1,
         limit: number = 30,
         signal?: AbortSignal,
-    ): Promise<ListResponse<string>> {
+    ): Promise<PaginatedResponse<string>> {
         const params = new URLSearchParams({
             page: String(page),
             limit: String(limit),
