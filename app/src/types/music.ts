@@ -35,7 +35,7 @@ export interface Track {
 }
 
 export interface TrackInfo {
-    title: string
+    name: string
     genre: number
     artistsIds: number[]
 }

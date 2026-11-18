@@ -39,13 +39,13 @@ onBeforeMount(() => getGenres())
 
   <form novalidate class="flex flex-col gap-5 w-full">
     <LabelUi text="Название трека:">
-      <InputUi v-model="form.title"
+      <InputUi v-model="form.name"
                :disabled="isLoading"
                maxlength="255"
                :action-btn="{
                       icon: CrossIcon,
-                      func: () => form.title = '',
-                      visible: !!form.title?.length
+                      func: () => form.name = '',
+                      visible: !!form.name?.length
                    }"
       />
     </LabelUi>

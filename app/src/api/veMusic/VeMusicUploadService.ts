@@ -16,7 +16,7 @@ export const VeMusicUploadService = {
 
         formData.append('url', form.files.previewPath)
 
-        formData.append('title', form.info.title)
+        formData.append('name', form.info.name)
         formData.append('genre_id', String(form.info.genre))
         formData.append('artists', form.info.artistsIds.join(','))
 

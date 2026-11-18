@@ -25,7 +25,7 @@ const form = ref<TrackForm>({
     video: null
   },
   info: {
-    title: '',
+    name: '',
     genre: -1,
     artistsIds: []
   }
@@ -59,7 +59,7 @@ const createMusic = async () => {
 
 const isSaveBtnDisabled = computed(() => {
   const f = form.value
-  return !f.files.audio || !f.info.title || f.info.genre < 0 || f.info.artistsIds.length === 0
+  return !f.files.audio || !f.info.name || f.info.genre < 0 || f.info.artistsIds.length === 0
 })
 </script>
 
