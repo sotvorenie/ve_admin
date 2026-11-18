@@ -20,13 +20,9 @@ export const VeMusicHistoryService = {
 
     delete(
         musicId: number,
-        userId: number,
+        _: any,
         signal?: AbortSignal,
     ): Promise<void> {
-        const params = new URLSearchParams({
-            user_id: String(userId),
-        })
-
-        return apiDelete(`/history/admin/${musicId}?${params}`, {signal})
+        return apiDelete(`/history/admin/${musicId}`, {signal})
     },
 }
