@@ -129,7 +129,7 @@ onBeforeMount(() => getSearchHistory())
     <Icon v-if="isLoading"
           :name="LoadingIcon"
           :size="30"
-          class="absolute -translate-1/2 top-1/2 left-1/2"
+          class="abs-center"
     />
 
     <template v-else>

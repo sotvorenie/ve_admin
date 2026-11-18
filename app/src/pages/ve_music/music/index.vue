@@ -38,7 +38,6 @@ const getMusic = async () => {
   try {
     const response = await VeMusicMusicService.getTracks(searchStore.searchName, -1, -1, page.value, 30, signal)
 
-    page.value += 1
     total.value = response.meta.total
     music.value = response.data.map(m => ({
       url: `/ve_music/music/${m.id}`,
@@ -63,8 +62,6 @@ onBeforeMount(() => {
     to: '/ve_music/music/create',
   }
   searchStore.searchFunc = () => getMusic()
-
-  getMusic()
 })
 
 watch(page, getMusic, {immediate: true})

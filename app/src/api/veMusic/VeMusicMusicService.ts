@@ -111,8 +111,15 @@ export const VeMusicMusicService = {
     },
 
     getPosters(
+        page: number = 1,
+        limit: number = 30,
         signal?: AbortSignal,
     ): Promise<ListResponse<string>> {
-        return apiGet('/music/admin/posters', {signal})
+        const params = new URLSearchParams({
+            page: String(page),
+            limit: String(limit),
+        })
+
+        return apiGet(`/music/admin/posters?${params}`, {signal})
     },
 }

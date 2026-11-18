@@ -78,7 +78,7 @@ watch(file, (uploadedFile) => {
         <span class="truncate text-center">Загрузите аудио</span>
       </div>
 
-      <EditIcon class="img-upload__icon absolute -translate-1/2 top-1/2 left-1/2 transition-opacity z-1"/>
+      <EditIcon class="img-upload__icon abs-center transition-opacity z-1"/>
 
       <button v-if="audioUrl && canDelete && !disabled"
               class="img-upload__delete rounded-full border flex items-center justify-center z-10 hover:text-accent absolute transition-all cursor-pointer"

@@ -10,8 +10,8 @@ import {formatDate} from "@composables/useFormatDate.ts";
 import Pagination from "@common/Pagination.vue";
 
 import Icon from "@ui/Icon.vue";
+import Loading from "@ui/Loading.vue";
 
-import LoadingIcon from "@icons/LoadingIcon.vue";
 import NotImageIcon from "@icons/NotImageIcon.vue";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
@@ -135,9 +135,7 @@ const handleItem = (row: ListItem) => {
       Данных нет..
     </div>
 
-    <div v-else class="recolor-svg w-full p-7.5 flex items-center justify-center h-full">
-      <Icon :name="LoadingIcon" :size="32"/>
-    </div>
+    <Loading v-else class="abs-center"/>
 
     <Pagination v-if="items?.length"
                 v-model="page"

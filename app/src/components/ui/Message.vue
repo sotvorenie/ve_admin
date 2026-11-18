@@ -13,7 +13,7 @@ const messageStore = useMessageStore();
         v-if="messageStore.isVisible"
         class="fixed left-0 right-0 z-1000 px-4 flex justify-center pointer-events-none text-black/80"
     >
-      <div class="px-4 py-3 flex items-center gap-3 absolute -translate-x-1/2 left-1/2 top-3 pointer-events-auto bg-white rounded-xl">
+      <div class="abs-x px-4 py-3 flex items-center gap-3 top-3 pointer-events-auto bg-white rounded-xl">
         <span class="truncate flex-1 text-sm font-bold ">{{ messageStore.message }}</span>
 
         <button

@@ -69,7 +69,6 @@ const getUsers = async () => {
   try {
     const response = await VeMusicUserService.getUsers(searchStore.searchName, page.value, 30, signal)
 
-    page.value += 1
     total.value = response.meta.total
     users.value = response.data.map(user => ({
       url: `/ve_music/users/${user.id}`,

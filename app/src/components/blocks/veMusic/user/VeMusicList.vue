@@ -9,9 +9,9 @@ import {showConfirm, showError} from "@utils/modals.ts";
 import Pagination from "@common/Pagination.vue";
 
 import Icon from "@ui/Icon.vue";
+import Loading from "@ui/Loading.vue";
 
 import DeleteIcon from "@icons/DeleteIcon.vue";
-import LoadingIcon from "@icons/LoadingIcon.vue";
 
 import useVeMusicStore from "@store/useVeMusicStore.ts";
 const veMusicStore = useVeMusicStore();
@@ -37,7 +37,6 @@ const getMusic = async () => {
     const response = await props.getFunc(veMusicStore.currentUser!.id, page.value, 30, signal)
 
     total.value = response.total
-    page.value += 1
     musicList.value = response.data
   } catch (err: any) {
     await showError(
@@ -83,11 +82,7 @@ onBeforeMount(() => getMusic())
 <template>
 
   <div class="recolor-svg h-full flex flex-col overflow-y-auto overflow-x-hidden scrollbar-thin gap-5 relative">
-    <Icon v-if="isLoading"
-          :name="LoadingIcon"
-          :size="30"
-          class="absolute -translate-1/2 top-1/2 left-1/2"
-    />
+    <Loading v-if="isLoading" class="abs-center"/>
 
     <template v-else-if="musicList?.length">
       <ul class="flex flex-col gap-2.5 pr-2">

@@ -10,36 +10,3 @@
     object-fit: cover;
   }
 }
-.recolor-svg {
-  svg {
-    &[stroke]:not([stroke="none"]),
-    *[stroke]:not([stroke="none"]) {
-      stroke: currentColor !important;
-    }
-
-    &[fill]:not([fill="none"]),
-    *[fill]:not([fill="none"]) {
-      fill: currentColor !important;
-    }
-
-    path,
-    circle,
-    rect,
-    polygon,
-    polyline,
-    line,
-    ellipse {
-      &[stroke]:not([stroke="none"]) {
-        stroke: currentColor !important;
-      }
-      &[fill]:not([fill="none"]) {
-        fill: currentColor !important;
-      }
-    }
-  }
-}
-
-.break-words {
-  overflow-wrap: anywhere !important;
-  word-break: normal !important;
-}

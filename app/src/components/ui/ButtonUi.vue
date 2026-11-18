@@ -27,7 +27,7 @@ withDefaults(
     <Icon v-show="isLoading"
           :name="LoadingIcon"
           :size="25"
-          class="absolute -translate-1/2 top-1/2 left-1/2"
+          class="abs-center"
     />
     <span class="flex flex-col leading-5.5"
           :style="{

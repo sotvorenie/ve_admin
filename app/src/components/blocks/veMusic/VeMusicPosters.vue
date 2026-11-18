@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
+import {ref, watch} from "vue";
 
 import {TrackFiles} from "@/types/music.ts";
 
@@ -9,6 +9,7 @@ import {showError} from "@utils/modals.ts";
 
 import Modal from "@ui/Modal.vue";
 import ButtonUi from "@ui/ButtonUi.vue";
+import Loading from "@ui/Loading.vue";
 
 import useApiUrlStore from "@store/useApiUrlStore.ts";
 const apiUrlStore = useApiUrlStore();
@@ -54,7 +55,10 @@ const handlePoster = (url: string) => {
   }
 }
 
-onBeforeMount(() => getPosters())
+watch(isVisible, () => {
+  if (posters.value.length) return
+  getPosters()
+})
 </script>
 
 <template>
@@ -69,24 +73,28 @@ onBeforeMount(() => getPosters())
     <template #default>
       <p class="text-lg font-medium mb-2">Список постеров</p>
 
-      <ul class="grid grid-cols-4 gap-2 max-h-[70vh] overflow-y-auto scrollbar-thin">
-        <li v-for="(poster, index) in posters"
-            :key="poster"
-            class="img-container aspect-square rounded-xl cursor-pointer group relative"
-            @click="handlePoster(poster)"
-        >
-          <img :src="`${apiUrlStore.activeUrl}${poster}`"
-               :alt="String(index)"
-               class="group-hover:scale-105 transition-all duration-200"
+      <template v-if="!isLoading">
+        <ul class="grid grid-cols-4 gap-2 max-h-[70vh] overflow-y-auto scrollbar-thin">
+          <li v-for="(poster, index) in posters"
+              :key="poster"
+              class="img-container aspect-square rounded-xl cursor-pointer group relative"
+              @click="handlePoster(poster)"
           >
+            <img :src="`${apiUrlStore.activeUrl}${poster}`"
+                 :alt="String(index)"
+                 class="group-hover:scale-105 transition-all duration-200"
+            >
 
-          <div class="absolute top-2 right-2 w-5 aspect-square rounded-full border border-white flex items-center justify-center shrink-0">
-            <div class="w-1/2 aspect-square rounded-full transition-colors"
-                 :class="form.previewPath === poster && 'bg-accent'"
-            />
-          </div>
-        </li>
-      </ul>
+            <div class="absolute top-2 right-2 w-5 aspect-square rounded-full border border-white flex items-center justify-center shrink-0">
+              <div class="w-1/2 aspect-square rounded-full transition-colors"
+                   :class="form.previewPath === poster && 'bg-accent'"
+              />
+            </div>
+          </li>
+        </ul>
+      </template>
+
+      <Loading v-else/>
     </template>
   </Modal>
 

@@ -1,6 +1,8 @@
 import {Genre} from "@/types/genre.ts";
 import {Artist} from "@/types/artist.ts";
 
+export type TrackStatus = 'PENDING' | 'PROCESSING' | 'READY'
+
 export interface TrackPreview {
     id: number
     name: string
@@ -23,12 +25,13 @@ export interface Track {
     previewUrl: string
     videoClipUrl: string | null
     isLiked: boolean
-
-    genre: Genre | null
-    artists: Artist[]
+    status: TrackStatus
 
     segmentsCount: number
     bitrates: number[]
+
+    genre: Genre | null
+    artists: Artist[]
 }
 
 export interface TrackInfo {
