@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {onBeforeMount, ref} from "vue";
+import {onBeforeMount, reactive, ref} from "vue";
 
-import {Search} from "@/types/search.ts";
+import {Search, SearchType} from "@/types/search.ts";
 
 import {VeMusicSearchService} from "@api/veMusic/VeMusicSearchService.ts";
 
@@ -13,6 +13,7 @@ import ButtonUi from "@ui/ButtonUi.vue";
 import Modal from "@ui/Modal.vue";
 import LabelUi from "@ui/LabelUi.vue";
 import InputUi from "@ui/InputUi.vue";
+import SelectUi, {Option} from "@ui/SelectUi.vue";
 
 import DeleteIcon from "@icons/DeleteIcon.vue";
 import LoadingIcon from "@icons/LoadingIcon.vue";
@@ -26,8 +27,27 @@ const searchList = ref<Search[]>([])
 
 const isLoading = ref<boolean>(true)
 
-const newSearch = ref<string>('')
+const form = reactive<{search: string, type: SearchType}>({
+  search: '',
+  type: SearchType.MUSIC
+})
 const newSearchModalVisible = ref<boolean>(false)
+
+const searchTypes = {
+  [SearchType.MUSIC]: 'музыка',
+  [SearchType.ARTISTS]: 'исполнители',
+}
+
+const typesOptions: Option[] = [
+  {
+    id: SearchType.MUSIC,
+    label: SearchType.MUSIC,
+  },
+  {
+    id: SearchType.ARTISTS,
+    label: SearchType.ARTISTS,
+  }
+]
 
 const getSearchHistory = async () => {
   try {
@@ -66,6 +86,20 @@ const deleteSearch = async (id: number) => {
   }
 }
 
+const deleteOldestSearch = (type: SearchType) => {
+  const typesSearches = searchList.value.filter(s => s.type === type)
+  if (typesSearches?.length > 5) {
+    const oldestSearchId = typesSearches.reduce((min, s) => min.id < s.id ? s : min).id
+    searchList.value = searchList.value.filter(s => s.id !== oldestSearchId)
+  }
+}
+
+const clearNewSearchData = () => {
+  newSearchModalVisible.value = false
+  form.search = ''
+  form.type = SearchType.MUSIC
+}
+
 const handleCreateSearch = async () => {
   const confirm = await showConfirm(
       'Доавление в историю поиска',
@@ -78,14 +112,14 @@ const createSearch = async () => {
   try {
     const response = await VeMusicSearchService.create(
         veMusicStore.currentUser!.id,
-        newSearch.value,
+        form.search,
+        form.type,
         signal,
     )
 
     searchList.value.push(response)
-    if (searchList.value?.length > 5) searchList.value.shift()
-    newSearchModalVisible.value = false
-    newSearch.value = ''
+    deleteOldestSearch(form.type)
+    clearNewSearchData()
   } catch (err: any) {
     await showError(
         'Ошибка добавления элемента истории поиска',
@@ -148,9 +182,11 @@ onBeforeMount(() => getSearchHistory())
           <template #default="{close}">
             <div class="flex flex-col gap-3">
               <LabelUi text="Элемент истории поиска">
-                <InputUi v-model="newSearch"
-                         @keydown.enter="handleCreateSearch"
-                />
+                <InputUi v-model="form.search"/>
+              </LabelUi>
+
+              <LabelUi text="Тип элемента поиска">
+                <SelectUi v-model="form.type" :options="typesOptions" />
               </LabelUi>
 
               <div class="grid grid-cols-2 gap-2.5">
@@ -181,6 +217,10 @@ onBeforeMount(() => getSearchHistory())
               :key="search.id"
               class="p-2 flex justify-between items-center gap-5 border rounded-xl"
           >
+            <div class="bg-text-alt text-accent">
+              {{searchTypes[search.type]}}
+            </div>
+
             <span>{{search.search}}</span>
 
             <button class="recolor-svg text-white w-10 aspect-square rounded-full border shrink-0 flex items-center justify-center cursor-pointer transition-colors hover:text-accent"

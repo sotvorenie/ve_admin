@@ -1,5 +1,5 @@
 import {ListResponse} from "@/types/response.ts";
-import {Search} from "@/types/search.ts";
+import {Search, SearchType} from "@/types/search.ts";
 
 import {apiDelete, apiGet, apiPost} from "@/api";
 
@@ -14,10 +14,12 @@ export const VeMusicSearchService = {
     create(
         userId: number,
         search: string,
+        type: SearchType,
         signal?: AbortSignal,
     ): Promise<Search> {
         const payload = {
             search,
+            type,
         }
 
         return apiPost(`/search/admin/${userId}`, payload, {signal})
