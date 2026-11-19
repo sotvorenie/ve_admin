@@ -22,10 +22,16 @@ const props = defineProps<{
 const isLoading = defineModel<boolean>('isLoading', {required: true})
 
 const previewPath = ref<string>('')
+const videoPath = ref<string>('')
 
 const editPreviewVisible = computed(() => {
   return previewPath.value !== formatPath(veMusicStore.currentMusic?.previewUrl ?? '', 'veMusic')
       && previewPath.value?.length > 0
+})
+
+const editVideoVisible = computed(() => {
+  return videoPath.value !== formatPath(veMusicStore.currentMusic?.videoClipUrl ?? '', 'veMusic')
+      && videoPath.value?.length > 0
 })
 
 const handleRedactPreview = async () => {
@@ -53,9 +59,35 @@ const redactPreview = async () => {
   }
 }
 
+const handleRedactVideo = async () => {
+  const confirm = await showConfirm(
+      'Редактирование видео',
+      'Вы действительно хотите редактировать url видео?'
+  )
+  if (confirm) await redactVideo()
+}
+
+const redactVideo = async () => {
+  try {
+    isLoading.value = true
+
+    const response = await VeMusicMusicService.updateVideoPath(props.musicId, videoPath.value, props.signal)
+
+    veMusicStore.currentMusic!.videoClipUrl = response.url
+  } catch (err: any) {
+    await showError(
+        'Ошибка редактирования url',
+        `Не удалось редактировать url для видео.. Ошибка: ${err?.detail}`
+    )
+  } finally {
+    isLoading.value = false
+  }
+}
+
 watchEffect(() => {
   if (veMusicStore.currentMusic) {
     previewPath.value = formatPath(veMusicStore.currentMusic.previewUrl ?? '', 'veMusic')
+    videoPath.value = formatPath(veMusicStore.currentMusic.videoClipUrl ?? '', 'veMusic')
   }
 })
 </script>
@@ -70,6 +102,17 @@ watchEffect(() => {
                       icon: EditIcon,
                       func: () => handleRedactPreview(),
                       visible: editPreviewVisible
+                   }"
+      />
+    </LabelUi>
+
+    <LabelUi text="Path видео:">
+      <InputUi v-model="videoPath"
+               :disabled="isLoading"
+               :action-btn="{
+                      icon: EditIcon,
+                      func: () => handleRedactVideo(),
+                      visible: editVideoVisible
                    }"
       />
     </LabelUi>
