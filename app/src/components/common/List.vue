@@ -74,6 +74,10 @@ const handleItem = (row: ListItem) => {
       <li v-for="row in items"
           :key="row.info.id"
           class="cursor-pointer"
+          :class="[
+              'cursor-pointer',
+              row.isDisabled && 'pointer-events-none opacity-60'
+          ]"
       >
         <div
             v-if="row?.info"

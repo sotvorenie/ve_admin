@@ -10,6 +10,7 @@ export interface TrackPreview {
     url: string
     previewUrl: string | null
     genreId: number
+    status: TrackStatus
 
     artists: Artist[]
 }

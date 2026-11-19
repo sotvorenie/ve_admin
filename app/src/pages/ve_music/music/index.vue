@@ -48,7 +48,8 @@ const getMusic = async (isClear: boolean = false) => {
       info: {
         ...m,
         artistId: m.artists.map(a => a.id)
-      }
+      },
+      isDisabled: m.status !== 'READY',
     }))
   } catch (err: any) {
     await showError(

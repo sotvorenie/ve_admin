@@ -13,4 +13,5 @@ export interface ListHead {
 export interface ListItem {
     url: string
     info: any
+    isDisabled?: boolean
 }
