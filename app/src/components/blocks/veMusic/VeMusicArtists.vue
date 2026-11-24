@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 import {Artist} from "@/types/artist.ts";
 
@@ -46,6 +46,10 @@ const page = ref<number>(1)
 const hasMore = ref(true)
 
 const lastLiRef = ref<HTMLLIElement | null>(null)
+
+const selectedArtists = computed(() => {
+  return artistsList.value.filter(a => artists.value.includes(a.id))
+})
 
 const getArtists = async () => {
   if (isLoading.value || !hasMore.value) return
@@ -109,9 +113,31 @@ useObserve(
 
   <Modal v-model="isVisible" :size="600">
     <template #activator="{open}">
-      <ButtonUi @click="open" class="w-full" :disabled="disabled">
-        Выбрать исполнителей
-      </ButtonUi>
+      <div class="flex flex-col gap-3">
+        <ul class="flex gap-3">
+          <li v-for="artist in selectedArtists"
+              :key="artist.id"
+              class="flex items-center gap-1"
+          >
+            <div class="img-container w-6 aspect-square rounded-full">
+              <img v-if="artist?.avatarUrl"
+                   :src="`${apiUrlStore.activeUrl}${artist.avatarUrl}`"
+                   :alt="artist?.name"
+              >
+              <Icon v-else
+                    :name="NotImageIcon"
+                    :size="20"
+              />
+            </div>
+
+            <p class="font-semibold text-sm">{{artist?.name}}</p>
+          </li>
+        </ul>
+
+        <ButtonUi @click="open" class="w-full" :disabled="disabled">
+          {{selectedArtists?.length ? 'Добавить исполнителей +' : 'Выбрать исполнителей'}}
+        </ButtonUi>
+      </div>
     </template>
 
     <template #default="{close}">
